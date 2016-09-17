@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -53,15 +52,16 @@ public class LaunchFragment extends BaseFragment {
                         if (response.getValues() != null
                                 && !response.getValues().isEmpty()) {
                             JokeEntry joke = response.getValues().get(0);
-                            DialogHelper.getSuccessDialog(getActivity(),joke);
+                            DialogHelper.getSuccessDialog(getActivity(), joke);
 
                         } else {
-                            //show erorr
+                            DialogHelper.getErrorDialog(getActivity());
                         }
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        DialogHelper.getErrorDialog(getActivity());
                     }
                 });
 

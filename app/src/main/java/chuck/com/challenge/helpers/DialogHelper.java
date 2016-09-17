@@ -13,6 +13,21 @@ import chuck.com.challenge.Classes.JokeEntry;
  */
 public class DialogHelper {
 
+    public static Dialog getErrorDialog(Context context) {
+
+        return getDialogWithOkButton(
+                context,
+                ResourceHelper.getString(R.string.generic_title_dialog_error),
+                ResourceHelper.getString(R.string.generic_message_dialog_error),
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+    }
+
     public static Dialog getSuccessDialog(Context context, JokeEntry joke) {
 
         return getDialogWithOkButton(context, String.format(
