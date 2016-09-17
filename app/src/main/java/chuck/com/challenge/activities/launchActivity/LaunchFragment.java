@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import chuck.com.challenge.R;
 import chuck.com.challenge.activities.baseActivity.BaseFragment;
 
@@ -19,6 +21,22 @@ public class LaunchFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_launch, container, false);
+        View view = inflater
+                .inflate(R.layout.fragment_launch, container, false);
+        ButterKnife.bind(this, view);
+        return view;
     }
+
+    @OnClick(R.id.randomJokeButton)
+    void showRandomJoke() {
+    }
+
+    @OnClick(R.id.nameReplaceButton)
+    void goToNameReplace() {
+    }
+
+    @OnClick(R.id.infiniteListButton)
+    void goToInfiniteList() {
+    }
+
 }

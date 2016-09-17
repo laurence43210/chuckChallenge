@@ -8,18 +8,23 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.widget.FrameLayout;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import chuck.com.challenge.R;
 
 public class BaseActivity extends AppCompatActivity implements GlobalListener {
 
-    private FrameLayout frameLayout;
+    @BindView(R.id.activityContent)
+    FrameLayout frameLayout;
+
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_base);
-        frameLayout = (FrameLayout) findViewById(R.id.activityContent);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        ButterKnife.bind(this);
         setSupportActionBar(toolbar);
     }
 
@@ -29,6 +34,5 @@ public class BaseActivity extends AppCompatActivity implements GlobalListener {
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(layoutResID, frameLayout);
     }
-
 
 }
