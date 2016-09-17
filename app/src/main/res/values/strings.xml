@@ -18,4 +18,5 @@
     <string name="generic_dialog_title">Lesson number: %1$s</string>
     <string name="generic_title_dialog_error">What the Chuck?!</string>
     <string name="generic_message_dialog_error">Something went wrong</string>
+    <string name="title_activity_name_replace">nameReplaceActivity</string>
 </resources>

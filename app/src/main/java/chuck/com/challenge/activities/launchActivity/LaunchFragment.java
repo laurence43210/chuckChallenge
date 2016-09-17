@@ -71,6 +71,7 @@ public class LaunchFragment extends BaseFragment {
 
     @OnClick(R.id.nameReplaceButton)
     void goToNameReplace() {
+        mListener.goToActivity(NameReplaceActivity.class);
     }
 
     @OnClick(R.id.infiniteListButton)

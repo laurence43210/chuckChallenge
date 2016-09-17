@@ -1,6 +1,7 @@
 package chuck.com.challenge.activities.baseActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.v7.app.AppCompatActivity;
@@ -33,6 +34,24 @@ public class BaseActivity extends AppCompatActivity implements GlobalListener {
         LayoutInflater inflater = (LayoutInflater) this
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(layoutResID, frameLayout);
+    }
+
+    @Override
+    public void goToActivity(Class clazz) {
+        goToNewActivity(clazz, 0);
+    }
+
+    @Override
+    public void goToActivity(Class clazz, int flags) {
+        goToNewActivity(clazz, flags);
+    }
+
+    private void goToNewActivity(Class clazz, int flags) {
+        Intent intent = new Intent(this, clazz);
+        if (flags > 0) {
+            intent.addFlags(flags);
+        }
+        startActivity(intent);
     }
 
 }

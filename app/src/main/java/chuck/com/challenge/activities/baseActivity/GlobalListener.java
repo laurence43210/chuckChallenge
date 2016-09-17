@@ -5,4 +5,7 @@ package chuck.com.challenge.activities.baseActivity;
  */
 public interface GlobalListener {
 
+    void goToActivity(Class clazz);
+
+    void goToActivity(Class clazz, int flags);
 }
