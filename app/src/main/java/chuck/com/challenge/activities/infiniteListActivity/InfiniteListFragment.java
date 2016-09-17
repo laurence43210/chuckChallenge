@@ -1,5 +1,9 @@
 package chuck.com.challenge.activities.infiniteListActivity;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+
+import android.content.ContentValues;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,9 +13,15 @@ import android.view.ViewGroup;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import chuck.com.challenge.Constants;
 import chuck.com.challenge.R;
+import chuck.com.challenge.Classes.ResponseParent;
+import chuck.com.challenge.Enums.ContentValuesEnum;
+import chuck.com.challenge.Enums.ServerCallEnum;
 import chuck.com.challenge.activities.baseActivity.BaseFragment;
 import chuck.com.challenge.adapters.JokeListAdapter;
+import chuck.com.challenge.helpers.DialogHelper;
+import chuck.com.challenge.helpers.VolleyHelper;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -36,11 +46,36 @@ public class InfiniteListFragment extends BaseFragment {
 
     private void initUI() {
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(
-                getActivity());
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        JokeListAdapter jokeListAdapter = new JokeListAdapter();
-        recyclerView.setAdapter(jokeListAdapter);
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(ContentValuesEnum.JOKES_TO_RETRIEVE.getKey(),
+                Constants.BATCH_JOKE_QUANTITY);
+
+        VolleyHelper.makeVolleyCall(ServerCallEnum.RANDOM, contentValues,
+                new Response.Listener<ResponseParent>() {
+                    @Override
+                    public void onResponse(ResponseParent response) {
+
+                        if (response.getValues() != null
+                                && !response.getValues().isEmpty()) {
+
+                            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(
+                                    getActivity());
+                            linearLayoutManager
+                                    .setOrientation(LinearLayoutManager.VERTICAL);
+                            recyclerView.setLayoutManager(linearLayoutManager);
+                            JokeListAdapter jokeListAdapter = new JokeListAdapter(
+                                    response.getValues());
+                            recyclerView.setAdapter(jokeListAdapter);
+
+                        } else {
+                            DialogHelper.getErrorDialog(getActivity());
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        DialogHelper.getErrorDialog(getActivity());
+                    }
+                });
     }
 }
