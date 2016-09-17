@@ -13,4 +13,8 @@
     <string name="launch_button_name_replace">Name Replace</string>
     <string name="launch_button_infinite_list">Infinite List</string>
 
+    <!--Generic-->
+
+    <string name="generic_dialog_title">Lesson number: %1$s</string>
+
 </resources>

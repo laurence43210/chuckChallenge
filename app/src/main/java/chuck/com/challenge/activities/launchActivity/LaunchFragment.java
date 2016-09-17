@@ -19,6 +19,7 @@ import chuck.com.challenge.Classes.ResponseParent;
 import chuck.com.challenge.Enums.ContentValuesEnum;
 import chuck.com.challenge.Enums.ServerCallEnum;
 import chuck.com.challenge.activities.baseActivity.BaseFragment;
+import chuck.com.challenge.helpers.DialogHelper;
 import chuck.com.challenge.helpers.VolleyHelper;
 
 /**
@@ -52,8 +53,10 @@ public class LaunchFragment extends BaseFragment {
                         if (response.getValues() != null
                                 && !response.getValues().isEmpty()) {
                             JokeEntry joke = response.getValues().get(0);
-                            Toast.makeText(getActivity(), joke.getJoke(),
-                                    Toast.LENGTH_LONG).show();
+                            DialogHelper.getSuccessDialog(getActivity(),joke);
+
+                        } else {
+                            //show erorr
                         }
                     }
                 }, new Response.ErrorListener() {
