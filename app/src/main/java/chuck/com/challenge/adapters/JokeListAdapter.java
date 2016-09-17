@@ -3,14 +3,18 @@ package chuck.com.challenge.adapters;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import chuck.com.challenge.Classes.ResponseParent;
 import chuck.com.challenge.R;
 import chuck.com.challenge.Classes.JokeEntry;
 import chuck.com.challenge.helpers.ResourceHelper;
@@ -29,6 +33,14 @@ public class JokeListAdapter extends
 
     public void addNewData(List<JokeEntry> newData) {
         this.data.addAll(newData);
+    }
+
+    public String getDataAsJson() {
+
+        ResponseParent responseParent = new ResponseParent();
+        responseParent.setValue(data);
+
+        return new Gson().toJson(responseParent);
     }
 
     @Override

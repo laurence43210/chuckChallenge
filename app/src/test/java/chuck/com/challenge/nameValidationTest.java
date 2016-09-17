@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
  * To work on unit tests, switch the Test Artifact in the Build Variants view.
  */
 
-public class nameValidationTest {
+public class NameValidationTest {
 
 private static final String NAME_REGEX = "([\\p{L}]{1,20})(\\s)([-'\\p{L}\\s]{1,20})";
 
@@ -19,6 +19,7 @@ private static final String NAME_REGEX = "([\\p{L}]{1,20})(\\s)([-'\\p{L}\\s]{1,
 
     @Test
     public void nameValidation() throws Exception {
+        assertTrue(isValidName("laurence smith'dixon"));
         assertTrue(isValidName("laurence smith-dixon"));
         assertTrue(isValidName("laurence smith dixon"));
         assertTrue(isValidName("laurence smith"));
@@ -35,7 +36,6 @@ private static final String NAME_REGEX = "([\\p{L}]{1,20})(\\s)([-'\\p{L}\\s]{1,
         assertFalse(isValidName("laurence smith-di6on"));
         assertFalse(isValidName("laurenceewivnerohveiruhvueirphveiruhveiruophveiruphveiruo smith-dixon"));
         assertFalse(isValidName("laurence smith-dixewivnerohveiruhvueirphveiruhveiruophveiruphveiruoon"));
-
 
     }
 }

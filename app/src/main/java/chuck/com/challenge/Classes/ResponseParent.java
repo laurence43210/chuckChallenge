@@ -18,4 +18,8 @@ public class ResponseParent {
     public List<JokeEntry> getValues() {
         return value;
     }
+
+    public void setValue(List<JokeEntry> value) {
+        this.value = value;
+    }
 }

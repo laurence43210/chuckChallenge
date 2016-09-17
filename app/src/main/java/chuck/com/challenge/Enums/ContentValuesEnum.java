@@ -8,7 +8,12 @@ public enum ContentValuesEnum {
     JOKES_TO_RETRIEVE("jokes_to_retrieve"),
     FIRST_NAME("first_name"),
     LAST_NAME("last_name"),
-    RESTRICT_EXPLICIT("restrict_explicit");
+    RESTRICT_EXPLICIT("restrict_explicit"),
+    RECYCLER_VIEW("recycler_view"),
+    RECYCLER_VIEW_DATA("recycler_view_data");
+
+
+
 
 
     String key;
