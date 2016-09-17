@@ -11,6 +11,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +29,7 @@ import chuck.com.challenge.Enums.ContentValuesEnum;
 import chuck.com.challenge.Enums.ServerCallEnum;
 import chuck.com.challenge.activities.baseActivity.BaseFragment;
 import chuck.com.challenge.helpers.DialogHelper;
+import chuck.com.challenge.helpers.ResourceHelper;
 import chuck.com.challenge.helpers.UIHelper;
 import chuck.com.challenge.helpers.VolleyHelper;
 
@@ -65,6 +68,34 @@ public class NameReplaceFragment extends BaseFragment {
     }
 
     private void init() {
+        textInput.setSaveEnabled(true);
+        setSubmitButtonStatus(false);
+        textInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                    int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before,
+                    int count) {
+                setSubmitButtonStatus(isValidName(s.toString()));
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+    }
+
+    private void setSubmitButtonStatus(boolean stringIsValid) {
+        submitButton.setBackgroundColor(ResourceHelper
+                .getColor(stringIsValid ? R.color.colorAccent
+                        : R.color.colorAccent_disabled));
+
     }
 
     @OnClick(R.id.submitButton)

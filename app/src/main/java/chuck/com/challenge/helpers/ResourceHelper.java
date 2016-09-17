@@ -1,5 +1,8 @@
 package chuck.com.challenge.helpers;
 
+import android.os.Build;
+import android.support.v4.content.ContextCompat;
+
 import chuck.com.challenge.ChuckChallengeApplication;
 
 /**
@@ -11,6 +14,17 @@ public class ResourceHelper {
 
         return ChuckChallengeApplication.getInstance().getResources()
                 .getString(id);
+    }
+
+    public static int getColor(int id) {
+        final int version = Build.VERSION.SDK_INT;
+        if (version >= 23) {
+            return ContextCompat.getColor(
+                    ChuckChallengeApplication.getInstance(), id);
+        } else {
+            return ChuckChallengeApplication.getInstance().getResources()
+                    .getColor(id);
+        }
     }
 
 }
