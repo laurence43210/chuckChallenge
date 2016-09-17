@@ -8,7 +8,7 @@ import chuck.com.challenge.R;
 import chuck.com.challenge.activities.baseActivity.BaseActivity;
 import chuck.com.challenge.helpers.VolleyHelper;
 
-public class NameReplaceActivity extends BaseActivity {
+public class nameReplaceActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
