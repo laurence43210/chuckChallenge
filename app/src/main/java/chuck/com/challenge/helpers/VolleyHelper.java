@@ -2,6 +2,7 @@ package chuck.com.challenge.helpers;
 
 import android.content.ContentValues;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -84,7 +85,7 @@ public class VolleyHelper {
             sb.append("exclude=[explicit]");
 
         }
-
+        Log.d(VolleyHelper.class.getSimpleName(),"Making call to " + sb.toString());
         return sb.toString();
     }
 

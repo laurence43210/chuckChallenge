@@ -29,4 +29,11 @@
         android:layout_marginBottom="@dimen/grid_spacing_triple"
         android:text="@string/launch_button_infinite_list" />
 
+
+    <CheckBox
+        android:id="@+id/explicitsCheckbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/launch_checkbox_explicits"
+        android:checked="false"/>
 </LinearLayout>

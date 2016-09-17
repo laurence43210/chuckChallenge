@@ -8,7 +8,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import chuck.com.challenge.Constants;
@@ -21,6 +24,7 @@ import chuck.com.challenge.activities.baseActivity.BaseFragment;
 import chuck.com.challenge.activities.infiniteListActivity.InfiniteListActivity;
 import chuck.com.challenge.activities.nameReplaceActivity.NameReplaceActivity;
 import chuck.com.challenge.helpers.DialogHelper;
+import chuck.com.challenge.helpers.SharedPreferencesHelper;
 import chuck.com.challenge.helpers.VolleyHelper;
 
 /**
@@ -28,16 +32,32 @@ import chuck.com.challenge.helpers.VolleyHelper;
  */
 public class LaunchFragment extends BaseFragment {
 
+    @BindView(R.id.explicitsCheckbox)
+    CheckBox explicitsCheckbox;
+
     public LaunchFragment() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         View view = inflater
                 .inflate(R.layout.fragment_launch, container, false);
         ButterKnife.bind(this, view);
+        init();
         return view;
+
+    }
+
+    private void init() {
+        explicitsCheckbox.setChecked(SharedPreferencesHelper.isNonExplicitsEnabled());
+
+        explicitsCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                SharedPreferencesHelper.setNonExplicits(isChecked);
+            }
+        });
     }
 
     @OnClick(R.id.randomJokeButton)
@@ -46,6 +66,8 @@ public class LaunchFragment extends BaseFragment {
         ContentValues contentValues = new ContentValues();
         contentValues.put(ContentValuesEnum.JOKES_TO_RETRIEVE.getKey(),
                 Constants.SINGLE_JOKE_QUANTITY);
+        contentValues.put(ContentValuesEnum.RESTRICT_EXPLICIT.getKey(),
+                SharedPreferencesHelper.isNonExplicitsEnabled());
 
         VolleyHelper.makeVolleyCall(ServerCallEnum.RANDOM, contentValues,
                 new Response.Listener<ResponseParent>() {

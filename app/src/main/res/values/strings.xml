@@ -14,6 +14,7 @@
     <string name="launch_button_random_joke">Random Joke</string>
     <string name="launch_button_name_replace">Name Replace</string>
     <string name="launch_button_infinite_list">Infinite List</string>
+    <string name="launch_checkbox_explicits">No explicits</string>
 
     <!--Generic-->
     <string name="generic_dialog_title">Lesson number: %1$s</string>

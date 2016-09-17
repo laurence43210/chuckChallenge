@@ -30,6 +30,7 @@ import chuck.com.challenge.Enums.ServerCallEnum;
 import chuck.com.challenge.activities.baseActivity.BaseFragment;
 import chuck.com.challenge.helpers.DialogHelper;
 import chuck.com.challenge.helpers.ResourceHelper;
+import chuck.com.challenge.helpers.SharedPreferencesHelper;
 import chuck.com.challenge.helpers.UIHelper;
 import chuck.com.challenge.helpers.VolleyHelper;
 
@@ -110,6 +111,8 @@ public class NameReplaceFragment extends BaseFragment {
                     splitNameString(textInput.getText().toString(), true));
             contentValues.put(ContentValuesEnum.LAST_NAME.getKey(),
                     splitNameString(textInput.getText().toString(), false));
+            contentValues.put(ContentValuesEnum.RESTRICT_EXPLICIT.getKey(),
+                    SharedPreferencesHelper.isNonExplicitsEnabled());
 
             VolleyHelper.makeVolleyCall(ServerCallEnum.NAME_REPLACE,
                     contentValues, new Response.Listener<ResponseParent>() {
