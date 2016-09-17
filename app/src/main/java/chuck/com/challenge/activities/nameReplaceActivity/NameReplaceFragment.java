@@ -63,7 +63,44 @@ public class NameReplaceFragment extends BaseFragment {
 
     private void init() {
     }
+    @OnClick(R.id.submitButton)
+    void checkText() {
+        if (isValidName(textInput.getText().toString())) {
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(ContentValuesEnum.FIRST_NAME.getKey(),
+                    splitNameString(textInput.getText().toString(), true));
+            contentValues.put(ContentValuesEnum.LAST_NAME.getKey(),
+                    splitNameString(textInput.getText().toString(), false));
 
+            VolleyHelper.makeVolleyCall(ServerCallEnum.NAME_REPLACE,
+                    contentValues, new Response.Listener<ResponseParent>() {
+                        @Override
+                        public void onResponse(ResponseParent response) {
+
+                            if (response.getValues() != null
+                                    && !response.getValues().isEmpty()) {
+                                JokeEntry joke = response.getValues().get(0);
+
+                                DialogHelper.getSuccessDialog(getActivity(),
+                                        joke).show();
+
+                            } else {
+                                DialogHelper.getErrorDialog(getActivity())
+                                        .show();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            DialogHelper.getErrorDialog(getActivity()).show();
+                        }
+                    });
+        } else {
+            textInputLayout
+                    .setError(getString(R.string.name_replace_error_message_name));
+        }
+
+    }
 
     public boolean isValidName(String string) {
 
