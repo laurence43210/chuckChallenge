@@ -3,6 +3,8 @@ package chuck.com.challenge.activities.baseActivity;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 
+import chuck.com.challenge.listeners.GlobalListener;
+
 /**
  * A placeholder fragment containing a simple view.
  */

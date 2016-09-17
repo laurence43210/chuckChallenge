@@ -1,5 +1,6 @@
 package chuck.com.challenge.adapters;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.support.v7.widget.RecyclerView;
@@ -21,10 +22,13 @@ import chuck.com.challenge.helpers.UIHelper;
 public class JokeListAdapter extends
         RecyclerView.Adapter<JokeListAdapter.myViewHolder> {
 
-    List<JokeEntry> data;
+    List<JokeEntry> data = new ArrayList<>();
 
-    public JokeListAdapter(List<JokeEntry> data) {
-        this.data = data;
+    public JokeListAdapter() {
+    }
+
+    public void addNewData(List<JokeEntry> newData) {
+        this.data.addAll(newData);
     }
 
     @Override

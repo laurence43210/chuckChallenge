@@ -22,6 +22,7 @@ import chuck.com.challenge.activities.baseActivity.BaseFragment;
 import chuck.com.challenge.adapters.JokeListAdapter;
 import chuck.com.challenge.helpers.DialogHelper;
 import chuck.com.challenge.helpers.VolleyHelper;
+import chuck.com.challenge.listeners.InfiniteListListener;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -30,6 +31,8 @@ public class InfiniteListFragment extends BaseFragment {
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
+
+    JokeListAdapter jokeListAdapter;
 
     public InfiniteListFragment() {
     }
@@ -46,6 +49,26 @@ public class InfiniteListFragment extends BaseFragment {
 
     private void initUI() {
 
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(
+                getActivity());
+        linearLayoutManager
+                .setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.addOnScrollListener(new InfiniteListListener(linearLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount) {
+                requestNewBatch();
+            }
+        });
+
+        jokeListAdapter = new JokeListAdapter();
+        recyclerView.setAdapter(jokeListAdapter);
+        requestNewBatch();
+
+    }
+
+    private void requestNewBatch() {
         ContentValues contentValues = new ContentValues();
         contentValues.put(ContentValuesEnum.JOKES_TO_RETRIEVE.getKey(),
                 Constants.BATCH_JOKE_QUANTITY);
@@ -58,14 +81,8 @@ public class InfiniteListFragment extends BaseFragment {
                         if (response.getValues() != null
                                 && !response.getValues().isEmpty()) {
 
-                            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(
-                                    getActivity());
-                            linearLayoutManager
-                                    .setOrientation(LinearLayoutManager.VERTICAL);
-                            recyclerView.setLayoutManager(linearLayoutManager);
-                            JokeListAdapter jokeListAdapter = new JokeListAdapter(
-                                    response.getValues());
-                            recyclerView.setAdapter(jokeListAdapter);
+                            jokeListAdapter.addNewData(response.getValues());
+                            recyclerView.getAdapter().notifyDataSetChanged();
 
                         } else {
                             DialogHelper.getErrorDialog(getActivity());
@@ -78,4 +95,5 @@ public class InfiniteListFragment extends BaseFragment {
                     }
                 });
     }
+
 }

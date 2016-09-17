@@ -12,6 +12,7 @@ import android.widget.FrameLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import chuck.com.challenge.R;
+import chuck.com.challenge.listeners.GlobalListener;
 
 public class BaseActivity extends AppCompatActivity implements GlobalListener {
 
