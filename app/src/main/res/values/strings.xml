@@ -1,6 +1,16 @@
 <resources>
+
+    <string name="action_settings">Settings</string>
+
+
+    <!--Titles-->
     <string name="app_name">challenge</string>
     <string name="title_activity_base">BaseActivity</string>
-    <string name="action_settings">Settings</string>
     <string name="title_activity_launch">LaunchActivity</string>
+
+    <!--Launch Activity    -->
+    <string name="launch_button_random_joke">Random Joke</string>
+    <string name="launch_button_name_replace">Name Replace</string>
+    <string name="launch_button_infinite_list">Infinite List</string>
+
 </resources>
