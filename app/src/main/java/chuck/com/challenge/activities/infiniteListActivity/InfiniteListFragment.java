@@ -1,6 +1,7 @@
 package chuck.com.challenge.activities.infiniteListActivity;
 
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import chuck.com.challenge.R;
 import chuck.com.challenge.activities.baseActivity.BaseFragment;
+import chuck.com.challenge.adapters.JokeListAdapter;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -33,6 +35,12 @@ public class InfiniteListFragment extends BaseFragment {
     }
 
     private void initUI() {
-        
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(
+                getActivity());
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        JokeListAdapter jokeListAdapter = new JokeListAdapter();
+        recyclerView.setAdapter(jokeListAdapter);
     }
 }
