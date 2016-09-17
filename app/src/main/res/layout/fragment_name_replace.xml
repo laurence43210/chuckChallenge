@@ -6,7 +6,36 @@
     tools:context=".activities.nameReplaceActivity.NameReplaceFragment"
     tools:showIn="@layout/activity_name_replace">
 
+    <TextView
+        android:id="@+id/introText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/input_layout_name"
+        android:layout_marginBottom="@dimen/grid_spacing_double"
+        android:layout_marginTop="@dimen/grid_spacing_double"
+        android:text="@string/name_replace_intro"
+        android:focusable="true"
+        android:focusableInTouchMode="true"/>
 
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_layout_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/submitButton">
 
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/input_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/name_replace_hint_name"
+            android:singleLine="true" />
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:id="@+id/submitButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="@string/name_replace_button" />
 
 </RelativeLayout>
