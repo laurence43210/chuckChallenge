@@ -4,14 +4,22 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.FrameLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import chuck.com.challenge.R;
+import chuck.com.challenge.activities.infiniteListActivity.InfiniteListActivity;
+import chuck.com.challenge.activities.launchActivity.LaunchActivity;
+import chuck.com.challenge.activities.nameReplaceActivity.NameReplaceActivity;
 import chuck.com.challenge.listeners.GlobalListener;
 
 public class BaseActivity extends AppCompatActivity implements GlobalListener {
@@ -22,12 +30,80 @@ public class BaseActivity extends AppCompatActivity implements GlobalListener {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
+    @BindView(R.id.navigationView)
+    NavigationView navigationView;
+
+    @BindView(R.id.drawerLayout)
+    DrawerLayout drawerLayout;
+
+    private ActionBarDrawerToggle actionBarDrawerToggle;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_base);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
+        setUpNavigationView();
+    }
+
+    private void setUpNavigationView() {
+
+        navigationView
+                .setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem item) {
+
+                        if (item.isChecked())
+                            item.setChecked(false);
+                        else
+                            item.setChecked(true);
+
+                        //Closing drawer on item click
+                        drawerLayout.closeDrawers();
+
+                        //Check to see which item was being clicked and perform appropriate action
+                        switch (item.getItemId()) {
+
+                            case R.id.home:
+                                if (!(BaseActivity.this instanceof LaunchActivity))
+                                    goToActivity(LaunchActivity.class);
+                                break;
+
+                            case R.id.nameReplace:
+                                if (!(BaseActivity.this instanceof NameReplaceActivity))
+                                    goToActivity(NameReplaceActivity.class);
+                                break;
+
+                            case R.id.infiniteList:
+                                if (!(BaseActivity.this instanceof InfiniteListActivity))
+                                    goToActivity(InfiniteListActivity.class);
+                                break;
+
+                        }
+
+                        return false;
+                    }
+                });
+
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout,
+                toolbar, R.string.drawer_open, R.string.drawer_closed) {
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+            }
+        };
+
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+
+        actionBarDrawerToggle.syncState();
     }
 
     @Override

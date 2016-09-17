@@ -27,5 +27,9 @@
     <string name="name_replace_error_message_name">Enter a valid full name</string>
     <string name="name_replace_button">Submit</string>
 
+    <!--Navigation drawer-->
+    <string name="drawer_open">Navigation Drawer Open</string>
+    <string name="drawer_closed">Navigation Drawer Closed</string>
+
 
 </resources>
