@@ -25,7 +25,7 @@ public class UIHelper {
         return "";
     }
 
-    private static boolean isStringEmptyOrNull(String string) {
+    public static boolean isStringEmptyOrNull(String string) {
         return string == null || TextUtils.isEmpty(string);
     }
 
