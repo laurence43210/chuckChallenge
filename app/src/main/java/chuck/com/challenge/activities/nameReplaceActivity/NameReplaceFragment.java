@@ -43,6 +43,9 @@ public class NameReplaceFragment extends BaseFragment {
 
     private static final String NAME_REGEX = "([\\p{L}]{1,20})(\\s)([-'\\p{L}\\s]{1,20})";
 
+    private static final String WHITE_SPACE_REGEX = "([\\s]+)";
+
+
     View view;
 
     @BindView(R.id.submitButton)
@@ -151,10 +154,25 @@ public class NameReplaceFragment extends BaseFragment {
         while (matcher.find()) {
             String name = matcher.group(firstNameRequired ? 1 : 3);
             if (!UIHelper.isStringEmptyOrNull(name)) {
-                return name;
+
+                return replaceWhiteSpaceInRequest(name);
             }
         }
         return "";
+    }
+
+    private String replaceWhiteSpaceInRequest(String string) {
+        StringBuffer sb = new StringBuffer();
+        Pattern p = Pattern.compile(WHITE_SPACE_REGEX);
+        Matcher m = p.matcher(string);
+
+        while (m.find()) {
+            String repString = m.group(1);
+            if (repString != null)
+                m.appendReplacement(sb, "%20");
+        }
+        m.appendTail(sb);
+        return sb.toString();
     }
 
     private void hideKeyboard() {
