@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/grid_spacing"
-    tools:context="chuck.com.challenge.activities.infiniteListActivity.InfiniteListActivityFragment"
+    tools:context=".activities.infiniteListActivity.InfiniteListFragment"
     tools:showIn="@layout/activity_infinite_list">
 
 

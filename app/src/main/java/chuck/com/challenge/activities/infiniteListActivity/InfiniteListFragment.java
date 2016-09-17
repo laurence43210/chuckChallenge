@@ -11,9 +11,9 @@ import chuck.com.challenge.activities.baseActivity.BaseFragment;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class InfiniteListActivityFragment extends BaseFragment {
+public class InfiniteListFragment extends BaseFragment {
 
-    public InfiniteListActivityFragment() {
+    public InfiniteListFragment() {
     }
 
     @Override
