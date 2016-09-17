@@ -139,6 +139,7 @@ public class NameReplaceFragment extends BaseFragment {
     }
 
     public boolean isValidName(String string) {
+        //TODO strip out titles Mr, Miss etc...
 
         return !UIHelper.isStringEmptyOrNull(string)
                 && Pattern.matches(NAME_REGEX, string.trim());
