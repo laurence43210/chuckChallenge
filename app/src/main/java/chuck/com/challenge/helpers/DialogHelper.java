@@ -32,7 +32,8 @@ public class DialogHelper {
 
         return getDialogWithOkButton(context, String.format(
                 ResourceHelper.getString(R.string.generic_dialog_title),
-                String.valueOf(joke.getId())), joke.getJoke(),
+                String.valueOf(joke.getId())),
+                UIHelper.convertStringFromHtml(joke.getJoke()),
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
