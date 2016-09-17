@@ -18,6 +18,7 @@ import chuck.com.challenge.Classes.ResponseParent;
 import chuck.com.challenge.Enums.ContentValuesEnum;
 import chuck.com.challenge.Enums.ServerCallEnum;
 import chuck.com.challenge.activities.baseActivity.BaseFragment;
+import chuck.com.challenge.activities.infiniteListActivity.InfiniteListActivity;
 import chuck.com.challenge.activities.nameReplaceActivity.NameReplaceActivity;
 import chuck.com.challenge.helpers.DialogHelper;
 import chuck.com.challenge.helpers.VolleyHelper;
@@ -76,6 +77,7 @@ public class LaunchFragment extends BaseFragment {
 
     @OnClick(R.id.infiniteListButton)
     void goToInfiniteList() {
+        mListener.goToActivity(InfiniteListActivity.class);
     }
 
 }
