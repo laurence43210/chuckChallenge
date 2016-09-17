@@ -1,6 +1,14 @@
 package chuck.com.challenge.helpers;
 
 import android.content.ContentValues;
+import android.support.annotation.NonNull;
+
+import com.android.volley.Request;
+import com.android.volley.Response;
+
+import chuck.com.challenge.ChuckChallengeApplication;
+import chuck.com.challenge.Classes.ResponseParent;
+import chuck.com.challenge.Connect.GsonRequest;
 import chuck.com.challenge.Constants;
 import chuck.com.challenge.Enums.ContentValuesEnum;
 import chuck.com.challenge.Enums.ServerCallEnum;
@@ -10,6 +18,33 @@ import chuck.com.challenge.Enums.ServerCallEnum;
  */
 public class VolleyHelper {
 
+    public static void makeVolleyCall(ServerCallEnum serverCallEnum,
+                                      ContentValues contentValues,
+                                      Response.Listener<ResponseParent> listener,
+                                      Response.ErrorListener errorListener) {
+        try {
+            GsonRequest gsonRequest = new GsonRequest<>(urlMessageFactory(
+                    serverCallEnum, contentValues), ResponseParent.class,
+                    listener, errorListener);
+            gsonRequest.setTag(serverCallEnum.toString());
+            addRequest(gsonRequest);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private static void addRequest(@NonNull
+                                   final Request<?> request) {
+        ChuckChallengeApplication.getInstance().getVolleyRequestQueue()
+                .add(request);
+    }
+
+    public static void cancelAllRequests(@NonNull
+                                         final String tag) {
+        ChuckChallengeApplication.getInstance().getVolleyRequestQueue()
+                .cancelAll(tag);
+    }
 
     private static String urlMessageFactory(ServerCallEnum serverCallEnum,
                                             ContentValues contentValues) {

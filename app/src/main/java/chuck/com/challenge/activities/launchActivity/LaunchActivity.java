@@ -3,7 +3,9 @@ package chuck.com.challenge.activities.launchActivity;
 import android.os.Bundle;
 
 import chuck.com.challenge.R;
+import chuck.com.challenge.Enums.ServerCallEnum;
 import chuck.com.challenge.activities.baseActivity.BaseActivity;
+import chuck.com.challenge.helpers.VolleyHelper;
 
 public class LaunchActivity extends BaseActivity {
 
@@ -13,4 +15,9 @@ public class LaunchActivity extends BaseActivity {
         setContentView(R.layout.activity_launch);
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        VolleyHelper.cancelAllRequests(ServerCallEnum.RANDOM.toString());
+    }
 }

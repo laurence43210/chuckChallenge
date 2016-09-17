@@ -14,7 +14,7 @@ import com.google.gson.JsonSyntaxException;
 
 import java.io.UnsupportedEncodingException;
 
-public  class GsonRequest<T> extends Request<T> {
+public class GsonRequest<T> extends Request<T> {
 
     private final Class<T> clazz;
 
