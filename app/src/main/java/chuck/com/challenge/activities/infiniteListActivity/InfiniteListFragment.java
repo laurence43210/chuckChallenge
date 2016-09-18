@@ -1,13 +1,15 @@
 package chuck.com.challenge.activities.infiniteListActivity;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.google.gson.Gson;
 
 import android.content.ContentValues;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -40,6 +42,8 @@ public class InfiniteListFragment extends BaseFragment {
 
     JokeListAdapter jokeListAdapter;
 
+    private List<JokeEntry> jokeEntries = new ArrayList<>();
+
     public InfiniteListFragment() {
     }
 
@@ -59,20 +63,27 @@ public class InfiniteListFragment extends BaseFragment {
                 getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.addOnScrollListener(new InfiniteListListener(
-                linearLayoutManager) {
-            @Override
-            public void onLoadMore(int page, int totalItemsCount) {
-                requestNewBatch(false);
-            }
-        });
 
-        jokeListAdapter = new JokeListAdapter();
+        jokeListAdapter = new JokeListAdapter(getActivity());
         recyclerView.setAdapter(jokeListAdapter);
 
-        if (jokeListAdapter.getItemCount() == 0) {
-            requestNewBatch(true);
-        }
+        requestNewBatch(true);
+
+        recyclerView.addOnScrollListener(new InfiniteListListener() {
+            @Override
+            public void onLoadMore() {
+                jokeListAdapter.showLoading(true);
+                jokeListAdapter.notifyDataSetChanged();
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        requestNewBatch(false);
+                    }
+                }, 1000);
+
+            }
+        });
     }
 
     private void requestNewBatch(final boolean firstLoad) {
@@ -92,8 +103,11 @@ public class InfiniteListFragment extends BaseFragment {
                         if (response.getValues() != null
                                 && !response.getValues().isEmpty()) {
 
-                            jokeListAdapter.addNewData(response.getValues());
-                            recyclerView.getAdapter().notifyDataSetChanged();
+                            jokeEntries.addAll(response.getValues());
+                            jokeListAdapter.setItems(jokeEntries);
+                            jokeListAdapter.showLoading(false);
+                            jokeListAdapter.notifyDataSetChanged();
+
                             if (firstLoad) {
                                 mListener.hideProgressSpinner();
                             }
@@ -113,25 +127,23 @@ public class InfiniteListFragment extends BaseFragment {
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
 
-        if (savedInstanceState != null) {
-            if (savedInstanceState
-                    .containsKey(ContentValuesEnum.RECYCLER_VIEW_DATA.getKey())) {
-                Gson gson = new Gson();
-                String json = (String) savedInstanceState
-                        .get(ContentValuesEnum.RECYCLER_VIEW_DATA.getKey());
-                List<JokeEntry> jokeEntries = gson.fromJson(json,
-                        ResponseParent.class).getValues();
-                ((JokeListAdapter) recyclerView.getAdapter())
-                        .addNewData(jokeEntries);
-            }
+        if (savedInstanceState != null
+                && savedInstanceState
+                        .containsKey(ContentValuesEnum.RECYCLER_VIEW.getKey())
+                && savedInstanceState
+                        .containsKey(ContentValuesEnum.RECYCLER_VIEW_DATA
+                                .getKey())) {
 
-            if (savedInstanceState.containsKey(ContentValuesEnum.RECYCLER_VIEW
-                    .getKey())) {
-                recyclerView.getLayoutManager().onRestoreInstanceState(
-                        savedInstanceState
-                                .getParcelable(ContentValuesEnum.RECYCLER_VIEW
-                                        .getKey()));
-            }
+            jokeEntries = (List<JokeEntry>) savedInstanceState
+                    .getSerializable(ContentValuesEnum.RECYCLER_VIEW_DATA
+                            .getKey());
+
+            ((JokeListAdapter) recyclerView.getAdapter()).setItems(jokeEntries);
+
+            recyclerView.getLayoutManager().onRestoreInstanceState(
+                    savedInstanceState
+                            .getParcelable(ContentValuesEnum.RECYCLER_VIEW
+                                    .getKey()));
         }
     }
 
@@ -140,7 +152,7 @@ public class InfiniteListFragment extends BaseFragment {
         super.onSaveInstanceState(outState);
         outState.putParcelable(ContentValuesEnum.RECYCLER_VIEW.getKey(),
                 recyclerView.getLayoutManager().onSaveInstanceState());
-        outState.putString(ContentValuesEnum.RECYCLER_VIEW_DATA.getKey(),
-                ((JokeListAdapter) recyclerView.getAdapter()).getDataAsJson());
+        outState.putSerializable(ContentValuesEnum.RECYCLER_VIEW_DATA.getKey(),
+                (Serializable) jokeEntries);
     }
 }

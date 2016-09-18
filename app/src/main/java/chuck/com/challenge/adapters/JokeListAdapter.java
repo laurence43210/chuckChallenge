@@ -2,19 +2,16 @@ package chuck.com.challenge.adapters;
 
 import java.util.ArrayList;
 import java.util.List;
-
-
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import com.google.gson.Gson;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import chuck.com.challenge.Classes.ResponseParent;
 import chuck.com.challenge.R;
 import chuck.com.challenge.Classes.JokeEntry;
 import chuck.com.challenge.helpers.ResourceHelper;
@@ -24,51 +21,113 @@ import chuck.com.challenge.helpers.UIHelper;
  * Created by Laurence on 17/09/2016.
  */
 public class JokeListAdapter extends
-        RecyclerView.Adapter<JokeListAdapter.myViewHolder> {
+        RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+    protected boolean showLoader;
+
+    private static final int VIEWTYPE_ITEM = 1;
+
+    private static final int VIEWTYPE_LOADER = 2;
 
     List<JokeEntry> data = new ArrayList<>();
 
-    public JokeListAdapter() {
-    }
+    protected LayoutInflater mInflater;
 
-    public void addNewData(List<JokeEntry> newData) {
-        this.data.addAll(newData);
-    }
-
-    public String getDataAsJson() {
-
-        ResponseParent responseParent = new ResponseParent();
-        responseParent.setValue(data);
-
-        return new Gson().toJson(responseParent);
+    public JokeListAdapter(Context context) {
+        mInflater = LayoutInflater.from(context);
     }
 
     @Override
-    public myViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(
-                R.layout.adapter_infinite_list, parent, false);
-        return new myViewHolder(v);
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup,
+            int viewType) {
+        if (viewType == VIEWTYPE_LOADER) {
+
+            // Your LoaderViewHolder class
+            return new ProgressViewHolder(mInflater.inflate(
+                    R.layout.adapter_progress_bar, viewGroup, false));
+
+        } else if (viewType == VIEWTYPE_ITEM) {
+            return new MyViewHolder(mInflater.inflate(
+                    R.layout.adapter_infinite_list, viewGroup, false));
+        }
+
+        throw new IllegalArgumentException("Invalid ViewType: " + viewType);
     }
 
     @Override
-    public void onBindViewHolder(myViewHolder holder, int position) {
-        JokeEntry jokeEntry = data.get(position);
-        holder.jokeText.setText(UIHelper.convertStringFromHtml(jokeEntry
-                .getJoke()));
+    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder,
+            int position) {
 
-        holder.lessonNumber.setText(String.format(
-                ResourceHelper.getString(R.string.generic_dialog_title),
-                String.valueOf(jokeEntry.getId())));
+        // Loader ViewHolder
+        if (viewHolder instanceof ProgressViewHolder) {
+            ProgressViewHolder loaderViewHolder = (ProgressViewHolder) viewHolder;
+            if (showLoader) {
+                loaderViewHolder.progressBar.setVisibility(View.VISIBLE);
+            } else {
+                loaderViewHolder.progressBar.setVisibility(View.GONE);
+            }
+            return;
+        }
+        // joke ViewHolder
+        if (viewHolder instanceof MyViewHolder) {
 
+            MyViewHolder myViewHolder = (MyViewHolder) viewHolder;
+            JokeEntry jokeEntry = data.get(position);
+            myViewHolder.jokeText.setText(UIHelper
+                    .convertStringFromHtml(jokeEntry.getJoke()));
+
+            myViewHolder.lessonNumber.setText(String.format(
+                    ResourceHelper.getString(R.string.generic_dialog_title),
+                    String.valueOf(jokeEntry.getId())));
+        }
     }
 
     @Override
     public int getItemCount() {
-        return data.size();
+
+        // If no items are present, there's no need for loader
+        if (data == null || data.size() == 0) {
+            return 0;
+        }
+
+        // +1 for loader
+        return data.size() + 1;
     }
 
-    static class myViewHolder extends RecyclerView.ViewHolder {
-        // each data item is just a string in this case
+    @Override
+    public long getItemId(int position) {
+
+        // loader can't be at position 0
+        // loader can only be at the last position
+        if (position != 0 && position == getItemCount() - 1) {
+
+            // id of loader is considered as -1 here
+            return -1;
+        }
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+
+        // loader can't be at position 0
+        // loader can only be at the last position
+        if (position != 0 && position == getItemCount() - 1) {
+            return VIEWTYPE_LOADER;
+        }
+
+        return VIEWTYPE_ITEM;
+    }
+
+    public void showLoading(boolean status) {
+        showLoader = status;
+    }
+
+    public void setItems(List<JokeEntry> items) {
+        data = items;
+    }
+
+    static class MyViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.jokeText)
         TextView jokeText;
@@ -76,7 +135,17 @@ public class JokeListAdapter extends
         @BindView(R.id.lessonText)
         TextView lessonNumber;
 
-        public myViewHolder(View view) {
+        public MyViewHolder(View view) {
+            super(view);
+            ButterKnife.bind(this, view);
+        }
+    }
+
+    public static class ProgressViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.progressBar)
+        ProgressBar progressBar;
+
+        public ProgressViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
         }

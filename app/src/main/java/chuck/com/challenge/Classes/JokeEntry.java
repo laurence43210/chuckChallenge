@@ -1,9 +1,11 @@
 package chuck.com.challenge.Classes;
 
+import java.io.Serializable;
+
 /**
  * Created by Laurence on 17/09/2016.
  */
-public class JokeEntry {
+public class JokeEntry implements Serializable {
 
     int id;
 

@@ -9,68 +9,51 @@ import android.support.v7.widget.RecyclerView;
 public abstract class InfiniteListListener extends
         RecyclerView.OnScrollListener {
 
-    // The minimum amount of items to have below your current scroll position
-    // before loading more.
-    private static final int BUFFER_COUNT = 15;
+    private static final String TAG = "RecylcerScrollListener";
 
-    private static final int STARTING_INDEX = 0;
+    private int previousTotal = 0; // The total number of items in the dataset after the last load
 
-    // The current offset index of data you have loaded
-    private int currentPage = 0;
+    private boolean loading = true; // True if we are still waiting for the last set of data to load.
 
-    // The total number of items in the dataset after the last load
-    private int previousTotalItemCount = 0;
+    private static final int visibleThreshold = 5; // The minimum amount of items to have below your current scroll position before loading more.
 
-    // True if we are still waiting for the last set of data to load.
-    private boolean loading = true;
+    int firstVisibleItem, visibleItemCount, totalItemCount;
 
-    RecyclerView.LayoutManager mLayoutManager;
-
-    public InfiniteListListener(LinearLayoutManager layoutManager) {
-        this.mLayoutManager = layoutManager;
+    public InfiniteListListener() {
     }
 
-     // This happens many times a second during a scroll, so be wary of the code you place here.
-    // We are given a few useful parameters to help us work out if we need to load some more data,
-    // but first we check if we are waiting for the previous load to finish.
     @Override
-    public void onScrolled(RecyclerView view, int dx, int dy) {
-        int lastVisibleItemPosition;
-        int totalItemCount = mLayoutManager.getItemCount();
+    public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+        super.onScrolled(recyclerView, dx, dy);
 
-        lastVisibleItemPosition = ((LinearLayoutManager) mLayoutManager)
-                .findLastVisibleItemPosition();
+        RecyclerView.LayoutManager manager = recyclerView.getLayoutManager();
 
-        // If the total item count is zero and the previous isn't, assume the
-        // list is invalidated and should be reset back to initial state
-        if (totalItemCount < previousTotalItemCount) {
-            this.currentPage = STARTING_INDEX;
-            this.previousTotalItemCount = totalItemCount;
-            if (totalItemCount == STARTING_INDEX) {
-                this.loading = true;
+        visibleItemCount = recyclerView.getChildCount();
+        if (manager instanceof LinearLayoutManager) {
+            LinearLayoutManager linearLayoutManager = (LinearLayoutManager) manager;
+            firstVisibleItem = linearLayoutManager
+                    .findFirstVisibleItemPosition();
+            totalItemCount = linearLayoutManager.getItemCount();
+        }
+
+        if (loading) {
+            if (totalItemCount > previousTotal) {
+                loading = false;
+                previousTotal = totalItemCount;
             }
         }
-        // If it’s still loading, we check to see if the dataset count has
-        // changed, if so we conclude it has finished loading and update the current page
-        // number and total item count.
-        if (loading && (totalItemCount > previousTotalItemCount)) {
-            loading = false;
-            previousTotalItemCount = totalItemCount;
-        }
 
-        // If it isn’t currently loading, we check to see if we have breached
-        // the BUFFER_COUNT and need to reload more data.
-        // If we do need to reload some more data, we execute onLoadMore to fetch the data.
-        // threshold should reflect how many total columns there are too
         if (!loading
-                && (lastVisibleItemPosition + BUFFER_COUNT) > totalItemCount) {
-            currentPage++;
-            onLoadMore(currentPage, totalItemCount);
+                && (totalItemCount - visibleItemCount <= firstVisibleItem
+                        + visibleThreshold)) {
+            // End has been reached
+            // do something
+            onLoadMore();
             loading = true;
         }
+
     }
 
-    // Defines the process for actually loading more data based on page
-    public abstract void onLoadMore(int page, int totalItemsCount);
+    public abstract void onLoadMore();
 
 }
