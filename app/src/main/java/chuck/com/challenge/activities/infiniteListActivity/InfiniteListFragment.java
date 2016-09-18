@@ -63,7 +63,7 @@ public class InfiniteListFragment extends BaseFragment {
                 linearLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount) {
-                requestNewBatch();
+                requestNewBatch(false);
             }
         });
 
@@ -71,11 +71,14 @@ public class InfiniteListFragment extends BaseFragment {
         recyclerView.setAdapter(jokeListAdapter);
 
         if (jokeListAdapter.getItemCount() == 0) {
-            requestNewBatch();
+            requestNewBatch(true);
         }
     }
 
-    private void requestNewBatch() {
+    private void requestNewBatch(final boolean firstLoad) {
+        if (firstLoad) {
+            mListener.showProgressSpinner();
+        }
         ContentValues contentValues = new ContentValues();
         contentValues.put(ContentValuesEnum.JOKES_TO_RETRIEVE.getKey(),
                 Constants.BATCH_JOKE_QUANTITY);
@@ -91,7 +94,9 @@ public class InfiniteListFragment extends BaseFragment {
 
                             jokeListAdapter.addNewData(response.getValues());
                             recyclerView.getAdapter().notifyDataSetChanged();
-
+                            if (firstLoad) {
+                                mListener.hideProgressSpinner();
+                            }
                         } else {
                             DialogHelper.getErrorDialog(getActivity());
                         }

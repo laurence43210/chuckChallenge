@@ -10,6 +10,8 @@
     <color name="colorAccent">#C0A300</color>
     <color name="colorAccent_disabled">#C03000</color>
 
+    <color name="transparent">#00FFFFFF</color>
+    <color name="white">#ffffff</color>
 
     
 </resources>

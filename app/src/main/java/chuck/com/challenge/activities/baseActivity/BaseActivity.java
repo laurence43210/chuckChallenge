@@ -9,10 +9,15 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.ContextThemeWrapper;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.SurfaceView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ProgressBar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,6 +40,8 @@ public class BaseActivity extends AppCompatActivity implements GlobalListener {
 
     @BindView(R.id.drawerLayout)
     DrawerLayout drawerLayout;
+
+    private ProgressBar progressBar;
 
     private ActionBarDrawerToggle actionBarDrawerToggle;
 
@@ -123,6 +130,16 @@ public class BaseActivity extends AppCompatActivity implements GlobalListener {
         goToNewActivity(clazz, flags);
     }
 
+    @Override
+    public void showProgressSpinner() {
+       showProgressBar();
+    }
+
+    @Override
+    public void hideProgressSpinner() {
+        hideProgressBar();
+    }
+
     private void goToNewActivity(Class clazz, int flags) {
         Intent intent = new Intent(this, clazz);
         if (flags > 0) {
@@ -131,4 +148,24 @@ public class BaseActivity extends AppCompatActivity implements GlobalListener {
         startActivity(intent);
     }
 
+    private ProgressBar showProgressBar() {
+
+        progressBar = new ProgressBar(new ContextThemeWrapper(this,
+                R.style.loadingProgressSpinner));
+        progressBar.setLayoutParams(new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.CENTER));
+        ViewGroup root = (ViewGroup) findViewById(android.R.id.content);
+
+        if (root != null) {
+            root.addView(progressBar);
+        }
+        return progressBar;
+    }
+
+    private void hideProgressBar() {
+        if (progressBar != null) {
+            progressBar.setVisibility(View.GONE);
+        }
+    }
 }
