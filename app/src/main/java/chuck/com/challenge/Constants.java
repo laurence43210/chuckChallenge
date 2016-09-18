@@ -11,5 +11,9 @@ public class Constants {
 
     public static int BATCH_JOKE_QUANTITY = 20;
 
+    public static String NERDY = "nerdy";
+
+    public static String EXPLICIT = "explicit";
+
 
 }

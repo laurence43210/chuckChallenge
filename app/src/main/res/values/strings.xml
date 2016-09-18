@@ -31,5 +31,7 @@
     <string name="drawer_open">Navigation Drawer Open</string>
     <string name="drawer_closed">Navigation Drawer Closed</string>
 
-
+    <!--Infinite List Activity-->
+    <string name="explicit_tag">Explicit</string>
+    <string name="nerdy_tag">Nerdy</string>
 </resources>

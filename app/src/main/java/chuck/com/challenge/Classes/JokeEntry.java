@@ -1,6 +1,7 @@
 package chuck.com.challenge.Classes;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by Laurence on 17/09/2016.
@@ -11,7 +12,7 @@ public class JokeEntry implements Serializable {
 
     String joke;
 
-    String[] categories;
+    List<String> categories;
 
     public int getId() {
         return id;
@@ -21,7 +22,7 @@ public class JokeEntry implements Serializable {
         return joke;
     }
 
-    public String[] getCategories() {
+    public List<String> getCategories() {
         return categories;
     }
 }

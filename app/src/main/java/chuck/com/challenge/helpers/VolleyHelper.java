@@ -94,9 +94,9 @@ public class VolleyHelper {
                 sb.append("&");
                 break;
             }
-
-            sb.append("exclude=[explicit]");
-
+            sb.append("exclude=[");
+            sb.append(Constants.EXPLICIT);
+            sb.append("]");
         }
         Log.d(VolleyHelper.class.getSimpleName(),
                 "Making call to " + sb.toString());

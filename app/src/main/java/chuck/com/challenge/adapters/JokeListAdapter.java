@@ -2,6 +2,7 @@ package chuck.com.challenge.adapters;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import chuck.com.challenge.Constants;
 import chuck.com.challenge.R;
 import chuck.com.challenge.Classes.JokeEntry;
 import chuck.com.challenge.helpers.ResourceHelper;
@@ -79,6 +81,13 @@ public class JokeListAdapter extends
             myViewHolder.lessonNumber.setText(String.format(
                     ResourceHelper.getString(R.string.generic_dialog_title),
                     String.valueOf(jokeEntry.getId())));
+
+            if (jokeEntry.getCategories().contains(Constants.EXPLICIT)) {
+                myViewHolder.explicitTag.setVisibility(View.VISIBLE);
+            }
+            if (jokeEntry.getCategories().contains(Constants.NERDY)) {
+                myViewHolder.nerdyTag.setVisibility(View.VISIBLE);
+            }
         }
     }
 
@@ -134,6 +143,12 @@ public class JokeListAdapter extends
 
         @BindView(R.id.lessonText)
         TextView lessonNumber;
+
+        @BindView((R.id.nerdy))
+        TextView nerdyTag;
+
+        @BindView((R.id.explicit))
+        TextView explicitTag;
 
         public MyViewHolder(View view) {
             super(view);
