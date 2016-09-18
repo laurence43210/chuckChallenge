@@ -13,6 +13,7 @@ public class InfiniteListActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_infinite_list);
+        setToolbarImage(R.drawable.chuck_desert);
     }
 
     @Override

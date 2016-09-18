@@ -2,8 +2,11 @@ package chuck.com.challenge.activities.baseActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -13,10 +16,10 @@ import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import butterknife.BindView;
@@ -25,6 +28,7 @@ import chuck.com.challenge.R;
 import chuck.com.challenge.activities.infiniteListActivity.InfiniteListActivity;
 import chuck.com.challenge.activities.launchActivity.LaunchActivity;
 import chuck.com.challenge.activities.nameReplaceActivity.NameReplaceActivity;
+import chuck.com.challenge.helpers.ResourceHelper;
 import chuck.com.challenge.listeners.GlobalListener;
 
 public class BaseActivity extends AppCompatActivity implements GlobalListener {
@@ -41,10 +45,15 @@ public class BaseActivity extends AppCompatActivity implements GlobalListener {
     @BindView(R.id.drawerLayout)
     DrawerLayout drawerLayout;
 
+    @BindView(R.id.collapsing_toolbar)
+    CollapsingToolbarLayout collapsingToolbarLayout;
+
+    @BindView(R.id.toolbarImage)
+    ImageView toolbarImage;
+
     private ProgressBar progressBar;
 
     private ActionBarDrawerToggle actionBarDrawerToggle;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +62,12 @@ public class BaseActivity extends AppCompatActivity implements GlobalListener {
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         setUpNavigationView();
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            hideToolbarImage();
+            hideCollapsingTitle();
+
+        }
+
     }
 
     private void setUpNavigationView() {
@@ -73,20 +88,20 @@ public class BaseActivity extends AppCompatActivity implements GlobalListener {
                         //Check to see which item was being clicked and perform appropriate action
                         switch (item.getItemId()) {
 
-                            case R.id.home:
-                                if (!(BaseActivity.this instanceof LaunchActivity))
-                                    goToActivity(LaunchActivity.class);
-                                break;
+                        case R.id.home:
+                            if (!(BaseActivity.this instanceof LaunchActivity))
+                                goToActivity(LaunchActivity.class);
+                            break;
 
-                            case R.id.nameReplace:
-                                if (!(BaseActivity.this instanceof NameReplaceActivity))
-                                    goToActivity(NameReplaceActivity.class);
-                                break;
+                        case R.id.nameReplace:
+                            if (!(BaseActivity.this instanceof NameReplaceActivity))
+                                goToActivity(NameReplaceActivity.class);
+                            break;
 
-                            case R.id.infiniteList:
-                                if (!(BaseActivity.this instanceof InfiniteListActivity))
-                                    goToActivity(InfiniteListActivity.class);
-                                break;
+                        case R.id.infiniteList:
+                            if (!(BaseActivity.this instanceof InfiniteListActivity))
+                                goToActivity(InfiniteListActivity.class);
+                            break;
 
                         }
 
@@ -132,7 +147,7 @@ public class BaseActivity extends AppCompatActivity implements GlobalListener {
 
     @Override
     public void showProgressSpinner() {
-       showProgressBar();
+        showProgressBar();
     }
 
     @Override
@@ -146,6 +161,30 @@ public class BaseActivity extends AppCompatActivity implements GlobalListener {
             intent.addFlags(flags);
         }
         startActivity(intent);
+    }
+
+    public void setToolbarImage(int id) {
+        toolbarImage.setImageDrawable(ResourceHelper.getDrawable(id));
+    }
+
+    public void hideToolbarImage() {
+        toolbarImage.setVisibility(View.GONE);
+    }
+
+    public void hideCollapsingTitle() {
+        collapsingToolbarLayout.setTitleEnabled(false);
+    }
+
+    public void hideDefaultTitle() {
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+    }
+
+    public void disableScrollOnToolbar() {
+        AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams) collapsingToolbarLayout
+                .getLayoutParams();
+        params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SNAP);
+        collapsingToolbarLayout.setLayoutParams(params);
+
     }
 
     private ProgressBar showProgressBar() {

@@ -13,6 +13,9 @@ public class LaunchActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launch);
+        disableScrollOnToolbar();
+        hideCollapsingTitle();
+        hideDefaultTitle();
     }
 
     @Override

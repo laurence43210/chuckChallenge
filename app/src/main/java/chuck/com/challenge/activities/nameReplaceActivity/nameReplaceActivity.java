@@ -14,6 +14,8 @@ public class NameReplaceActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_name_replace);
+        hideToolbarImage();
+        hideCollapsingTitle();
     }
 
     @Override

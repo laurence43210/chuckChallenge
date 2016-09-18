@@ -6,7 +6,8 @@
     android:orientation="vertical"
     android:padding="@dimen/grid_spacing"
     tools:context=".activities.launchActivity.LaunchFragment"
-    tools:showIn="@layout/activity_launch">
+    tools:showIn="@layout/activity_launch"
+    android:background="@color/colorPrimaryLight">
 
     <Button
         android:id="@+id/randomJokeButton"

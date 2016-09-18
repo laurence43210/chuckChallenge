@@ -1,5 +1,6 @@
 package chuck.com.challenge.helpers;
 
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
 
@@ -27,4 +28,17 @@ public class ResourceHelper {
         }
     }
 
+    public static Drawable getDrawable(int id) {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            return ChuckChallengeApplication
+                    .getInstance()
+                    .getResources()
+                    .getDrawable(id,
+                            ChuckChallengeApplication.getInstance().getTheme());
+        } else {
+            return ChuckChallengeApplication.getInstance().getResources()
+                    .getDrawable(id);
+        }
+    }
 }
