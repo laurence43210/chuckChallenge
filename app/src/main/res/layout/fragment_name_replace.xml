@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/grid_spacing_double"
-    tools:context=".activities.nameReplaceActivity.NameReplaceFragment"
+    tools:context=".activities.nameReplaceActivity.ReplaceNameFragment"
     tools:showIn="@layout/activity_name_replace">
 
     <TextView

@@ -27,7 +27,7 @@ import butterknife.ButterKnife;
 import chuck.com.challenge.R;
 import chuck.com.challenge.activities.infiniteListActivity.InfiniteListActivity;
 import chuck.com.challenge.activities.launchActivity.LaunchActivity;
-import chuck.com.challenge.activities.nameReplaceActivity.NameReplaceActivity;
+import chuck.com.challenge.activities.nameReplaceActivity.ReplaceNameActivity;
 import chuck.com.challenge.helpers.ResourceHelper;
 import chuck.com.challenge.appListeners.GlobalListener;
 
@@ -94,8 +94,8 @@ public class BaseActivity extends AppCompatActivity implements GlobalListener {
                             break;
 
                         case R.id.nameReplace:
-                            if (!(BaseActivity.this instanceof NameReplaceActivity))
-                                goToActivity(NameReplaceActivity.class);
+                            if (!(BaseActivity.this instanceof ReplaceNameActivity))
+                                goToActivity(ReplaceNameActivity.class);
                             break;
 
                         case R.id.infiniteList:

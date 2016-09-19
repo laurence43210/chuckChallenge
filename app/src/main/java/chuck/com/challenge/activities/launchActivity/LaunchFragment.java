@@ -19,7 +19,7 @@ import chuck.com.challenge.Constants;
 import chuck.com.challenge.R;
 import chuck.com.challenge.activities.baseActivity.BaseFragment;
 import chuck.com.challenge.activities.infiniteListActivity.InfiniteListActivity;
-import chuck.com.challenge.activities.nameReplaceActivity.NameReplaceActivity;
+import chuck.com.challenge.activities.nameReplaceActivity.ReplaceNameActivity;
 import chuck.com.challenge.responsePojo.JokeEntry;
 import chuck.com.challenge.responsePojo.ResponseParent;
 import chuck.com.challenge.appEnums.ContentValuesEnum;
@@ -105,7 +105,7 @@ public class LaunchFragment extends BaseFragment {
 
     @OnClick(R.id.nameReplaceButton)
     void goToNameReplace() {
-        mListener.goToActivity(NameReplaceActivity.class);
+        mListener.goToActivity(ReplaceNameActivity.class);
     }
 
     @OnClick(R.id.infiniteListButton)

@@ -35,7 +35,7 @@ import chuck.com.challenge.appListeners.OnOneOffClickListener;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class NameReplaceFragment extends BaseFragment {
+public class ReplaceNameFragment extends BaseFragment {
 
     View view;
 
@@ -48,7 +48,7 @@ public class NameReplaceFragment extends BaseFragment {
     @BindView(R.id.input_name)
     TextInputEditText textInput;
 
-    public NameReplaceFragment() {
+    public ReplaceNameFragment() {
     }
 
     @Override
