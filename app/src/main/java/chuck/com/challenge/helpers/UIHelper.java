@@ -2,13 +2,11 @@ package chuck.com.challenge.helpers;
 
 import android.os.Build;
 import android.text.Html;
-import android.text.TextUtils;
 
 /**
  * Created by Laurence on 17/09/2016.
  */
 public class UIHelper {
-
 
     //The String returned from the service seems to contain html tags for "
     //this method will convert it to ui friendly text.
@@ -26,7 +24,7 @@ public class UIHelper {
     }
 
     public static boolean isStringEmptyOrNull(String string) {
-        return string == null || TextUtils.isEmpty(string);
+        return string == null || string.length() == 0;
     }
 
 }

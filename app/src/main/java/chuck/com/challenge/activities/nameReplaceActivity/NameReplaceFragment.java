@@ -1,8 +1,5 @@
 package chuck.com.challenge.activities.nameReplaceActivity;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 
@@ -28,10 +25,11 @@ import chuck.com.challenge.Classes.ResponseParent;
 import chuck.com.challenge.Enums.ContentValuesEnum;
 import chuck.com.challenge.Enums.ServerCallEnum;
 import chuck.com.challenge.activities.baseActivity.BaseFragment;
+import chuck.com.challenge.exceptions.UnSplittableNameException;
 import chuck.com.challenge.helpers.DialogHelper;
+import chuck.com.challenge.helpers.RegexHelper;
 import chuck.com.challenge.helpers.ResourceHelper;
 import chuck.com.challenge.helpers.SharedPreferencesHelper;
-import chuck.com.challenge.helpers.UIHelper;
 import chuck.com.challenge.helpers.VolleyHelper;
 
 /**
@@ -41,10 +39,6 @@ public class NameReplaceFragment extends BaseFragment {
 
     //regex to look for a group of up to 20 non language specific letters,
     //then a space, then another up to 20 letters but also accepts a "-"
-
-    private static final String NAME_REGEX = "([\\p{L}]{1,20})(\\s)([\\p{L}]([-]?[\\s]?[']?[a-z]){1,20})";
-
-    private static final String WHITE_SPACE_REGEX = "([\\s]+)";
 
     View view;
 
@@ -83,7 +77,8 @@ public class NameReplaceFragment extends BaseFragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before,
                     int count) {
-                setSubmitButtonStatus(isValidName(s.toString()));
+                setSubmitButtonStatus(RegexHelper.isValidName(s.toString()));
+                setEditTextErrorStatus(RegexHelper.isValidName(s.toString()));
             }
 
             @Override
@@ -98,20 +93,34 @@ public class NameReplaceFragment extends BaseFragment {
         submitButton.setBackgroundColor(ResourceHelper
                 .getColor(stringIsValid ? R.color.colorAccent
                         : R.color.colorAccent_disabled));
+        textInputLayout.setErrorEnabled(false);
+    }
 
+    private void setEditTextErrorStatus(boolean stringIsValid) {
+        textInputLayout.setErrorEnabled(stringIsValid);
     }
 
     @OnClick(R.id.submitButton)
     void checkText() {
-        if (isValidName(textInput.getText().toString())) {
+        if (RegexHelper.isValidName(textInput.getText().toString())) {
             hideKeyboard();
+
             ContentValues contentValues = new ContentValues();
-            contentValues.put(ContentValuesEnum.FIRST_NAME.getKey(),
-                    splitNameString(textInput.getText().toString(), true));
-            contentValues.put(ContentValuesEnum.LAST_NAME.getKey(),
-                    splitNameString(textInput.getText().toString(), false));
-            contentValues.put(ContentValuesEnum.RESTRICT_EXPLICIT.getKey(),
-                    SharedPreferencesHelper.isNonExplicitsEnabled());
+            try {
+                contentValues.put(ContentValuesEnum.FIRST_NAME.getKey(),
+                        RegexHelper.splitNameString(textInput.getText()
+                                .toString(), true));
+                contentValues.put(ContentValuesEnum.LAST_NAME.getKey(),
+                        RegexHelper.splitNameString(textInput.getText()
+                                .toString(), false));
+                contentValues.put(ContentValuesEnum.RESTRICT_EXPLICIT.getKey(),
+                        SharedPreferencesHelper.isNonExplicitsEnabled());
+
+            } catch (UnSplittableNameException e) {
+                textInputLayout
+                        .setError(getString(R.string.name_replace_error_message_unsplittable_name));
+                return;
+            }
 
             VolleyHelper.makeVolleyCall(ServerCallEnum.NAME_REPLACE,
                     contentValues, new Response.Listener<ResponseParent>() {
@@ -140,41 +149,6 @@ public class NameReplaceFragment extends BaseFragment {
             textInputLayout
                     .setError(getString(R.string.name_replace_error_message_name));
         }
-
-    }
-
-    public boolean isValidName(String string) {
-        //TODO strip out titles Mr, Miss etc...
-
-        return !UIHelper.isStringEmptyOrNull(string)
-                && Pattern.matches(NAME_REGEX, string.trim());
-    }
-
-    private String splitNameString(String string, boolean firstNameRequired) {
-
-        Matcher matcher = Pattern.compile(NAME_REGEX).matcher(string.trim());
-        while (matcher.find()) {
-            String name = matcher.group(firstNameRequired ? 1 : 3);
-            if (!UIHelper.isStringEmptyOrNull(name)) {
-
-                return replaceWhiteSpaceInRequest(name);
-            }
-        }
-        return "";
-    }
-
-    private String replaceWhiteSpaceInRequest(String string) {
-        StringBuffer sb = new StringBuffer();
-        Pattern p = Pattern.compile(WHITE_SPACE_REGEX);
-        Matcher m = p.matcher(string);
-
-        while (m.find()) {
-            String repString = m.group(1);
-            if (repString != null)
-                m.appendReplacement(sb, "%20");
-        }
-        m.appendTail(sb);
-        return sb.toString();
     }
 
     private void hideKeyboard() {

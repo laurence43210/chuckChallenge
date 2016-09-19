@@ -21,24 +21,18 @@ public class SharedPreferencesHelper {
     }
 
     private static void setBooleanItem(String key, boolean value) {
-        try {
-            SharedPreferences.Editor editor = ChuckChallengeApplication
-                    .getInstance().getSharedPrefs().edit();
-            editor.putBoolean(key, value);
-            editor.apply();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
+        SharedPreferences.Editor editor = ChuckChallengeApplication
+                .getInstance().getSharedPrefs().edit();
+        editor.putBoolean(key, value);
+        editor.apply();
     }
 
     private static boolean getBooleanItem(String key, boolean defaultVal) {
-        try {
-            return ChuckChallengeApplication.getInstance().getSharedPrefs()
-                    .getBoolean(key, defaultVal);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return defaultVal;
-        }
+
+        return ChuckChallengeApplication.getInstance().getSharedPrefs()
+                .getBoolean(key, defaultVal);
+
     }
 
     private static boolean containsKey(String key) {
