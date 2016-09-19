@@ -15,7 +15,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import chuck.com.challenge.Constants;
 import chuck.com.challenge.R;
-import chuck.com.challenge.classes.JokeEntry;
+import chuck.com.challenge.responsePojo.JokeEntry;
 import chuck.com.challenge.helpers.ResourceHelper;
 import chuck.com.challenge.helpers.UIHelper;
 

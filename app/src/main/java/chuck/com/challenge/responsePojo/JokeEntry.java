@@ -1,4 +1,4 @@
-package chuck.com.challenge.classes;
+package chuck.com.challenge.responsePojo;
 
 import java.io.Serializable;
 import java.util.List;
