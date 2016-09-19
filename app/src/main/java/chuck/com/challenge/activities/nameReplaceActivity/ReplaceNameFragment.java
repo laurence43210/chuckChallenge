@@ -20,17 +20,17 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import chuck.com.challenge.R;
 import chuck.com.challenge.activities.baseActivity.BaseFragment;
-import chuck.com.challenge.responsePojo.JokeEntry;
-import chuck.com.challenge.responsePojo.ResponseParent;
 import chuck.com.challenge.appEnums.ContentValuesEnum;
 import chuck.com.challenge.appEnums.ServerCallEnum;
+import chuck.com.challenge.appListeners.OnOneOffClickListener;
 import chuck.com.challenge.exceptions.NonSplittableNameException;
 import chuck.com.challenge.helpers.DialogHelper;
 import chuck.com.challenge.helpers.RegexHelper;
 import chuck.com.challenge.helpers.ResourceHelper;
 import chuck.com.challenge.helpers.SharedPreferencesHelper;
 import chuck.com.challenge.helpers.VolleyHelper;
-import chuck.com.challenge.appListeners.OnOneOffClickListener;
+import chuck.com.challenge.responsePojo.JokeEntry;
+import chuck.com.challenge.responsePojo.ResponseParent;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -124,12 +124,12 @@ public class ReplaceNameFragment extends BaseFragment {
                         .setError(getString(R.string.name_replace_error_message_unsplittable_name));
                 return;
             }
-
+            mListener.showProgressSpinner();
             VolleyHelper.makeVolleyCall(ServerCallEnum.NAME_REPLACE,
                     contentValues, new Response.Listener<ResponseParent>() {
                         @Override
                         public void onResponse(ResponseParent response) {
-
+                            mListener.hideProgressSpinner();
                             if (response.getValues() != null
                                     && !response.getValues().isEmpty()) {
                                 JokeEntry joke = response.getValues().get(0);
@@ -145,6 +145,7 @@ public class ReplaceNameFragment extends BaseFragment {
                     }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
+                            mListener.hideProgressSpinner();
                             DialogHelper.getErrorDialog(getActivity()).show();
                         }
                     });

@@ -28,8 +28,8 @@ import chuck.com.challenge.R;
 import chuck.com.challenge.activities.infiniteListActivity.InfiniteListActivity;
 import chuck.com.challenge.activities.launchActivity.LaunchActivity;
 import chuck.com.challenge.activities.nameReplaceActivity.ReplaceNameActivity;
-import chuck.com.challenge.helpers.ResourceHelper;
 import chuck.com.challenge.appListeners.GlobalListener;
+import chuck.com.challenge.helpers.ResourceHelper;
 
 public class BaseActivity extends AppCompatActivity implements GlobalListener {
 
@@ -65,9 +65,7 @@ public class BaseActivity extends AppCompatActivity implements GlobalListener {
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             hideToolbarImage();
             hideCollapsingTitle();
-
         }
-
     }
 
     private void setUpNavigationView() {
@@ -158,30 +156,60 @@ public class BaseActivity extends AppCompatActivity implements GlobalListener {
         startActivity(intent);
     }
 
+    /**
+     *Sets a Drawable as the image to use in the toolbar.
+     *
+     * @param id the image R address
+     */
+
     public void setToolbarImage(int id) {
         toolbarImage.setImageDrawable(ResourceHelper.getDrawable(id));
     }
+
+    /**
+     * Manipulate the collapsible toolbar to not display an image.
+     */
 
     public void hideToolbarImage() {
         toolbarImage.setVisibility(View.GONE);
     }
 
+
+    /**
+     * Manipulate the collapsible toolbar layout to not have an animated collapsible
+     * title, and instead default the text in the toolbar.
+     */
     public void hideCollapsingTitle() {
         collapsingToolbarLayout.setTitleEnabled(false);
     }
 
+    /**
+     * Manipulate the toolbar to show no title text at all.
+     * May need to be called with hideCollapsingTitle() for best effect.
+     */
+
     public void hideDefaultTitle() {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
+
+    /**
+     * Manipulate the collapsible toolbar to not follow the scroll flags defined in the base activity xml.
+     * This will stop the scrolling functionality for working and freeze the toolbar's position
+     */
 
     public void disableScrollOnToolbar() {
         AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams) collapsingToolbarLayout
                 .getLayoutParams();
         params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SNAP);
         collapsingToolbarLayout.setLayoutParams(params);
-
     }
 
+    /**
+     *Constructs a progress spinner that will be displayed
+     *  in the centre of the system window on any activity
+     *
+     * @return   Activity independent progress spinner
+     */
     private ProgressBar showProgressBar() {
 
         progressBar = new ProgressBar(new ContextThemeWrapper(this,
@@ -196,6 +224,10 @@ public class BaseActivity extends AppCompatActivity implements GlobalListener {
         }
         return progressBar;
     }
+
+    /**
+     *Hides the visible progress spinner.
+     */
 
     private void hideProgressBar() {
         if (progressBar != null) {

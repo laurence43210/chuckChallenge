@@ -21,16 +21,16 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import chuck.com.challenge.Constants;
 import chuck.com.challenge.R;
-import chuck.com.challenge.responsePojo.JokeEntry;
-import chuck.com.challenge.responsePojo.ResponseParent;
-import chuck.com.challenge.appEnums.ContentValuesEnum;
-import chuck.com.challenge.appEnums.ServerCallEnum;
 import chuck.com.challenge.activities.baseActivity.BaseFragment;
 import chuck.com.challenge.adapters.JokeListAdapter;
+import chuck.com.challenge.appEnums.ContentValuesEnum;
+import chuck.com.challenge.appEnums.ServerCallEnum;
+import chuck.com.challenge.appListeners.InfiniteListListener;
 import chuck.com.challenge.helpers.DialogHelper;
 import chuck.com.challenge.helpers.SharedPreferencesHelper;
 import chuck.com.challenge.helpers.VolleyHelper;
-import chuck.com.challenge.appListeners.InfiniteListListener;
+import chuck.com.challenge.responsePojo.JokeEntry;
+import chuck.com.challenge.responsePojo.ResponseParent;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -99,7 +99,9 @@ public class InfiniteListFragment extends BaseFragment {
                 new Response.Listener<ResponseParent>() {
                     @Override
                     public void onResponse(ResponseParent response) {
-
+                        if (firstLoad) {
+                            mListener.hideProgressSpinner();
+                        }
                         if (response.getValues() != null
                                 && !response.getValues().isEmpty()) {
 
@@ -108,9 +110,6 @@ public class InfiniteListFragment extends BaseFragment {
                             jokeListAdapter.showLoading(false);
                             jokeListAdapter.notifyDataSetChanged();
 
-                            if (firstLoad) {
-                                mListener.hideProgressSpinner();
-                            }
                         } else {
                             DialogHelper.getErrorDialog(getActivity());
                         }
@@ -118,6 +117,9 @@ public class InfiniteListFragment extends BaseFragment {
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        if (firstLoad) {
+                            mListener.hideProgressSpinner();
+                        }
                         DialogHelper.getErrorDialog(getActivity());
                     }
                 });

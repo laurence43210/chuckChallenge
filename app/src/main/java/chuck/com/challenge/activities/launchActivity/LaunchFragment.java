@@ -70,6 +70,7 @@ public class LaunchFragment extends BaseFragment {
         randomJokeButton.setOnClickListener(new OnOneOffClickListener() {
             @Override
             public void onOneClick(View v) {
+                mListener.showProgressSpinner();
                 ContentValues contentValues = new ContentValues();
                 contentValues.put(ContentValuesEnum.JOKES_TO_RETRIEVE.getKey(),
                         Constants.SINGLE_JOKE_QUANTITY);
@@ -80,6 +81,7 @@ public class LaunchFragment extends BaseFragment {
                         contentValues, new Response.Listener<ResponseParent>() {
                             @Override
                             public void onResponse(ResponseParent response) {
+                                mListener.hideProgressSpinner();
                                 if (response.getValues() != null
                                         && !response.getValues().isEmpty()) {
                                     JokeEntry joke = response.getValues()
@@ -95,6 +97,7 @@ public class LaunchFragment extends BaseFragment {
                         }, new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
+                                mListener.hideProgressSpinner();
                                 DialogHelper.getErrorDialog(getActivity())
                                         .show();
                             }
