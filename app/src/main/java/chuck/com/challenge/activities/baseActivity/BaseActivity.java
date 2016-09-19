@@ -77,11 +77,6 @@ public class BaseActivity extends AppCompatActivity implements GlobalListener {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem item) {
 
-                        if (item.isChecked())
-                            item.setChecked(false);
-                        else
-                            item.setChecked(true);
-
                         //Closing drawer on item click
                         drawerLayout.closeDrawers();
 

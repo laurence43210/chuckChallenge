@@ -6,7 +6,7 @@ import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
-import chuck.com.challenge.exceptions.UnSplittableNameException;
+import chuck.com.challenge.exceptions.NonSplittableNameException;
 import chuck.com.challenge.helpers.RegexHelper;
 
 /**
@@ -27,7 +27,7 @@ public class SplitNameTest {
                 "laurence smith dixon jiojidso", false));
     }
 
-    @Test(expected = UnSplittableNameException.class)
+    @Test(expected = NonSplittableNameException.class)
     public void replaceWhiteSpaceTest_RedPath() throws Exception {
             RegexHelper.splitNameString("laurencesmithdixon", true);
     }

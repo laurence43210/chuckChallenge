@@ -3,7 +3,7 @@ package chuck.com.challenge.helpers;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import chuck.com.challenge.exceptions.UnSplittableNameException;
+import chuck.com.challenge.exceptions.NonSplittableNameException;
 
 /**
  * Created by Laurence on 19/09/2016.
@@ -21,7 +21,7 @@ public class RegexHelper {
     }
 
     public static String splitNameString(String string,
-            boolean firstNameRequired) throws UnSplittableNameException {
+            boolean firstNameRequired) throws NonSplittableNameException {
 
         Matcher matcher = Pattern.compile(NAME_REGEX).matcher(string);
         while (matcher.find()) {
@@ -30,7 +30,7 @@ public class RegexHelper {
                 return replaceWhiteSpaceInRequest(name);
             }
         }
-        throw new UnSplittableNameException();
+        throw new NonSplittableNameException();
     }
 
     private static String replaceWhiteSpaceInRequest(String string) {

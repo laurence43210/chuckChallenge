@@ -24,7 +24,7 @@ import chuck.com.challenge.responsePojo.JokeEntry;
 import chuck.com.challenge.responsePojo.ResponseParent;
 import chuck.com.challenge.appEnums.ContentValuesEnum;
 import chuck.com.challenge.appEnums.ServerCallEnum;
-import chuck.com.challenge.exceptions.UnSplittableNameException;
+import chuck.com.challenge.exceptions.NonSplittableNameException;
 import chuck.com.challenge.helpers.DialogHelper;
 import chuck.com.challenge.helpers.RegexHelper;
 import chuck.com.challenge.helpers.ResourceHelper;
@@ -119,7 +119,7 @@ public class ReplaceNameFragment extends BaseFragment {
                 contentValues.put(ContentValuesEnum.RESTRICT_EXPLICIT.getKey(),
                         SharedPreferencesHelper.isNonExplicitsEnabled());
 
-            } catch (UnSplittableNameException e) {
+            } catch (NonSplittableNameException e) {
                 textInputLayout
                         .setError(getString(R.string.name_replace_error_message_unsplittable_name));
                 return;
