@@ -5,11 +5,17 @@ import android.text.Html;
 
 /**
  * Created by Laurence on 17/09/2016.
+ *
+ * A helper class containing methods that assist in providing a good UI
  */
 public class UIHelper {
 
-    /** The String returned from the service seems to contain html tags for "
-     *   this method will convert it to ui friendly text.
+    /**
+     *  Returns displayable styled text from the provided HTML string.
+     *  Useful when the server response sometimes contains html tags
+     *
+     * @param  string  raw unformatted html string.
+     * @return styled text
      */
 
     public static String convertStringFromHtml(String string) {
@@ -23,6 +29,14 @@ public class UIHelper {
         }
         return "";
     }
+
+
+    /**
+     Checks if a string is empty or null
+     *
+     * @param  string  string to check
+     * @return if string is empty or null
+     */
 
     public static boolean isStringEmptyOrNull(String string) {
         return string == null || string.length() == 0;

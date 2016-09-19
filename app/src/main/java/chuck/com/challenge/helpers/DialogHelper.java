@@ -10,8 +10,15 @@ import chuck.com.challenge.responsePojo.JokeEntry;
 
 /**
  * Created by Laurence on 17/09/2016.
+
+ * Helper class that Returns an Dialog object that can then be shown on the screen.
  */
 public class DialogHelper {
+
+    /**
+     * Returns an overloaded basic dialog generic dialog showing a generic error message.
+     * @return overloaded basic dialog
+     */
 
     public static Dialog getErrorDialog(Context context) {
 
@@ -28,6 +35,14 @@ public class DialogHelper {
 
     }
 
+    /**
+     * Returns an overloaded basic dialog generic dialog showing a joke and a customisable title.
+     *
+     * @param  joke  the joke object associated with the joke to
+     *               display, this should contain joke text and a reference to the joke number.
+     * @return overloaded basic dialog
+     */
+
     public static Dialog getSuccessDialog(Context context, JokeEntry joke) {
 
         return getDialogWithOkButton(context, String.format(
@@ -41,6 +56,14 @@ public class DialogHelper {
                     }
                 });
     }
+
+    /**
+     * Returns a basic dialog with a ok button and listener attached. Message and title are customisable.
+     * @param  title  dialog title
+     * @param  message dialog message
+     * @param  onClickListener new onClickListener to be attached to the dialog
+     * @return basic dialog
+     */
 
     private static Dialog getDialogWithOkButton(Context context, String title,
             String message, DialogInterface.OnClickListener onClickListener) {

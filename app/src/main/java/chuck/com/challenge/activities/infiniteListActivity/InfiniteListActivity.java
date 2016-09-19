@@ -19,7 +19,7 @@ public class InfiniteListActivity extends BaseActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        VolleyHelper.cancelAllRequests(ServerCallEnum.NAME_REPLACE.toString());
+        VolleyHelper.cancelAllRequests(ServerCallEnum.NAME_REPLACE);
     }
 
 }

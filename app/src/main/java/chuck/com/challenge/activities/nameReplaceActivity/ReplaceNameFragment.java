@@ -95,7 +95,7 @@ public class ReplaceNameFragment extends BaseFragment {
 
     private void setSubmitButtonStatus(boolean stringIsValid) {
         submitButton.setBackgroundColor(ResourceHelper
-                .getColor(stringIsValid ? R.color.colorAccent
+                .getColour(stringIsValid ? R.color.colorAccent
                         : R.color.colorAccent_disabled));
         textInputLayout.setErrorEnabled(false);
     }

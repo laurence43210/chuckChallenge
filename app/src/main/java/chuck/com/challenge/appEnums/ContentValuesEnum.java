@@ -12,10 +12,6 @@ public enum ContentValuesEnum {
     RECYCLER_VIEW("recycler_view"),
     RECYCLER_VIEW_DATA("recycler_view_data");
 
-
-
-
-
     String key;
 
     ContentValuesEnum(String key) {

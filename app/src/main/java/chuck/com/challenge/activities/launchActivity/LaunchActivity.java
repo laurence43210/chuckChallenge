@@ -21,6 +21,6 @@ public class LaunchActivity extends BaseActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        VolleyHelper.cancelAllRequests(ServerCallEnum.RANDOM.toString());
+        VolleyHelper.cancelAllRequests(ServerCallEnum.RANDOM);
     }
 }
