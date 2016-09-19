@@ -1,4 +1,4 @@
-package chuck.com.challenge.connect;
+package chuck.com.challenge.connects;
 import com.android.volley.NetworkResponse;
 import com.android.volley.ParseError;
 import com.android.volley.Request;

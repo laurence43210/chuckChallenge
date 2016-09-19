@@ -10,7 +10,7 @@ import android.util.Log;
 import chuck.com.challenge.ChuckChallengeApplication;
 import chuck.com.challenge.Constants;
 import chuck.com.challenge.responsePojo.ResponseParent;
-import chuck.com.challenge.connect.GsonRequest;
+import chuck.com.challenge.connects.GsonRequest;
 import chuck.com.challenge.enums.ContentValuesEnum;
 import chuck.com.challenge.enums.ServerCallEnum;
 
