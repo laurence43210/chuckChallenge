@@ -18,19 +18,19 @@ import android.widget.Button;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import chuck.com.challenge.R;
+import chuck.com.challenge.activities.baseActivity.BaseFragment;
 import chuck.com.challenge.classes.JokeEntry;
 import chuck.com.challenge.classes.ResponseParent;
 import chuck.com.challenge.enums.ContentValuesEnum;
 import chuck.com.challenge.enums.ServerCallEnum;
-import chuck.com.challenge.activities.baseActivity.BaseFragment;
 import chuck.com.challenge.exceptions.UnSplittableNameException;
 import chuck.com.challenge.helpers.DialogHelper;
 import chuck.com.challenge.helpers.RegexHelper;
 import chuck.com.challenge.helpers.ResourceHelper;
 import chuck.com.challenge.helpers.SharedPreferencesHelper;
 import chuck.com.challenge.helpers.VolleyHelper;
+import chuck.com.challenge.listeners.OnOneOffClickListener;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -84,6 +84,13 @@ public class NameReplaceFragment extends BaseFragment {
             }
         });
 
+        submitButton.setOnClickListener(new OnOneOffClickListener() {
+            @Override
+            public void onOneClick(View v) {
+                checkTextAndSubmit();
+            }
+        });
+
     }
 
     private void setSubmitButtonStatus(boolean stringIsValid) {
@@ -97,8 +104,7 @@ public class NameReplaceFragment extends BaseFragment {
         textInputLayout.setErrorEnabled(stringIsValid);
     }
 
-    @OnClick(R.id.submitButton)
-    void checkText() {
+    private void checkTextAndSubmit() {
         if (RegexHelper.isValidName(textInput.getText().toString())) {
             hideKeyboard();
 
