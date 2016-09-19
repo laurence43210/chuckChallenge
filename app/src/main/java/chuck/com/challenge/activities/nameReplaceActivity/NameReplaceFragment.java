@@ -42,10 +42,9 @@ public class NameReplaceFragment extends BaseFragment {
     //regex to look for a group of up to 20 non language specific letters,
     //then a space, then another up to 20 letters but also accepts a "-"
 
-    private static final String NAME_REGEX = "([\\p{L}]{1,20})(\\s)([-'\\p{L}\\s]{1,20})";
+    private static final String NAME_REGEX = "([\\p{L}]{1,20})(\\s)([\\p{L}]([-]?[\\s]?[']?[a-z]){1,20})";
 
     private static final String WHITE_SPACE_REGEX = "([\\s]+)";
-
 
     View view;
 
