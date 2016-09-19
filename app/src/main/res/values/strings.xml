@@ -17,7 +17,7 @@
     <string name="launch_checkbox_explicits">No explicits</string>
 
     <!--Generic-->
-    <string name="generic_dialog_title">Lesson number: %1$s</string>
+    <string name="generic_dialog_title">Joke number: %1$s</string>
     <string name="generic_title_dialog_error">What the Chuck?!</string>
     <string name="generic_message_dialog_error">Something went wrong</string>
 
