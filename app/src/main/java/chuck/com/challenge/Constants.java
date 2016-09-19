@@ -5,15 +5,15 @@ package chuck.com.challenge;
  */
 public class Constants {
 
-    public static String API_BASE_LINK = "http://api.icndb.com/jokes/random";
+    public static final String API_BASE_LINK = "http://api.icndb.com/jokes/random";
 
-    public static int SINGLE_JOKE_QUANTITY = 1;
+    public static final int SINGLE_JOKE_QUANTITY = 1;
 
-    public static int BATCH_JOKE_QUANTITY = 20;
+    public static final int BATCH_JOKE_QUANTITY = 20;
 
-    public static String NERDY = "nerdy";
+    public static final String NERDY = "nerdy";
 
-    public static String EXPLICIT = "explicit";
+    public static final String EXPLICIT = "explicit";
 
 
 }
