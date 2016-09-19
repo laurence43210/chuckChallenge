@@ -30,7 +30,7 @@ import chuck.com.challenge.adapters.JokeListAdapter;
 import chuck.com.challenge.helpers.DialogHelper;
 import chuck.com.challenge.helpers.SharedPreferencesHelper;
 import chuck.com.challenge.helpers.VolleyHelper;
-import chuck.com.challenge.listeners.InfiniteListListener;
+import chuck.com.challenge.appListeners.InfiniteListListener;
 
 /**
  * A placeholder fragment containing a simple view.

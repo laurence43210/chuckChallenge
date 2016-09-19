@@ -27,7 +27,7 @@ import chuck.com.challenge.appEnums.ServerCallEnum;
 import chuck.com.challenge.helpers.DialogHelper;
 import chuck.com.challenge.helpers.SharedPreferencesHelper;
 import chuck.com.challenge.helpers.VolleyHelper;
-import chuck.com.challenge.listeners.OnOneOffClickListener;
+import chuck.com.challenge.appListeners.OnOneOffClickListener;
 
 /**
  * A placeholder fragment containing a simple view.

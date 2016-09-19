@@ -29,7 +29,7 @@ import chuck.com.challenge.activities.infiniteListActivity.InfiniteListActivity;
 import chuck.com.challenge.activities.launchActivity.LaunchActivity;
 import chuck.com.challenge.activities.nameReplaceActivity.NameReplaceActivity;
 import chuck.com.challenge.helpers.ResourceHelper;
-import chuck.com.challenge.listeners.GlobalListener;
+import chuck.com.challenge.appListeners.GlobalListener;
 
 public class BaseActivity extends AppCompatActivity implements GlobalListener {
 

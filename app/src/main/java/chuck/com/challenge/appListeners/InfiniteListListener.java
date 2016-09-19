@@ -1,4 +1,4 @@
-package chuck.com.challenge.listeners;
+package chuck.com.challenge.appListeners;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
