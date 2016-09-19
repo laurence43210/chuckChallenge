@@ -9,10 +9,10 @@ import android.util.Log;
 
 import chuck.com.challenge.ChuckChallengeApplication;
 import chuck.com.challenge.Constants;
-import chuck.com.challenge.Classes.ResponseParent;
-import chuck.com.challenge.Connect.GsonRequest;
-import chuck.com.challenge.Enums.ContentValuesEnum;
-import chuck.com.challenge.Enums.ServerCallEnum;
+import chuck.com.challenge.classes.ResponseParent;
+import chuck.com.challenge.connect.GsonRequest;
+import chuck.com.challenge.enums.ContentValuesEnum;
+import chuck.com.challenge.enums.ServerCallEnum;
 
 /**
  * Created by Laurence on 17/09/2016.

@@ -20,10 +20,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import chuck.com.challenge.R;
-import chuck.com.challenge.Classes.JokeEntry;
-import chuck.com.challenge.Classes.ResponseParent;
-import chuck.com.challenge.Enums.ContentValuesEnum;
-import chuck.com.challenge.Enums.ServerCallEnum;
+import chuck.com.challenge.classes.JokeEntry;
+import chuck.com.challenge.classes.ResponseParent;
+import chuck.com.challenge.enums.ContentValuesEnum;
+import chuck.com.challenge.enums.ServerCallEnum;
 import chuck.com.challenge.activities.baseActivity.BaseFragment;
 import chuck.com.challenge.exceptions.UnSplittableNameException;
 import chuck.com.challenge.helpers.DialogHelper;
@@ -36,9 +36,6 @@ import chuck.com.challenge.helpers.VolleyHelper;
  * A placeholder fragment containing a simple view.
  */
 public class NameReplaceFragment extends BaseFragment {
-
-    //regex to look for a group of up to 20 non language specific letters,
-    //then a space, then another up to 20 letters but also accepts a "-"
 
     View view;
 

@@ -8,8 +8,9 @@ import android.text.Html;
  */
 public class UIHelper {
 
-    //The String returned from the service seems to contain html tags for "
-    //this method will convert it to ui friendly text.
+    /** The String returned from the service seems to contain html tags for "
+     *   this method will convert it to ui friendly text.
+     */
 
     public static String convertStringFromHtml(String string) {
         if (!isStringEmptyOrNull(string)) {

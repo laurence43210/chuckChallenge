@@ -1,4 +1,4 @@
-package chuck.com.challenge.Classes;
+package chuck.com.challenge.classes;
 
 import java.util.List;
 

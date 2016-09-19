@@ -6,7 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 
 import chuck.com.challenge.R;
-import chuck.com.challenge.Classes.JokeEntry;
+import chuck.com.challenge.classes.JokeEntry;
 
 /**
  * Created by Laurence on 17/09/2016.
