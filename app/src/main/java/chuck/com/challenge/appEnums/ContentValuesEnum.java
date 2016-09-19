@@ -1,4 +1,4 @@
-package chuck.com.challenge.enums;
+package chuck.com.challenge.appEnums;
 
 /**
  * Created by Laurence on 17/09/2016.

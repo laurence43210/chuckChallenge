@@ -11,8 +11,8 @@ import chuck.com.challenge.ChuckChallengeApplication;
 import chuck.com.challenge.Constants;
 import chuck.com.challenge.responsePojo.ResponseParent;
 import chuck.com.challenge.connects.GsonRequest;
-import chuck.com.challenge.enums.ContentValuesEnum;
-import chuck.com.challenge.enums.ServerCallEnum;
+import chuck.com.challenge.appEnums.ContentValuesEnum;
+import chuck.com.challenge.appEnums.ServerCallEnum;
 
 /**
  * Created by Laurence on 17/09/2016.
