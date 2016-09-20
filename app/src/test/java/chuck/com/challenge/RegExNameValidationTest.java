@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
  */
 
 
-public class NameValidationTest {
+public class RegExNameValidationTest {
 
     @Test
     public void nameValidation_Valid_Names() throws Exception {
