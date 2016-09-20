@@ -5,6 +5,7 @@ import com.android.volley.VolleyError;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
@@ -62,6 +63,7 @@ public class ReplaceNameFragment extends BaseFragment {
     }
 
     private void init() {
+        textInputLayout.setErrorEnabled(true);
         textInput.setSaveEnabled(true);
         setSubmitButtonStatus(false);
         textInput.addTextChangedListener(new TextWatcher() {
@@ -94,14 +96,21 @@ public class ReplaceNameFragment extends BaseFragment {
     }
 
     private void setSubmitButtonStatus(boolean stringIsValid) {
-        submitButton.setBackgroundColor(ResourceHelper
-                .getColour(stringIsValid ? R.color.colorAccent
-                        : R.color.colorAccent_disabled));
-        textInputLayout.setErrorEnabled(false);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            submitButton.setBackground(ResourceHelper
+                    .getDrawable(stringIsValid ? R.drawable.button
+                            : R.drawable.button_faded));
+        } else {
+            submitButton.setBackgroundDrawable(ResourceHelper
+                    .getDrawable(stringIsValid ? R.drawable.button
+                            : R.drawable.button_faded));
+        }
     }
 
     private void setEditTextErrorStatus(boolean stringIsValid) {
-        textInputLayout.setErrorEnabled(stringIsValid);
+        if (stringIsValid) {
+            textInputLayout.setError(null);
+        }
     }
 
     private void checkTextAndSubmit() {

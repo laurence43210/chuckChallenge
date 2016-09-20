@@ -141,7 +141,7 @@ public class JokeListAdapter extends
         @BindView(R.id.jokeText)
         TextView jokeText;
 
-        @BindView(R.id.lessonText)
+        @BindView(R.id.jokeNumber)
         TextView lessonNumber;
 
         @BindView((R.id.nerdy))

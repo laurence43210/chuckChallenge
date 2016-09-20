@@ -21,15 +21,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/grid_spacing"
+            style="@style/Content.Dark"
+            android:shadowColor="@color/colorPrimaryDark"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="2"
             tools:text="random joke" />
 
         <TextView
-            android:id="@+id/lessonText"
+            android:id="@+id/jokeNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/grid_spacing"
             android:layout_marginTop="@dimen/grid_spacing"
-            android:textStyle="bold"
+            style="@style/Content"
             tools:text="lesson number" />
 
 
@@ -46,7 +51,7 @@
                 android:layout_marginRight="@dimen/grid_spacing"
                 android:layout_marginEnd="@dimen/grid_spacing"
                 android:text="@string/explicit_tag"
-                android:textStyle="italic"
+                style="@style/Content.Small.Italics"
                 android:visibility="gone"/>
 
             <TextView
@@ -55,7 +60,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/grid_spacing"
                 android:text="@string/nerdy_tag"
-                android:textStyle="italic"
+                style="@style/Content.Small.Italics"
                 android:visibility="gone" />
 
         </LinearLayout>

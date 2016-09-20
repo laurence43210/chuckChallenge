@@ -2,39 +2,49 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryLight"
     android:gravity="center"
     android:orientation="vertical"
     android:padding="@dimen/grid_spacing"
     tools:context=".activities.launchActivity.LaunchFragment"
-    tools:showIn="@layout/activity_launch"
-    android:background="@color/colorPrimaryLight">
+    tools:showIn="@layout/activity_launch">
 
     <Button
         android:id="@+id/randomJokeButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/Button"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height"
+        android:layout_marginLeft="@dimen/grid_spacing_triple"
+        android:layout_marginRight="@dimen/grid_spacing_triple"
         android:layout_marginBottom="@dimen/grid_spacing_triple"
         android:text="@string/launch_button_random_joke" />
 
     <Button
         android:id="@+id/nameReplaceButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/Button"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height"
+        android:layout_marginLeft="@dimen/grid_spacing_triple"
+        android:layout_marginRight="@dimen/grid_spacing_triple"
         android:layout_marginBottom="@dimen/grid_spacing_triple"
         android:text="@string/launch_button_name_replace" />
 
     <Button
         android:id="@+id/infiniteListButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/Button"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height"
+        android:layout_marginLeft="@dimen/grid_spacing_triple"
+        android:layout_marginRight="@dimen/grid_spacing_triple"
         android:layout_marginBottom="@dimen/grid_spacing_triple"
         android:text="@string/launch_button_infinite_list" />
 
 
     <CheckBox
         android:id="@+id/explicitsCheckbox"
+        style="@style/CheckBox.Content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="@string/launch_checkbox_explicits"
-        android:checked="false"/>
+        android:checked="false"
+        android:hint="@string/launch_checkbox_explicits" />
 </LinearLayout>
