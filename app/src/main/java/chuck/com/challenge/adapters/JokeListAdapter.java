@@ -4,7 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +19,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import chuck.com.challenge.Constants;
 import chuck.com.challenge.R;
-import chuck.com.challenge.responsePojo.JokeEntry;
 import chuck.com.challenge.helpers.ResourceHelper;
 import chuck.com.challenge.helpers.UIHelper;
+import chuck.com.challenge.responsePojo.JokeEntry;
 
 /**
  * Created by Laurence on 17/09/2016.
@@ -78,9 +82,18 @@ public class JokeListAdapter extends
             myViewHolder.jokeText.setText(UIHelper
                     .convertStringFromHtml(jokeEntry.getJoke()));
 
-            myViewHolder.lessonNumber.setText(String.format(
+            String jokeTitle = String.format(
                     ResourceHelper.getString(R.string.generic_dialog_title),
-                    String.valueOf(jokeEntry.getId())));
+                    String.valueOf(jokeEntry.getId()));
+
+            SpannableString spannableString = new SpannableString(jokeTitle);
+            spannableString.setSpan(
+                    new StyleSpan(Typeface.BOLD), jokeTitle.length()
+                            - String.valueOf(jokeEntry.getId()).length(),
+                            jokeTitle.length(),
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+            myViewHolder.jokeNumber.setText(spannableString);
 
             if (jokeEntry.getCategories().contains(Constants.EXPLICIT)) {
                 myViewHolder.explicitTag.setVisibility(View.VISIBLE);
@@ -142,7 +155,7 @@ public class JokeListAdapter extends
         TextView jokeText;
 
         @BindView(R.id.jokeNumber)
-        TextView lessonNumber;
+        TextView jokeNumber;
 
         @BindView((R.id.nerdy))
         TextView nerdyTag;

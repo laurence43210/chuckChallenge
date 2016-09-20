@@ -28,7 +28,7 @@
         <activity
             android:name=".activities.nameReplaceActivity.ReplaceNameActivity"
             android:label="@string/title_activity_name_replace"
-            android:windowSoftInputMode="adjustPan"
+            android:windowSoftInputMode="adjustResize"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.infiniteListActivity.InfiniteListActivity"
