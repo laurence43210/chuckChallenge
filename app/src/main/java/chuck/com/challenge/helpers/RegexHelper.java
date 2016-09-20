@@ -36,7 +36,7 @@ public class RegexHelper {
 
     public static boolean isValidName(String string) {
         return !UIHelper.isStringEmptyOrNull(string)
-                && Pattern.matches(NAME_REGEX, string);
+                && Pattern.matches(NAME_REGEX, string.trim());
     }
 
     /**

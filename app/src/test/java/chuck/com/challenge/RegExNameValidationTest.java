@@ -20,6 +20,7 @@ public class RegExNameValidationTest {
         assertTrue(RegexHelper.isValidName("laurence smith-dixon"));
         assertTrue(RegexHelper.isValidName("laurence smith dixon"));
         assertTrue(RegexHelper.isValidName("laurence smith"));
+        assertTrue(RegexHelper.isValidName("laurence smith "));
     }
 
     @Test
@@ -56,7 +57,6 @@ public class RegExNameValidationTest {
     }
     @Test
     public void nameValidation_too_much_whitespace() throws Exception {
-        assertFalse(RegexHelper.isValidName("laurence smith           "));
         assertFalse(RegexHelper.isValidName("laurence smith           dixon"));
         assertFalse(RegexHelper.isValidName("laurence smith           d"));
         assertFalse(RegexHelper.isValidName("laurence                  smith"));
