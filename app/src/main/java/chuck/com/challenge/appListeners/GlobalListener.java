@@ -12,4 +12,6 @@ public interface GlobalListener {
     void showProgressSpinner();
 
     void hideProgressSpinner();
+
+    void showRandomJoke();
 }
