@@ -1,4 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge>
-    <include layout="@layout/content_launch" />
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+
+        <include layout="@layout/content_launch" />
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/showRandomJoke"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/grid_spacing"
+        android:src="@drawable/ic_autorenew_white_24dp"
+        />
+
+</RelativeLayout>
 </merge>

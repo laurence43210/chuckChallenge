@@ -10,4 +10,17 @@
     tools:showIn="@layout/activity_launch">
 
 
+    <TextSwitcher
+        android:id="@+id/titleSwitcher"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/grid_spacing" />
+
+    <TextSwitcher
+        android:id="@+id/jokeSwitcher"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="@dimen/grid_spacing"
+        android:layout_weight="1" />
+
 </LinearLayout>
