@@ -15,6 +15,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +32,7 @@ import chuck.com.challenge.activities.launchActivity.LaunchActivity;
 import chuck.com.challenge.activities.nameReplaceActivity.ReplaceNameActivity;
 import chuck.com.challenge.appListeners.GlobalListener;
 import chuck.com.challenge.helpers.ResourceHelper;
+import chuck.com.challenge.helpers.SharedPreferencesHelper;
 
 public class BaseActivity extends AppCompatActivity implements GlobalListener {
 
@@ -148,6 +151,11 @@ public class BaseActivity extends AppCompatActivity implements GlobalListener {
         hideProgressBar();
     }
 
+    @Override
+    public void showRandomJoke() {
+
+    }
+
     private void goToNewActivity(Class clazz, int flags) {
         Intent intent = new Intent(this, clazz);
         if (flags > 0) {
@@ -173,7 +181,6 @@ public class BaseActivity extends AppCompatActivity implements GlobalListener {
     public void hideToolbarImage() {
         toolbarImage.setVisibility(View.GONE);
     }
-
 
     /**
      * Manipulate the collapsible toolbar layout to not have an animated collapsible
@@ -234,4 +241,33 @@ public class BaseActivity extends AppCompatActivity implements GlobalListener {
             progressBar.setVisibility(View.GONE);
         }
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_base, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        MenuItem checkable = menu.findItem(R.id.noExplicits);
+        checkable.setChecked(SharedPreferencesHelper.isNonExplicitsEnabled());
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+        case R.id.noExplicits:
+            boolean isChecked = !item.isChecked();
+            item.setChecked(isChecked);
+            SharedPreferencesHelper.setNonExplicits(isChecked);
+            return true;
+        default:
+            return false;
+        }
+    }
+
 }
