@@ -1,5 +1,7 @@
 package chuck.com.challenge.appListeners;
 
+import android.text.SpannableString;
+
 import java.util.List;
 
 import chuck.com.challenge.responsePojo.JokeEntry;
@@ -7,12 +9,10 @@ import chuck.com.challenge.responsePojo.JokeEntry;
 /**
  * Created by Laurence on 12/10/2016.
  */
-public interface OnJokeRetrievedListener {
+public interface IBatchJokeView {
 
-    void onSuccessBatch(List<JokeEntry> batch);
+    void onJokesLoaded(List<JokeEntry> jokeEntries);
 
-    void onSuccessSingle(JokeEntry joke);
-
-    void onFail(String error);
+    void onError(String message);
 
 }

@@ -5,7 +5,7 @@ package chuck.com.challenge;
  */
 public class Constants {
 
-    public static final String API_BASE_LINK = "http://api.icndb.com/jokes/random";
+    public static final String API_BASE_URL = "http://api.icndb.com/jokes/random/";
 
     public static final int SINGLE_JOKE_QUANTITY = 1;
 

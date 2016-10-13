@@ -1,8 +1,5 @@
 package chuck.com.challenge;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
-
 import android.app.Application;
 import android.content.SharedPreferences;
 
@@ -17,22 +14,16 @@ public class ChuckChallengeApplication extends Application {
 
     static SharedPreferences sSharedPreferences;
 
-    static RequestQueue sRequestQueue;
-
     @Override
     public void onCreate() {
         super.onCreate();
         sInstance = this;
-        sRequestQueue = Volley.newRequestQueue(sInstance);
-        sSharedPreferences = getSharedPreferences(SHARED_PREF_NAME,MODE_PRIVATE);
+        sSharedPreferences = getSharedPreferences(SHARED_PREF_NAME,
+                MODE_PRIVATE);
     }
 
     public static ChuckChallengeApplication getInstance() {
         return sInstance;
-    }
-
-    public RequestQueue getVolleyRequestQueue() {
-        return sRequestQueue;
     }
 
     public SharedPreferences getSharedPrefs() {

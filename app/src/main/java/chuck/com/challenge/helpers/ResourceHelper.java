@@ -25,22 +25,6 @@ public class ResourceHelper {
                 .getString(id);
     }
 
-    /**
-     * Finds by id and returns colour from resources
-     *
-     * @param id the R address of the colour to retrieve
-     * @return associated colour
-     */
-    public static int getColour(int id) {
-        final int version = Build.VERSION.SDK_INT;
-        if (version >= 23) {
-            return ContextCompat.getColor(
-                    ChuckChallengeApplication.getInstance(), id);
-        } else {
-            return ChuckChallengeApplication.getInstance().getResources()
-                    .getColor(id);
-        }
-    }
 
     /**
      * Finds by id and returns drawable from resources

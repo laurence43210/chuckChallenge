@@ -6,7 +6,7 @@
     android:gravity="center"
     android:orientation="vertical"
     android:padding="@dimen/grid_spacing"
-    tools:context=".activities.launchActivity.LaunchFragment"
+    tools:context=".activities.launchActivity.SingleJokeFragment"
     tools:showIn="@layout/activity_launch">
 
 

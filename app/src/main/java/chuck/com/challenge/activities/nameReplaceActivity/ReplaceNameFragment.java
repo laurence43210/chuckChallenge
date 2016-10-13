@@ -1,16 +1,11 @@
 package chuck.com.challenge.activities.nameReplaceActivity;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-
-import android.content.ContentValues;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.text.SpannableString;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,23 +15,20 @@ import android.widget.Button;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import chuck.com.challenge.R;
+import chuck.com.challenge.Presenters.ReplaceNamePresenter;
 import chuck.com.challenge.activities.baseActivity.BaseFragment;
-import chuck.com.challenge.appEnums.ContentValuesEnum;
-import chuck.com.challenge.appEnums.ServerCallEnum;
+import chuck.com.challenge.appListeners.IReplaceNameView;
 import chuck.com.challenge.appListeners.OnOneOffClickListener;
 import chuck.com.challenge.exceptions.NonSplittableNameException;
 import chuck.com.challenge.helpers.DialogHelper;
 import chuck.com.challenge.helpers.RegexHelper;
 import chuck.com.challenge.helpers.ResourceHelper;
-import chuck.com.challenge.helpers.SharedPreferencesHelper;
-import chuck.com.challenge.helpers.VolleyHelper;
-import chuck.com.challenge.responsePojo.JokeEntry;
-import chuck.com.challenge.responsePojo.ResponseParent;
 
 /**
  * A placeholder fragment containing a simple view.
  */
-public class ReplaceNameFragment extends BaseFragment {
+public class ReplaceNameFragment extends BaseFragment implements
+        IReplaceNameView {
 
     View view;
 
@@ -49,6 +41,8 @@ public class ReplaceNameFragment extends BaseFragment {
     @BindView(R.id.input_name)
     TextInputEditText textInput;
 
+    private ReplaceNamePresenter nameReplaceSingleJokePresenter;
+
     public ReplaceNameFragment() {
     }
 
@@ -58,6 +52,7 @@ public class ReplaceNameFragment extends BaseFragment {
         view = inflater.inflate(R.layout.fragment_name_replace, container,
                 false);
         ButterKnife.bind(this, view);
+        nameReplaceSingleJokePresenter = new ReplaceNamePresenter(this);
         init();
         return view;
     }
@@ -65,27 +60,8 @@ public class ReplaceNameFragment extends BaseFragment {
     private void init() {
         textInputLayout.setErrorEnabled(true);
         textInput.setSaveEnabled(true);
-        setSubmitButtonStatus(false);
-        textInput.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count,
-                    int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before,
-                    int count) {
-                setSubmitButtonStatus(RegexHelper.isValidName(s.toString()));
-                setEditTextErrorStatus(RegexHelper.isValidName(s.toString()));
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
+        nameReplaceSingleJokePresenter.onSetButtonDrawableToFaded();
+        textInput.addTextChangedListener(nameReplaceSingleJokePresenter);
         submitButton.setOnClickListener(new OnOneOffClickListener() {
             @Override
             public void onOneClick(View v) {
@@ -95,20 +71,31 @@ public class ReplaceNameFragment extends BaseFragment {
 
     }
 
-    private void setSubmitButtonStatus(boolean stringIsValid) {
+    @Override
+    public void onJokeLoaded(SpannableString title, String joke) {
+        mListener.hideProgressSpinner();
+        DialogHelper.getDialogWithOkButton(getActivity(), title, joke).show();
+    }
+
+    @Override
+    public void onError(String message) {
+        mListener.hideProgressSpinner();
+        DialogHelper.getErrorDialog(getActivity(), message).show();
+    }
+
+    @Override
+    public void onSubmitButtonBackgroundChange(int drawableId) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            submitButton.setBackground(ResourceHelper
-                    .getDrawable(stringIsValid ? R.drawable.button
-                            : R.drawable.button_faded));
+            submitButton.setBackground(ResourceHelper.getDrawable(drawableId));
         } else {
             submitButton.setBackgroundDrawable(ResourceHelper
-                    .getDrawable(stringIsValid ? R.drawable.button
-                            : R.drawable.button_faded));
+                    .getDrawable(drawableId));
         }
     }
 
-    private void setEditTextErrorStatus(boolean stringIsValid) {
-        if (stringIsValid) {
+    @Override
+    public void onRemoveTextInputLayoutErrorState(boolean doRemove) {
+        if (doRemove) {
             textInputLayout.setError(null);
         }
     }
@@ -116,48 +103,15 @@ public class ReplaceNameFragment extends BaseFragment {
     private void checkTextAndSubmit() {
         if (RegexHelper.isValidName(textInput.getText().toString())) {
             hideKeyboard();
-
-            ContentValues contentValues = new ContentValues();
             try {
-                contentValues.put(ContentValuesEnum.FIRST_NAME.getKey(),
-                        RegexHelper.splitNameString(textInput.getText()
-                                .toString(), true));
-                contentValues.put(ContentValuesEnum.LAST_NAME.getKey(),
-                        RegexHelper.splitNameString(textInput.getText()
-                                .toString(), false));
-                contentValues.put(ContentValuesEnum.RESTRICT_EXPLICIT.getKey(),
-                        SharedPreferencesHelper.isNonExplicitsEnabled());
+                nameReplaceSingleJokePresenter.fetchNameReplaceJoke(textInput
+                        .getText().toString());
+                mListener.showProgressSpinner();
 
             } catch (NonSplittableNameException e) {
                 textInputLayout
                         .setError(getString(R.string.name_replace_error_message_unsplittable_name));
-                return;
             }
-            mListener.showProgressSpinner();
-            VolleyHelper.makeVolleyCall(ServerCallEnum.NAME_REPLACE,
-                    contentValues, new Response.Listener<ResponseParent>() {
-                        @Override
-                        public void onResponse(ResponseParent response) {
-                            mListener.hideProgressSpinner();
-                            if (response.getValues() != null
-                                    && !response.getValues().isEmpty()) {
-                                JokeEntry joke = response.getValues().get(0);
-
-                                DialogHelper.getSuccessDialog(getActivity(),
-                                        joke).show();
-
-                            } else {
-                                DialogHelper.getErrorDialog(getActivity())
-                                        .show();
-                            }
-                        }
-                    }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            mListener.hideProgressSpinner();
-                            DialogHelper.getErrorDialog(getActivity()).show();
-                        }
-                    });
         } else {
             textInputLayout
                     .setError(getString(R.string.name_replace_error_message_name));
@@ -170,4 +124,5 @@ public class ReplaceNameFragment extends BaseFragment {
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
 
     }
+
 }

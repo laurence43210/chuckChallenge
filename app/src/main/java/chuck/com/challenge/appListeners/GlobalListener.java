@@ -7,11 +7,7 @@ public interface GlobalListener {
 
     void goToActivity(Class clazz);
 
-    void goToActivity(Class clazz, int flags);
-
     void showProgressSpinner();
 
     void hideProgressSpinner();
-
-    void showRandomJoke();
 }

@@ -133,12 +133,8 @@ public class BaseActivity extends AppCompatActivity implements GlobalListener {
 
     @Override
     public void goToActivity(Class clazz) {
-        goToNewActivity(clazz, 0);
-    }
-
-    @Override
-    public void goToActivity(Class clazz, int flags) {
-        goToNewActivity(clazz, flags);
+        Intent intent = new Intent(this, clazz);
+        startActivity(intent);
     }
 
     @Override
@@ -149,19 +145,6 @@ public class BaseActivity extends AppCompatActivity implements GlobalListener {
     @Override
     public void hideProgressSpinner() {
         hideProgressBar();
-    }
-
-    @Override
-    public void showRandomJoke() {
-
-    }
-
-    private void goToNewActivity(Class clazz, int flags) {
-        Intent intent = new Intent(this, clazz);
-        if (flags > 0) {
-            intent.addFlags(flags);
-        }
-        startActivity(intent);
     }
 
     /**

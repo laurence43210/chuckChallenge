@@ -5,11 +5,10 @@ import android.text.SpannableString;
 /**
  * Created by Laurence on 12/10/2016.
  */
-public interface ILaunchView {
+public interface ISingleJokeView {
 
-    void onRandomJokeLoaded(SpannableString title, String joke);
+    void onJokeLoaded(SpannableString title, String joke);
 
-    void onProblem(String string);
-
+    void onError(String message);
 
 }

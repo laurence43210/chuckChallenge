@@ -17,7 +17,7 @@ public abstract class InfiniteListListener extends
 
     private static final int visibleThreshold = 5; // The minimum amount of items to have below your current scroll position before loading more.
 
-    int firstVisibleItem, visibleItemCount, totalItemCount;
+    private int firstVisibleItem, visibleItemCount, totalItemCount;
 
     public InfiniteListListener() {
     }
