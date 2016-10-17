@@ -18,7 +18,7 @@ public class UIHelper {
      * @return styled text
      */
 
-    public static String convertStringFromHtml(String string) {
+    public String convertStringFromHtml(String string) {
         if (!isStringEmptyOrNull(string)) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 return String.valueOf(Html.fromHtml(string,
@@ -38,7 +38,7 @@ public class UIHelper {
      * @return if string is empty or null
      */
 
-    public static boolean isStringEmptyOrNull(String string) {
+    public boolean isStringEmptyOrNull(String string) {
         return string == null || string.length() == 0;
     }
 

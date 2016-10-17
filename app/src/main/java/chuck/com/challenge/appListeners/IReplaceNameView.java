@@ -1,7 +1,5 @@
 package chuck.com.challenge.appListeners;
 
-import android.text.SpannableString;
-
 /**
  * Created by Laurence on 13/10/2016.
  */

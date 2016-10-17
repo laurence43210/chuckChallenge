@@ -3,7 +3,10 @@ package chuck.com.challenge.adapters;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
@@ -16,12 +19,11 @@ import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import chuck.com.challenge.ChuckChallengeApplication;
 import chuck.com.challenge.Constants;
 import chuck.com.challenge.R;
-import chuck.com.challenge.helpers.ResourceHelper;
 import chuck.com.challenge.helpers.UIHelper;
 import chuck.com.challenge.responsePojo.JokeEntry;
-
 /**
  * Created by Laurence on 17/09/2016.
  */
@@ -32,14 +34,19 @@ public class JokeListAdapter extends
 
     private LayoutInflater mInflater;
 
+    @Inject
+    Resources resources;
+
+    @Inject UIHelper uiHelper;
+
     public JokeListAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
+        ChuckChallengeApplication.getDiComponent().inject(this);
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup,
             int viewType) {
-
         return new MyViewHolder(mInflater.inflate(
                 R.layout.adapter_infinite_list, viewGroup, false));
 
@@ -51,11 +58,11 @@ public class JokeListAdapter extends
 
         MyViewHolder myViewHolder = (MyViewHolder) viewHolder;
         JokeEntry jokeEntry = data.get(position);
-        myViewHolder.jokeText.setText(UIHelper.convertStringFromHtml(jokeEntry
+        myViewHolder.jokeText.setText(uiHelper.convertStringFromHtml(jokeEntry
                 .getJoke()));
 
         String jokeTitle = String.format(
-                ResourceHelper.getString(R.string.generic_dialog_title),
+                resources.getString(R.string.generic_dialog_title),
                 String.valueOf(jokeEntry.getId()));
 
         SpannableString spannableString = new SpannableString(jokeTitle);

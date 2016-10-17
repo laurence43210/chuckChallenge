@@ -16,7 +16,7 @@
             android:label="@string/title_activity_base"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.launchActivity.LaunchActivity"
+            android:name=".activities.singleJokeActivity.SingleJokeActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait">
             <intent-filter>

@@ -14,6 +14,12 @@ import chuck.com.challenge.exceptions.NonSplittableNameException;
  */
 public class RegexHelper {
 
+    private UIHelper uiHelper;
+
+    public RegexHelper(UIHelper uiHelper) {
+        this.uiHelper = uiHelper;
+    }
+
     /** regex which looks for 3 groups. the first group 1 - 25 of any language character, the second group is whitespace
      * used to split the string at a later point. The final group is another 1-25 language character that allow and optional "-"
      * "'" or " ". The regex will only allow these special characters if they are wrapped in language characters.
@@ -25,8 +31,6 @@ public class RegexHelper {
      * a simple regex for finding white space in a string.
      */
 
-    private static final String WHITE_SPACE_REGEX = "([\\s]+)";
-
     /**
      *Checks if the supplied string meets the NAME_REGEX requirements
      *
@@ -34,8 +38,8 @@ public class RegexHelper {
      * @return      if supplied string fulfills requirements.
      */
 
-    public static boolean isValidName(String string) {
-        return !UIHelper.isStringEmptyOrNull(string)
+    public boolean isValidName(String string) {
+        return !uiHelper.isStringEmptyOrNull(string)
                 && Pattern.matches(NAME_REGEX, string.trim());
     }
 
@@ -53,38 +57,17 @@ public class RegexHelper {
      * @return  either a first or last name, depending on params
      */
 
-    public static String splitNameString(@NonNull String string,
+    public String splitNameString(@NonNull String string,
             boolean returnFirstName) throws NonSplittableNameException {
 
         Matcher matcher = Pattern.compile(NAME_REGEX).matcher(string);
         while (matcher.find()) {
             String name = matcher.group(returnFirstName ? 1 : 3);
-            if (!UIHelper.isStringEmptyOrNull(name)) {
-                return replaceWhiteSpaceInRequest(name);
+            if (!uiHelper.isStringEmptyOrNull(name)) {
+                return name;
             }
         }
         throw new NonSplittableNameException();
-    }
-
-    /**
-     * finds any white space in the supplied text and replaces it with html space. This is required for the server call
-     *
-     * @param string the string to check against
-     * @return     string formatted for the server.
-     */
-
-    private static String replaceWhiteSpaceInRequest(@NonNull String string) {
-        StringBuffer sb = new StringBuffer();
-        Pattern p = Pattern.compile(WHITE_SPACE_REGEX);
-        Matcher m = p.matcher(string);
-
-        while (m.find()) {
-            String repString = m.group(1);
-            if (repString != null)
-                m.appendReplacement(sb, "%20");
-        }
-        m.appendTail(sb);
-        return sb.toString();
     }
 
 }

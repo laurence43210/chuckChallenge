@@ -2,8 +2,6 @@ package chuck.com.challenge.activities.nameReplaceActivity;
 
 import android.os.Bundle;
 
-
-
 import chuck.com.challenge.R;
 import chuck.com.challenge.activities.baseActivity.BaseActivity;
 

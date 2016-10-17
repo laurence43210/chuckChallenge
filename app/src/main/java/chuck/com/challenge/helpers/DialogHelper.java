@@ -15,18 +15,23 @@ import chuck.com.challenge.R;
  */
 public class DialogHelper {
 
+    private ResourceHelper resourceHelper;
 
-    public static Dialog getErrorDialog(Context context, String errorMessage) {
+    public DialogHelper(ResourceHelper resourceHelper) {
+        this.resourceHelper = resourceHelper;
+    }
+
+    public Dialog getErrorDialog(Context context, String errorMessage) {
 
         return getDialogWithOkButton(context,
-                SpannableString.valueOf(ResourceHelper
+                SpannableString.valueOf(resourceHelper
                         .getString(R.string.generic_title_dialog_error)),
                 errorMessage);
 
     }
 
-    public static Dialog getDialogWithOkButton(Context context,
-                                               SpannableString title, String message) {
+    public Dialog getDialogWithOkButton(Context context, SpannableString title,
+            String message) {
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                 context);
@@ -34,7 +39,7 @@ public class DialogHelper {
         alertDialogBuilder.setMessage(message);
         alertDialogBuilder.setCancelable(false);
         alertDialogBuilder.setPositiveButton(
-                ResourceHelper.getString(android.R.string.ok),
+                resourceHelper.getString(android.R.string.ok),
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

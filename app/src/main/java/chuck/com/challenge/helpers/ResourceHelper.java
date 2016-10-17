@@ -1,10 +1,9 @@
 package chuck.com.challenge.helpers;
 
+import android.app.Application;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.v4.content.ContextCompat;
-
-import chuck.com.challenge.ChuckChallengeApplication;
 
 /**
  * Created by Laurence on 17/09/2016.
@@ -13,37 +12,24 @@ import chuck.com.challenge.ChuckChallengeApplication;
  */
 public class ResourceHelper {
 
-    /**
-     * Finds by id and returns string from resources
-     *
-     * @param id the R address of the string to retrieve
-     * @return associated string
-     */
-    public static String getString(int id) {
+    Application application;
 
-        return ChuckChallengeApplication.getInstance().getResources()
-                .getString(id);
+    Resources resources;
+
+    public ResourceHelper(Application application, Resources resources) {
+        this.application = application;
+        this.resources = resources;
     }
 
+    public String getString(int id) {
+        return resources.getString(id);
+    }
 
-    /**
-     * Finds by id and returns drawable from resources
-     *
-     * @param id the R address of the drawable to retrieve
-     * @return associated drawable
-     */
-
-    public static Drawable getDrawable(int id) {
-
+    public Drawable getDrawable(int id) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            return ChuckChallengeApplication
-                    .getInstance()
-                    .getResources()
-                    .getDrawable(id,
-                            ChuckChallengeApplication.getInstance().getTheme());
+            return resources.getDrawable(id, application.getTheme());
         } else {
-            return ChuckChallengeApplication.getInstance().getResources()
-                    .getDrawable(id);
+            return resources.getDrawable(id);
         }
     }
 }

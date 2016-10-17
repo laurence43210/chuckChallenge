@@ -1,5 +1,7 @@
 package chuck.com.challenge.activities.baseActivity;
 
+import javax.inject.Inject;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -26,10 +28,11 @@ import android.widget.ProgressBar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import chuck.com.challenge.ChuckChallengeApplication;
 import chuck.com.challenge.R;
 import chuck.com.challenge.activities.infiniteListActivity.InfiniteListActivity;
-import chuck.com.challenge.activities.launchActivity.LaunchActivity;
 import chuck.com.challenge.activities.nameReplaceActivity.ReplaceNameActivity;
+import chuck.com.challenge.activities.singleJokeActivity.SingleJokeActivity;
 import chuck.com.challenge.appListeners.GlobalListener;
 import chuck.com.challenge.helpers.ResourceHelper;
 import chuck.com.challenge.helpers.SharedPreferencesHelper;
@@ -54,15 +57,20 @@ public class BaseActivity extends AppCompatActivity implements GlobalListener {
     @BindView(R.id.toolbarImage)
     ImageView toolbarImage;
 
-    private ProgressBar progressBar;
+    @Inject
+    ResourceHelper resourceHelper;
 
-    private ActionBarDrawerToggle actionBarDrawerToggle;
+    @Inject
+    SharedPreferencesHelper sharedPreferencesHelper;
+
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_base);
         ButterKnife.bind(this);
+        ChuckChallengeApplication.getDiComponent().inject(this);
         setSupportActionBar(toolbar);
         setUpNavigationView();
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
@@ -85,8 +93,8 @@ public class BaseActivity extends AppCompatActivity implements GlobalListener {
                         switch (item.getItemId()) {
 
                         case R.id.home:
-                            if (!(BaseActivity.this instanceof LaunchActivity))
-                                goToActivity(LaunchActivity.class);
+                            if (!(BaseActivity.this instanceof SingleJokeActivity))
+                                goToActivity(SingleJokeActivity.class);
                             break;
 
                         case R.id.nameReplace:
@@ -105,8 +113,9 @@ public class BaseActivity extends AppCompatActivity implements GlobalListener {
                     }
                 });
 
-        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout,
-                toolbar, R.string.drawer_open, R.string.drawer_closed) {
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(
+                this, drawerLayout, toolbar, R.string.drawer_open,
+                R.string.drawer_closed) {
 
             @Override
             public void onDrawerOpened(View drawerView) {
@@ -152,9 +161,8 @@ public class BaseActivity extends AppCompatActivity implements GlobalListener {
      *
      * @param id the image R address
      */
-
     public void setToolbarImage(int id) {
-        toolbarImage.setImageDrawable(ResourceHelper.getDrawable(id));
+        toolbarImage.setImageDrawable(resourceHelper.getDrawable(id));
     }
 
     /**
@@ -236,7 +244,7 @@ public class BaseActivity extends AppCompatActivity implements GlobalListener {
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
         MenuItem checkable = menu.findItem(R.id.noExplicits);
-        checkable.setChecked(SharedPreferencesHelper.isNonExplicitsEnabled());
+        checkable.setChecked(sharedPreferencesHelper.getExplicitState());
         return true;
     }
 
@@ -246,7 +254,7 @@ public class BaseActivity extends AppCompatActivity implements GlobalListener {
         case R.id.noExplicits:
             boolean isChecked = !item.isChecked();
             item.setChecked(isChecked);
-            SharedPreferencesHelper.setNonExplicits(isChecked);
+            sharedPreferencesHelper.setExplicits(isChecked);
             return true;
         default:
             return false;

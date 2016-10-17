@@ -1,21 +1,23 @@
 package chuck.com.challenge.activities.baseActivity;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.view.View;
 
 import chuck.com.challenge.appListeners.GlobalListener;
 
 /**
  * A placeholder fragment containing a simple view.
  */
-public class BaseFragment extends Fragment {
+public abstract class BaseFragment extends Fragment {
 
     protected static final String TAG = BaseFragment.class.getSimpleName();
 
     protected GlobalListener mListener;
 
-    public BaseFragment() {
-    }
+    protected View view;
 
     @Override
     public void onAttach(Context context) {
@@ -29,4 +31,17 @@ public class BaseFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        butterKnifeBind();
+        daggerInjection();
+        initUI();
+    }
+
+    abstract protected void daggerInjection();
+
+    abstract protected void butterKnifeBind();
+
+    abstract protected void initUI();
 }

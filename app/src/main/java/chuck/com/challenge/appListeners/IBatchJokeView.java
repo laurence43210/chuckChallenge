@@ -1,7 +1,5 @@
 package chuck.com.challenge.appListeners;
 
-import android.text.SpannableString;
-
 import java.util.List;
 
 import chuck.com.challenge.responsePojo.JokeEntry;

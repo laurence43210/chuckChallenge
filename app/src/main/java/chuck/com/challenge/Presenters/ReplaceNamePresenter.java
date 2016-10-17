@@ -2,6 +2,8 @@ package chuck.com.challenge.Presenters;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import android.graphics.Typeface;
 import android.text.Editable;
 import android.text.SpannableString;
@@ -9,6 +11,7 @@ import android.text.Spanned;
 import android.text.TextWatcher;
 import android.text.style.StyleSpan;
 
+import chuck.com.challenge.ChuckChallengeApplication;
 import chuck.com.challenge.R;
 import chuck.com.challenge.Models.AsyncJokeRetriever;
 import chuck.com.challenge.appListeners.IReplaceNamePresenter;
@@ -26,11 +29,19 @@ import chuck.com.challenge.responsePojo.JokeEntry;
 public class ReplaceNamePresenter implements TextWatcher,
         IReplaceNamePresenter, OnJokeRetrievedListener {
 
+    @Inject
+    ResourceHelper resourceHelper;
+
+    @Inject UIHelper uiHelper;
+
+    @Inject RegexHelper regexHelper;
+
     private IReplaceNameView view;
 
     private AsyncJokeRetriever model;
 
     public ReplaceNamePresenter(IReplaceNameView view) {
+        ChuckChallengeApplication.getDiComponent().inject(this);
         this.view = view;
         this.model = new AsyncJokeRetriever();
     }
@@ -44,8 +55,8 @@ public class ReplaceNamePresenter implements TextWatcher,
             throws NonSplittableNameException {
 
         model.RetrieveNameReplaceJoke(this,
-                RegexHelper.splitNameString(fullName, true),
-                RegexHelper.splitNameString(fullName, false));
+                regexHelper.splitNameString(fullName, true),
+                regexHelper.splitNameString(fullName, false));
     }
 
     @Override
@@ -56,8 +67,8 @@ public class ReplaceNamePresenter implements TextWatcher,
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        setSubmitButtonStatus(RegexHelper.isValidName(s.toString()));
-        setEditTextErrorStatus(RegexHelper.isValidName(s.toString()));
+        setSubmitButtonStatus(regexHelper.isValidName(s.toString()));
+        setEditTextErrorStatus(regexHelper.isValidName(s.toString()));
     }
 
     @Override
@@ -82,7 +93,7 @@ public class ReplaceNamePresenter implements TextWatcher,
     @Override
     public void onSuccessSingle(JokeEntry joke) {
         String jokeTitle = String.format(
-                ResourceHelper.getString(R.string.generic_dialog_title),
+                resourceHelper.getString(R.string.generic_dialog_title),
                 String.valueOf(joke.getId()));
 
         SpannableString titleSpan = new SpannableString(jokeTitle);
@@ -91,7 +102,7 @@ public class ReplaceNamePresenter implements TextWatcher,
                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         view.onJokeLoaded(titleSpan,
-                UIHelper.convertStringFromHtml(joke.getJoke()));
+                uiHelper.convertStringFromHtml(joke.getJoke()));
     }
 
     @Override

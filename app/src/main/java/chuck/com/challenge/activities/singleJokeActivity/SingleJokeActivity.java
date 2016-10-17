@@ -1,4 +1,4 @@
-package chuck.com.challenge.activities.launchActivity;
+package chuck.com.challenge.activities.singleJokeActivity;
 
 import android.os.Bundle;
 
@@ -9,7 +9,7 @@ import chuck.com.challenge.R;
 import chuck.com.challenge.activities.baseActivity.BaseActivity;
 
 
-public class LaunchActivity extends BaseActivity {
+public class SingleJokeActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

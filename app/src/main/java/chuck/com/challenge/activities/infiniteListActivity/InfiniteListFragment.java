@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +16,7 @@ import android.view.ViewGroup;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import chuck.com.challenge.ChuckChallengeApplication;
 import chuck.com.challenge.R;
 import chuck.com.challenge.Presenters.BatchJokePresenter;
 import chuck.com.challenge.activities.baseActivity.BaseFragment;
@@ -33,27 +36,27 @@ public class InfiniteListFragment extends BaseFragment implements
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
 
+    @Inject
+    DialogHelper dialogHelper;
+
     JokeListAdapter jokeListAdapter;
 
     BatchJokePresenter batchJokePresenter;
 
     private List<JokeEntry> jokes = new ArrayList<>();
 
-    public InfiniteListFragment() {
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_infinite_list,
+        view = inflater.inflate(R.layout.fragment_infinite_list,
                 container, false);
-        ButterKnife.bind(this, view);
         batchJokePresenter = new BatchJokePresenter(this);
-        initUI();
         return view;
     }
 
-    private void initUI() {
+
+
+    protected void initUI() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(
                 getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -114,6 +117,16 @@ public class InfiniteListFragment extends BaseFragment implements
 
     @Override
     public void onError(String message) {
-        DialogHelper.getErrorDialog(getActivity(), message).show();
+        dialogHelper.getErrorDialog(getActivity(), message).show();
+    }
+
+    @Override
+    protected void daggerInjection() {
+        ChuckChallengeApplication.getDiComponent().inject(this);
+    }
+
+    @Override
+    protected void butterKnifeBind() {
+        ButterKnife.bind(this, view);
     }
 }

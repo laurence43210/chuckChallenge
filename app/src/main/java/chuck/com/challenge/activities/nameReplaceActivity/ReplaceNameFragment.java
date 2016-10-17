@@ -1,5 +1,7 @@
 package chuck.com.challenge.activities.nameReplaceActivity;
 
+import javax.inject.Inject;
+
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,6 +16,7 @@ import android.widget.Button;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import chuck.com.challenge.ChuckChallengeApplication;
 import chuck.com.challenge.R;
 import chuck.com.challenge.Presenters.ReplaceNamePresenter;
 import chuck.com.challenge.activities.baseActivity.BaseFragment;
@@ -30,8 +33,6 @@ import chuck.com.challenge.helpers.ResourceHelper;
 public class ReplaceNameFragment extends BaseFragment implements
         IReplaceNameView {
 
-    View view;
-
     @BindView(R.id.submitButton)
     Button submitButton;
 
@@ -41,9 +42,25 @@ public class ReplaceNameFragment extends BaseFragment implements
     @BindView(R.id.input_name)
     TextInputEditText textInput;
 
+    @Inject
+    DialogHelper dialogHelper;
+
+    @Inject
+    ResourceHelper resourceHelper;
+
+    @Inject
+    RegexHelper regexHelper;
+
     private ReplaceNamePresenter nameReplaceSingleJokePresenter;
 
-    public ReplaceNameFragment() {
+    @Override
+    protected void daggerInjection() {
+        ChuckChallengeApplication.getDiComponent().inject(this);
+    }
+
+    @Override
+    protected void butterKnifeBind() {
+        ButterKnife.bind(this, view);
     }
 
     @Override
@@ -51,13 +68,11 @@ public class ReplaceNameFragment extends BaseFragment implements
             Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_name_replace, container,
                 false);
-        ButterKnife.bind(this, view);
         nameReplaceSingleJokePresenter = new ReplaceNamePresenter(this);
-        init();
         return view;
     }
 
-    private void init() {
+    protected void initUI() {
         textInputLayout.setErrorEnabled(true);
         textInput.setSaveEnabled(true);
         nameReplaceSingleJokePresenter.onSetButtonDrawableToFaded();
@@ -74,21 +89,21 @@ public class ReplaceNameFragment extends BaseFragment implements
     @Override
     public void onJokeLoaded(SpannableString title, String joke) {
         mListener.hideProgressSpinner();
-        DialogHelper.getDialogWithOkButton(getActivity(), title, joke).show();
+        dialogHelper.getDialogWithOkButton(getActivity(), title, joke).show();
     }
 
     @Override
     public void onError(String message) {
         mListener.hideProgressSpinner();
-        DialogHelper.getErrorDialog(getActivity(), message).show();
+        dialogHelper.getErrorDialog(getActivity(), message).show();
     }
 
     @Override
     public void onSubmitButtonBackgroundChange(int drawableId) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            submitButton.setBackground(ResourceHelper.getDrawable(drawableId));
+            submitButton.setBackground(resourceHelper.getDrawable(drawableId));
         } else {
-            submitButton.setBackgroundDrawable(ResourceHelper
+            submitButton.setBackgroundDrawable(resourceHelper
                     .getDrawable(drawableId));
         }
     }
@@ -101,7 +116,7 @@ public class ReplaceNameFragment extends BaseFragment implements
     }
 
     private void checkTextAndSubmit() {
-        if (RegexHelper.isValidName(textInput.getText().toString())) {
+        if (regexHelper.isValidName(textInput.getText().toString())) {
             hideKeyboard();
             try {
                 nameReplaceSingleJokePresenter.fetchNameReplaceJoke(textInput
