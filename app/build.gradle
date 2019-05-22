@@ -1,11 +1,14 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 28
 
     defaultConfig {
         applicationId "chuck.com.challenge"
-        minSdkVersion 14
+        minSdkVersion 24
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -16,19 +19,33 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
+}
+
+ext {
+    BUTTERKNIFE_VERSION = '10.1.0'
+    DAGGER_VERSION = '2.22.1'
+    RETROFIT_VERSION = '2.5.0'
+
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
-    compile 'androidx.appcompat:appcompat:1.0.2'
-    compile 'com.google.android.material:material:1.0.0'
-    compile 'com.jakewharton:butterknife:8.3.0'
-    annotationProcessor'com.jakewharton:butterknife-compiler:8.3.0'
-    compile 'androidx.cardview:cardview:1.0.0'
-    compile 'com.squareup.retrofit2:retrofit:2.1.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
-    compile 'com.squareup.okhttp3:logging-interceptor:3.3.1'
-    compile 'com.google.dagger:dagger:2.7'
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.7'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation "com.jakewharton:butterknife:$BUTTERKNIFE_VERSION"
+    kapt "com.jakewharton:butterknife-compiler:$BUTTERKNIFE_VERSION"
+    implementation "com.squareup.retrofit2:retrofit:$RETROFIT_VERSION"
+    implementation "com.squareup.retrofit2:converter-gson:$RETROFIT_VERSION"
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.12.0'
+    implementation "com.google.dagger:dagger:$DAGGER_VERSION"
+    kapt "com.google.dagger:dagger-compiler:$DAGGER_VERSION"
+
+    testImplementation 'junit:junit:4.12'
+
 }
