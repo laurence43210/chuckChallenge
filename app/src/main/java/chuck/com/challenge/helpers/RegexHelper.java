@@ -3,7 +3,7 @@ package chuck.com.challenge.helpers;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import chuck.com.challenge.exceptions.NonSplittableNameException;
 

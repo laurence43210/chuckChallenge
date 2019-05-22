@@ -2,6 +2,8 @@ package chuck.com.challenge.activities.singleJokeActivity;
 
 import android.os.Bundle;
 
+import androidx.fragment.app.Fragment;
+
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Optional;
@@ -25,7 +27,7 @@ public class SingleJokeActivity extends BaseActivity {
     @OnClick(R.id.showRandomJoke)
     @Optional
     void onShowNextRandomJoke() {
-        for (android.support.v4.app.Fragment fragment : getSupportFragmentManager()
+        for (Fragment fragment : getSupportFragmentManager()
                 .getFragments()) {
             if (fragment instanceof SingleJokeFragment) {
                 ((SingleJokeFragment) fragment).loadJoke();
