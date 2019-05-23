@@ -20,6 +20,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import chuck.com.challenge.R;
+import chuck.com.challenge.data.models.Joke;
 import chuck.com.challenge.helpers.UIHelper;
 import chuck.com.challenge.responsePojo.JokeEntry;
 
@@ -32,7 +33,7 @@ import static chuck.com.challenge.NetConstants.NERDY;
 public class JokeListAdapter extends
         RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<JokeEntry> data = new ArrayList<>();
+    private List<Joke> data = new ArrayList<>();
 
     private LayoutInflater mInflater;
 
@@ -58,9 +59,9 @@ public class JokeListAdapter extends
             int position) {
 
         MyViewHolder myViewHolder = (MyViewHolder) viewHolder;
-        JokeEntry jokeEntry = data.get(position);
+        Joke jokeEntry = data.get(position);
         myViewHolder.jokeText.setText(uiHelper.convertStringFromHtml(jokeEntry
-                .getJoke()));
+                .getValue()));
 
         String jokeTitle = String.format(
                 resources.getString(R.string.generic_dialog_title),
@@ -107,7 +108,7 @@ public class JokeListAdapter extends
         return position;
     }
 
-    public void setItems(List<JokeEntry> items) {
+    public void setItems(List<Joke> items) {
         data = items;
     }
 

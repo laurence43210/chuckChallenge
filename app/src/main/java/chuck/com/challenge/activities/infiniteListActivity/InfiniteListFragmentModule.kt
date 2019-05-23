@@ -1,10 +1,10 @@
 package chuck.com.challenge.activities.infiniteListActivity
 
 import android.content.res.Resources
-import chuck.com.challenge.Models.AsyncJokeRetriever
-import chuck.com.challenge.Presenters.BatchJokePresenter
 import chuck.com.challenge.adapters.JokeListAdapter
+import chuck.com.challenge.data.repositories.JokesRepository
 import chuck.com.challenge.helpers.UIHelper
+import chuck.com.challenge.presenters.BatchJokePresenter
 import dagger.Module
 import dagger.Provides
 
@@ -12,7 +12,7 @@ import dagger.Provides
 class InfiniteListFragmentModule {
 
     @Provides
-    fun providePresenter(fragment: InfiniteListFragment, asyncJokeRetriever: AsyncJokeRetriever) = BatchJokePresenter(fragment, asyncJokeRetriever)
+    fun providePresenter(repository: JokesRepository) = BatchJokePresenter(repository)
 
     @Provides
     fun provideAdapter(fragment: InfiniteListFragment, resources: Resources, uiHelper: UIHelper) = JokeListAdapter(fragment.requireContext(), resources, uiHelper)

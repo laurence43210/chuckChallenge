@@ -13,15 +13,18 @@ import android.widget.TextSwitcher;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import chuck.com.challenge.R;
-import chuck.com.challenge.Presenters.SingleJokePresenter;
+import chuck.com.challenge.contracts.singleJoke.SingleJokeFragmentContract;
+import chuck.com.challenge.presenters.SingleJokePresenter;
 import chuck.com.challenge.activities.baseActivity.BaseFragment;
-import chuck.com.challenge.appListeners.ISingleJokeView;
 import chuck.com.challenge.helpers.DialogHelper;
 
-public class SingleJokeFragment extends BaseFragment implements ISingleJokeView {
+public class SingleJokeFragment extends BaseFragment implements SingleJokeFragmentContract.View {
 
     @BindView(R.id.titleSwitcher)
     TextSwitcher titleSwitcher;
@@ -33,7 +36,7 @@ public class SingleJokeFragment extends BaseFragment implements ISingleJokeView 
     DialogHelper dialogHelper;
 
     @Inject
-    SingleJokePresenter randomSingleJokePresenter;
+    SingleJokePresenter presenter;
 
     private ViewSwitcher.ViewFactory titleFactory = new ViewSwitcher.ViewFactory() {
         @Override
@@ -66,16 +69,26 @@ public class SingleJokeFragment extends BaseFragment implements ISingleJokeView 
     };
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
-        view = inflater
-                .inflate(R.layout.fragment_launch, container, false);
-        return view;
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        initUI();
     }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_launch, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        presenter.attachView(this);
+        presenter.fetchSingleRandomJoke();
+    }
 
     public void loadJoke() {
-        randomSingleJokePresenter.fetchSingleRandomJoke();
+        presenter.fetchSingleRandomJoke();
     }
 
     @Override
@@ -90,11 +103,6 @@ public class SingleJokeFragment extends BaseFragment implements ISingleJokeView 
     }
 
     @Override
-    protected void butterKnifeBind() {
-        ButterKnife.bind(this, view);
-    }
-
-    @Override
     protected void initUI() {
         titleSwitcher.setFactory(titleFactory);
         titleSwitcher.setAnimateFirstView(false);
@@ -105,7 +113,12 @@ public class SingleJokeFragment extends BaseFragment implements ISingleJokeView 
         jokeSwitcher.setAnimateFirstView(false);
         jokeSwitcher.setOutAnimation(getContext(), R.anim.slide_right_to_left);
         jokeSwitcher.setInAnimation(getContext(), R.anim.slide_left_to_right);
+    }
 
-        loadJoke();
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        presenter.destroyAllDisposables();
+        presenter.detachView();
     }
 }

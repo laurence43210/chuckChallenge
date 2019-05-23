@@ -7,6 +7,8 @@ import java.util.List;
 import javax.inject.Inject;
 
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,15 +16,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.jetbrains.annotations.NotNull;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import chuck.com.challenge.ChuckChallengeApplication;
 import chuck.com.challenge.R;
-import chuck.com.challenge.Presenters.BatchJokePresenter;
+import chuck.com.challenge.contracts.infiniteList.InfiniteListFragmentContract;
+import chuck.com.challenge.data.models.Joke;
+import chuck.com.challenge.presenters.BatchJokePresenter;
 import chuck.com.challenge.activities.baseActivity.BaseFragment;
 import chuck.com.challenge.adapters.JokeListAdapter;
 import chuck.com.challenge.appEnums.ContentValuesEnum;
-import chuck.com.challenge.appListeners.IBatchJokeView;
 import chuck.com.challenge.appListeners.InfiniteListListener;
 import chuck.com.challenge.helpers.DialogHelper;
 import chuck.com.challenge.helpers.UIHelper;
@@ -31,8 +35,7 @@ import chuck.com.challenge.responsePojo.JokeEntry;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class InfiniteListFragment extends BaseFragment implements
-        IBatchJokeView {
+public class InfiniteListFragment extends BaseFragment implements InfiniteListFragmentContract.View {
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
@@ -47,19 +50,22 @@ public class InfiniteListFragment extends BaseFragment implements
     JokeListAdapter jokeListAdapter;
 
     @Inject
-    BatchJokePresenter batchJokePresenter;
+    BatchJokePresenter presenter;
 
-    private List<JokeEntry> jokes = new ArrayList<>();
+    private List<Joke> jokes = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_infinite_list,
-                container, false);
-        return view;
+        return inflater.inflate(R.layout.fragment_infinite_list, container, false);
     }
 
-
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        presenter.attachView(this);
+        presenter.fetchBatchOfRandomJokes();
+    }
 
     protected void initUI() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(
@@ -68,14 +74,20 @@ public class InfiniteListFragment extends BaseFragment implements
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(jokeListAdapter);
 
-        batchJokePresenter.fetchBatchOfRandomJokes();
 
         recyclerView.addOnScrollListener(new InfiniteListListener() {
             @Override
             public void onLoadMore() {
-                batchJokePresenter.fetchBatchOfRandomJokes();
+                presenter.fetchBatchOfRandomJokes();
             }
         });
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        presenter.destroyAllDisposables();
+        presenter.detachView();
     }
 
     @Override
@@ -89,7 +101,7 @@ public class InfiniteListFragment extends BaseFragment implements
                         .containsKey(ContentValuesEnum.RECYCLER_VIEW_DATA
                                 .getKey())) {
 
-            jokes = (List<JokeEntry>) savedInstanceState
+            jokes = (List<Joke>) savedInstanceState
                     .getSerializable(ContentValuesEnum.RECYCLER_VIEW_DATA
                             .getKey());
 
@@ -112,7 +124,7 @@ public class InfiniteListFragment extends BaseFragment implements
     }
 
     @Override
-    public void onJokesLoaded(List<JokeEntry> jokeEntries) {
+    public void onJokesLoaded(List<Joke> jokeEntries) {
         jokes.addAll(jokeEntries);
         jokeListAdapter.setItems(jokes);
         jokeListAdapter.notifyDataSetChanged();
@@ -121,10 +133,5 @@ public class InfiniteListFragment extends BaseFragment implements
     @Override
     public void onError(String message) {
         dialogHelper.getErrorDialog(getActivity(), message).show();
-    }
-
-    @Override
-    protected void butterKnifeBind() {
-        ButterKnife.bind(this, view);
     }
 }

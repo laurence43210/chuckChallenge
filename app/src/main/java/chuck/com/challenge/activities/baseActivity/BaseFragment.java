@@ -2,9 +2,12 @@ package chuck.com.challenge.activities.baseActivity;
 
 import android.content.Context;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import android.view.View;
 
+import butterknife.ButterKnife;
 import chuck.com.challenge.appListeners.GlobalListener;
 import dagger.android.support.DaggerFragment;
 
@@ -16,8 +19,6 @@ public abstract class BaseFragment extends DaggerFragment {
     protected static final String TAG = BaseFragment.class.getSimpleName();
 
     protected GlobalListener mListener;
-
-    protected View view;
 
     @Override
     public void onAttach(Context context) {
@@ -32,13 +33,11 @@ public abstract class BaseFragment extends DaggerFragment {
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        butterKnifeBind();
-        initUI();
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        ButterKnife.bind(this, view);
     }
 
-    abstract protected void butterKnifeBind();
 
     abstract protected void initUI();
 }
