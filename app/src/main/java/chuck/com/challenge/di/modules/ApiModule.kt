@@ -1,6 +1,6 @@
 package chuck.com.challenge.di.modules
 
-import chuck.com.challenge.appListeners.ChuckNorrisAPI
+import chuck.com.challenge.data.remote.network.ChuckNorrisAPI
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable

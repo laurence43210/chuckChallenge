@@ -27,8 +27,7 @@ public class SharedPreferencesHelper {
     }
 
     public boolean getExplicitState() {
-        return containsKey(EXPLICITS_KEY)
-                && getBooleanItem(EXPLICITS_KEY, false);
+        return getBooleanItem(EXPLICITS_KEY, false);
     }
 
     private void setBooleanItem(String key, boolean value) {
