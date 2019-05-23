@@ -11,5 +11,5 @@ import dagger.Provides
 class ReplaceNameFragmentModule {
 
     @Provides
-    fun providePresenter(jokesRepository: JokesRepository, resourceHelper: ResourceHelper, uiHelper: UIHelper, regexHelper: RegexHelper) = ReplaceNamePresenter(jokesRepository, uiHelper, resourceHelper)
+    fun providePresenter(jokesRepository: JokesRepository, resourceHelper: ResourceHelper, uiHelper: UIHelper) = ReplaceNamePresenter(jokesRepository, uiHelper, resourceHelper)
 }

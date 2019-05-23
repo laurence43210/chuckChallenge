@@ -23,7 +23,6 @@ import chuck.com.challenge.presenters.ReplaceNamePresenter;
 import chuck.com.challenge.ui.base.BaseFragment;
 import chuck.com.challenge.appListeners.OnOneOffClickListener;
 import chuck.com.challenge.helpers.DialogHelper;
-import chuck.com.challenge.helpers.RegexHelper;
 import chuck.com.challenge.helpers.ResourceHelper;
 
 /**
@@ -46,9 +45,6 @@ public class ReplaceNameFragment extends BaseFragment implements
 
     @Inject
     ResourceHelper resourceHelper;
-
-    @Inject
-    RegexHelper regexHelper;
 
     @Inject
     ReplaceNamePresenter nameReplaceSingleJokePresenter;
@@ -103,16 +99,10 @@ public class ReplaceNameFragment extends BaseFragment implements
     }
 
     private void checkTextAndSubmit() {
-        if (regexHelper.isValidName(textInput.getText().toString())) {
             hideKeyboard();
             nameReplaceSingleJokePresenter.fetchNameReplaceJoke(textInput
                     .getText().toString());
             mListener.showProgressSpinner();
-
-        } else {
-            textInputLayout
-                    .setError(getString(R.string.name_replace_error_message_name));
-        }
     }
 
     private void hideKeyboard() {
@@ -124,6 +114,6 @@ public class ReplaceNameFragment extends BaseFragment implements
 
     @Override
     public void showInvalidNameError() {
-        textInputLayout.setError(getString(R.string.name_replace_error_message_unsplittable_name));
+        textInputLayout.setError(getString(R.string.name_replace_error_message_name));
     }
 }

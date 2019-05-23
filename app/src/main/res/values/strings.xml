@@ -25,7 +25,6 @@
     <string name="name_replace_intro">Enter your first and last name to appear in your very own joke!</string>
     <string name="name_replace_hint_name">Full Name</string>
     <string name="name_replace_error_message_name">Please enter your first and second name.</string>
-    <string name="name_replace_error_message_unsplittable_name">Enter enter your our first and second name, separated with a space. </string>
     <string name="name_replace_button">Submit</string>
 
     <!--Navigation drawer-->
