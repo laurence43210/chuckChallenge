@@ -1,7 +1,6 @@
 package chuck.com.challenge.di.modules
 
 import chuck.com.challenge.data.remote.JokesRemoteDataSource
-import chuck.com.challenge.data.repositories.AsyncJokeRetriever
 import chuck.com.challenge.data.remote.network.ChuckNorrisAPI
 import chuck.com.challenge.data.repositories.JokesRepository
 import chuck.com.challenge.helpers.SharedPreferencesHelper
@@ -12,9 +11,6 @@ import javax.inject.Named
 
 @Module
 class RepositoryModule {
-
-    @Provides
-    fun provideAsyncJokeRetriever(chuckNorrisAPI: ChuckNorrisAPI, sharedPreferencesHelper: SharedPreferencesHelper) = AsyncJokeRetriever(chuckNorrisAPI, sharedPreferencesHelper)
 
     @Provides
     fun provideJokeRepository(remoteDataSource: JokesRemoteDataSource, sharedPreferencesHelper: SharedPreferencesHelper) = JokesRepository(remoteDataSource, sharedPreferencesHelper)
