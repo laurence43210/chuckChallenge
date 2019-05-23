@@ -1,4 +1,4 @@
-package chuck.com.challenge.activities.singleJokeActivity
+package chuck.com.challenge.ui.singleJoke
 
 import chuck.com.challenge.data.repositories.JokesRepository
 import chuck.com.challenge.presenters.SingleJokePresenter

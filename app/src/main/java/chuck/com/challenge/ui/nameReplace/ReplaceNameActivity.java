@@ -1,9 +1,9 @@
-package chuck.com.challenge.activities.nameReplaceActivity;
+package chuck.com.challenge.ui.nameReplace;
 
 import android.os.Bundle;
 
 import chuck.com.challenge.R;
-import chuck.com.challenge.activities.baseActivity.BaseActivity;
+import chuck.com.challenge.ui.base.BaseActivity;
 
 
 public class ReplaceNameActivity extends BaseActivity {

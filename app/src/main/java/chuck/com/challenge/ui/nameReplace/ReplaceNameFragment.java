@@ -1,4 +1,4 @@
-package chuck.com.challenge.activities.nameReplaceActivity;
+package chuck.com.challenge.ui.nameReplace;
 
 import javax.inject.Inject;
 
@@ -17,11 +17,10 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import chuck.com.challenge.R;
 import chuck.com.challenge.contracts.replaceName.ReplaceNameFragmentContract;
 import chuck.com.challenge.presenters.ReplaceNamePresenter;
-import chuck.com.challenge.activities.baseActivity.BaseFragment;
+import chuck.com.challenge.ui.base.BaseFragment;
 import chuck.com.challenge.appListeners.OnOneOffClickListener;
 import chuck.com.challenge.helpers.DialogHelper;
 import chuck.com.challenge.helpers.RegexHelper;

@@ -22,7 +22,6 @@ import butterknife.ButterKnife;
 import chuck.com.challenge.R;
 import chuck.com.challenge.data.models.Joke;
 import chuck.com.challenge.helpers.UIHelper;
-import chuck.com.challenge.responsePojo.JokeEntry;
 
 import static chuck.com.challenge.NetConstants.EXPLICIT;
 import static chuck.com.challenge.NetConstants.NERDY;

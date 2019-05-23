@@ -1,7 +1,7 @@
 package chuck.com.challenge.di.fragments
 
-import chuck.com.challenge.activities.infiniteListActivity.InfiniteListFragment
-import chuck.com.challenge.activities.infiniteListActivity.InfiniteListFragmentModule
+import chuck.com.challenge.ui.infiniteList.InfiniteListFragment
+import chuck.com.challenge.ui.infiniteList.InfiniteListFragmentModule
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector

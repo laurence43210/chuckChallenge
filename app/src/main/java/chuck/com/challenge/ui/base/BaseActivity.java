@@ -1,4 +1,4 @@
-package chuck.com.challenge.activities.baseActivity;
+package chuck.com.challenge.ui.base;
 
 import javax.inject.Inject;
 
@@ -12,7 +12,6 @@ import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.navigation.NavigationView;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
@@ -28,11 +27,10 @@ import android.widget.ProgressBar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import chuck.com.challenge.ChuckChallengeApplication;
 import chuck.com.challenge.R;
-import chuck.com.challenge.activities.infiniteListActivity.InfiniteListActivity;
-import chuck.com.challenge.activities.nameReplaceActivity.ReplaceNameActivity;
-import chuck.com.challenge.activities.singleJokeActivity.SingleJokeActivity;
+import chuck.com.challenge.ui.infiniteList.InfiniteListActivity;
+import chuck.com.challenge.ui.nameReplace.ReplaceNameActivity;
+import chuck.com.challenge.ui.singleJoke.SingleJokeActivity;
 import chuck.com.challenge.appListeners.GlobalListener;
 import chuck.com.challenge.helpers.ResourceHelper;
 import chuck.com.challenge.helpers.SharedPreferencesHelper;

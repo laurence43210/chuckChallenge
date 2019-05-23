@@ -1,4 +1,4 @@
-package chuck.com.challenge.activities.singleJokeActivity;
+package chuck.com.challenge.ui.singleJoke;
 
 import javax.inject.Inject;
 
@@ -17,11 +17,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import chuck.com.challenge.R;
 import chuck.com.challenge.contracts.singleJoke.SingleJokeFragmentContract;
 import chuck.com.challenge.presenters.SingleJokePresenter;
-import chuck.com.challenge.activities.baseActivity.BaseFragment;
+import chuck.com.challenge.ui.base.BaseFragment;
 import chuck.com.challenge.helpers.DialogHelper;
 
 public class SingleJokeFragment extends BaseFragment implements SingleJokeFragmentContract.View {

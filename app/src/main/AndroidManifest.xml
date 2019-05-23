@@ -12,11 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activities.baseActivity.BaseActivity"
+            android:name=".ui.base.BaseActivity"
             android:label="@string/title_activity_base"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.singleJokeActivity.SingleJokeActivity"
+            android:name="chuck.com.challenge.ui.singleJoke.SingleJokeActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -26,12 +26,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.nameReplaceActivity.ReplaceNameActivity"
+            android:name="chuck.com.challenge.ui.nameReplace.ReplaceNameActivity"
             android:label="@string/title_activity_name_replace"
             android:windowSoftInputMode="adjustResize"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.infiniteListActivity.InfiniteListActivity"
+            android:name="chuck.com.challenge.ui.infiniteList.InfiniteListActivity"
             android:label="@string/title_activity_infinite_list"
             android:theme="@style/AppTheme.NoActionBar"/>
     </application>

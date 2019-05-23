@@ -1,4 +1,4 @@
-package chuck.com.challenge.activities.infiniteListActivity
+package chuck.com.challenge.ui.infiniteList
 
 import android.content.res.Resources
 import chuck.com.challenge.adapters.JokeListAdapter

@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="@dimen/grid_spacing_double"
-    tools:context=".activities.nameReplaceActivity.ReplaceNameFragment"
+    tools:context=".ui.nameReplace.ReplaceNameFragment"
     tools:showIn="@layout/activity_name_replace"
     android:background="@color/colorPrimaryLight"
     android:orientation="vertical"

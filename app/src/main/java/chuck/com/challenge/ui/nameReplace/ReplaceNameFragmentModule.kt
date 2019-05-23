@@ -1,4 +1,4 @@
-package chuck.com.challenge.activities.nameReplaceActivity
+package chuck.com.challenge.ui.nameReplace
 
 import chuck.com.challenge.data.repositories.JokesRepository
 import chuck.com.challenge.presenters.ReplaceNamePresenter

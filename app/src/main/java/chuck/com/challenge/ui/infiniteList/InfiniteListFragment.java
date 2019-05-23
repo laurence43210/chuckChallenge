@@ -1,4 +1,4 @@
-package chuck.com.challenge.activities.infiniteListActivity;
+package chuck.com.challenge.ui.infiniteList;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -16,21 +16,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.jetbrains.annotations.NotNull;
-
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import chuck.com.challenge.R;
 import chuck.com.challenge.contracts.infiniteList.InfiniteListFragmentContract;
 import chuck.com.challenge.data.models.Joke;
 import chuck.com.challenge.presenters.BatchJokePresenter;
-import chuck.com.challenge.activities.baseActivity.BaseFragment;
+import chuck.com.challenge.ui.base.BaseFragment;
 import chuck.com.challenge.adapters.JokeListAdapter;
 import chuck.com.challenge.appEnums.ContentValuesEnum;
 import chuck.com.challenge.appListeners.InfiniteListListener;
 import chuck.com.challenge.helpers.DialogHelper;
 import chuck.com.challenge.helpers.UIHelper;
-import chuck.com.challenge.responsePojo.JokeEntry;
 
 /**
  * A placeholder fragment containing a simple view.

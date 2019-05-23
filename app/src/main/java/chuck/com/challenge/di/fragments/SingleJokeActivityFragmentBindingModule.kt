@@ -1,7 +1,7 @@
 package chuck.com.challenge.di.fragments
 
-import chuck.com.challenge.activities.singleJokeActivity.SingleJokeFragment
-import chuck.com.challenge.activities.singleJokeActivity.SingleJokeFragmentModule
+import chuck.com.challenge.ui.singleJoke.SingleJokeFragment
+import chuck.com.challenge.ui.singleJoke.SingleJokeFragmentModule
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 

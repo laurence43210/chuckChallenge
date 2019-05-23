@@ -1,4 +1,4 @@
-package chuck.com.challenge.activities.baseActivity;
+package chuck.com.challenge.ui.base;
 
 import android.content.Context;
 import android.os.Bundle;
