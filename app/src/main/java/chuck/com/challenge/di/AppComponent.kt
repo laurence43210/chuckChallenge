@@ -1,6 +1,5 @@
 package chuck.com.challenge.di
 
-
 import chuck.com.challenge.ChuckChallengeApplication
 import javax.inject.Singleton
 

@@ -21,7 +21,6 @@ class NetModule {
         }
     }
 
-
     @Provides
     fun provideOkHttpClient(loggingInterceptor: HttpLoggingInterceptor) =
             OkHttpClient.Builder().addNetworkInterceptor(loggingInterceptor).build()
@@ -31,6 +30,5 @@ class NetModule {
             .baseUrl(JOKE_API_BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
-            .build();
-
+            .build()
 }

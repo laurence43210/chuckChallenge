@@ -1,6 +1,5 @@
 package chuck.com.challenge.di.fragments
 
-import chuck.com.challenge.activities.singleJokeActivity.SingleJokeActivity
 import chuck.com.challenge.activities.singleJokeActivity.SingleJokeFragment
 import chuck.com.challenge.activities.singleJokeActivity.SingleJokeFragmentModule
 import dagger.Module

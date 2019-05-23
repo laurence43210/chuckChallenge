@@ -10,6 +10,5 @@ class ChuckChallengeApplication : DaggerApplication() {
     override fun applicationInjector(): AndroidInjector<out DaggerApplication>? =
             DaggerAppComponent.builder()
                     .appModule(AppModule(this))
-                   .build()
-
+                    .build()
 }
