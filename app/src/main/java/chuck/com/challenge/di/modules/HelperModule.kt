@@ -4,7 +4,6 @@ import android.app.Application
 import android.content.SharedPreferences
 import android.content.res.Resources
 import chuck.com.challenge.helpers.DialogHelper
-import chuck.com.challenge.helpers.RegexHelper
 import chuck.com.challenge.helpers.ResourceHelper
 import chuck.com.challenge.helpers.SharedPreferencesHelper
 import chuck.com.challenge.helpers.UIHelper
@@ -24,5 +23,5 @@ class HelperModule {
     fun getDialogHelper(resourceHelper: ResourceHelper) = DialogHelper(resourceHelper)
 
     @Provides
-    fun getUIHelper()= UIHelper()
+    fun getUIHelper() = UIHelper()
 }

@@ -12,5 +12,4 @@ class ApiModule {
     @Provides
     @Reusable
     fun provideChuckNorrisAPI(retrofit: Retrofit) = retrofit.create(ChuckNorrisAPI::class.java)
-
 }

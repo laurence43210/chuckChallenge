@@ -8,7 +8,6 @@ import javax.inject.Singleton
 
 private const val SHARED_PREF_NAME = "ChuckChallengeApplicationPrefs"
 
-
 @Module
 class AppModule(private val application: Application) {
 
