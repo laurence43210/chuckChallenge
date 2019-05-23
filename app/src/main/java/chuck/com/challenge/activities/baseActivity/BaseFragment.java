@@ -3,15 +3,15 @@ package chuck.com.challenge.activities.baseActivity;
 import android.content.Context;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import android.view.View;
 
 import chuck.com.challenge.appListeners.GlobalListener;
+import dagger.android.support.DaggerFragment;
 
 /**
  * A placeholder fragment containing a simple view.
  */
-public abstract class BaseFragment extends Fragment {
+public abstract class BaseFragment extends DaggerFragment {
 
     protected static final String TAG = BaseFragment.class.getSimpleName();
 
@@ -35,11 +35,8 @@ public abstract class BaseFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         butterKnifeBind();
-        daggerInjection();
         initUI();
     }
-
-    abstract protected void daggerInjection();
 
     abstract protected void butterKnifeBind();
 

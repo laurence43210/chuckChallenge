@@ -15,7 +15,6 @@ import android.widget.ViewSwitcher;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import chuck.com.challenge.ChuckChallengeApplication;
 import chuck.com.challenge.R;
 import chuck.com.challenge.Presenters.SingleJokePresenter;
 import chuck.com.challenge.activities.baseActivity.BaseFragment;
@@ -33,7 +32,8 @@ public class SingleJokeFragment extends BaseFragment implements ISingleJokeView 
     @Inject
     DialogHelper dialogHelper;
 
-    private SingleJokePresenter randomSingleJokePresenter;
+    @Inject
+    SingleJokePresenter randomSingleJokePresenter;
 
     private ViewSwitcher.ViewFactory titleFactory = new ViewSwitcher.ViewFactory() {
         @Override
@@ -70,7 +70,6 @@ public class SingleJokeFragment extends BaseFragment implements ISingleJokeView 
             Bundle savedInstanceState) {
         view = inflater
                 .inflate(R.layout.fragment_launch, container, false);
-        randomSingleJokePresenter = new SingleJokePresenter(this);
         return view;
     }
 
@@ -88,11 +87,6 @@ public class SingleJokeFragment extends BaseFragment implements ISingleJokeView 
     @Override
     public void onError(String message) {
         dialogHelper.getErrorDialog(getActivity(), message).show();
-    }
-
-    @Override
-    protected void daggerInjection() {
-        ChuckChallengeApplication.getDiComponent().inject(this);
     }
 
     @Override

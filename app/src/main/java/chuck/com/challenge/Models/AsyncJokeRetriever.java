@@ -1,9 +1,5 @@
 package chuck.com.challenge.Models;
 
-import javax.inject.Inject;
-
-import chuck.com.challenge.ChuckChallengeApplication;
-import chuck.com.challenge.Constants;
 import chuck.com.challenge.appListeners.ChuckNorrisAPI;
 import chuck.com.challenge.appListeners.IAsyncJokeRetriever;
 import chuck.com.challenge.appListeners.OnJokeRetrievedListener;
@@ -13,27 +9,30 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static chuck.com.challenge.NetConstants.BATCH_JOKE_QUANTITY;
+import static chuck.com.challenge.NetConstants.EXPLICIT;
+import static chuck.com.challenge.NetConstants.SINGLE_JOKE_QUANTITY;
+
 /**
  * Created by Laurence on 12/10/2016.
  */
 public class AsyncJokeRetriever implements IAsyncJokeRetriever {
 
-    @Inject
     ChuckNorrisAPI chuckNorrisAPI;
 
-    @Inject
     SharedPreferencesHelper sharedPreferencesHelper;
 
-    public AsyncJokeRetriever() {
-        ChuckChallengeApplication.getDiComponent().inject(this);
+    public AsyncJokeRetriever(ChuckNorrisAPI chuckNorrisAPI, SharedPreferencesHelper sharedPreferencesHelper) {
+        this.chuckNorrisAPI = chuckNorrisAPI;
+        this.sharedPreferencesHelper = sharedPreferencesHelper;
     }
 
     @Override
     public void RetrieveRandomJoke(
             final OnJokeRetrievedListener onJokeRetrievedListener) {
         Call<ResponseParent> responseParentCall = chuckNorrisAPI.randomJoke(
-                Constants.SINGLE_JOKE_QUANTITY, sharedPreferencesHelper
-                        .getExplicitState() ? Constants.EXPLICIT : null);
+                SINGLE_JOKE_QUANTITY, sharedPreferencesHelper
+                        .getExplicitState() ? EXPLICIT : null);
 
         responseParentCall.enqueue(new Callback<ResponseParent>() {
             @Override
@@ -58,7 +57,7 @@ public class AsyncJokeRetriever implements IAsyncJokeRetriever {
 
         Call<ResponseParent> responseParentCall = chuckNorrisAPI.nameReplace(
                 firstName, lastName, sharedPreferencesHelper
-                        .getExplicitState() ? Constants.EXPLICIT : null);
+                        .getExplicitState() ? EXPLICIT : null);
 
         responseParentCall.enqueue(new Callback<ResponseParent>() {
             @Override
@@ -80,8 +79,8 @@ public class AsyncJokeRetriever implements IAsyncJokeRetriever {
             final OnJokeRetrievedListener onJokeRetrievedListener) {
 
         Call<ResponseParent> responseParentCall = chuckNorrisAPI.randomJoke(
-                Constants.BATCH_JOKE_QUANTITY, sharedPreferencesHelper
-                        .getExplicitState() ? Constants.EXPLICIT : null);
+                BATCH_JOKE_QUANTITY, sharedPreferencesHelper
+                        .getExplicitState() ? EXPLICIT : null);
 
         responseParentCall.enqueue(new Callback<ResponseParent>() {
             @Override

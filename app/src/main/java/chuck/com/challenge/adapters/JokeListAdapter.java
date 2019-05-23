@@ -19,11 +19,13 @@ import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import chuck.com.challenge.ChuckChallengeApplication;
-import chuck.com.challenge.Constants;
 import chuck.com.challenge.R;
 import chuck.com.challenge.helpers.UIHelper;
 import chuck.com.challenge.responsePojo.JokeEntry;
+
+import static chuck.com.challenge.NetConstants.EXPLICIT;
+import static chuck.com.challenge.NetConstants.NERDY;
+
 /**
  * Created by Laurence on 17/09/2016.
  */
@@ -34,14 +36,13 @@ public class JokeListAdapter extends
 
     private LayoutInflater mInflater;
 
-    @Inject
-    Resources resources;
+        Resources resources;
+        UIHelper uiHelper;
 
-    @Inject UIHelper uiHelper;
-
-    public JokeListAdapter(Context context) {
+    public JokeListAdapter(Context context, Resources resources, UIHelper uiHelper) {
         mInflater = LayoutInflater.from(context);
-        ChuckChallengeApplication.getDiComponent().inject(this);
+        this.resources = resources;
+        this.uiHelper = uiHelper;
     }
 
     @Override
@@ -73,10 +74,10 @@ public class JokeListAdapter extends
 
         myViewHolder.jokeNumber.setText(spannableString);
 
-        if (jokeEntry.getCategories().contains(Constants.EXPLICIT)) {
+        if (jokeEntry.getCategories().contains(EXPLICIT)) {
             myViewHolder.explicitTag.setVisibility(View.VISIBLE);
         }
-        if (jokeEntry.getCategories().contains(Constants.NERDY)) {
+        if (jokeEntry.getCategories().contains(NERDY)) {
             myViewHolder.nerdyTag.setVisibility(View.VISIBLE);
         }
     }

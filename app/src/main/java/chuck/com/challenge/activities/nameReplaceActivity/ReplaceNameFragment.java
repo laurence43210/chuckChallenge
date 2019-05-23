@@ -51,12 +51,8 @@ public class ReplaceNameFragment extends BaseFragment implements
     @Inject
     RegexHelper regexHelper;
 
-    private ReplaceNamePresenter nameReplaceSingleJokePresenter;
-
-    @Override
-    protected void daggerInjection() {
-        ChuckChallengeApplication.getDiComponent().inject(this);
-    }
+    @Inject
+    ReplaceNamePresenter nameReplaceSingleJokePresenter;
 
     @Override
     protected void butterKnifeBind() {
@@ -68,7 +64,6 @@ public class ReplaceNameFragment extends BaseFragment implements
             Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_name_replace, container,
                 false);
-        nameReplaceSingleJokePresenter = new ReplaceNamePresenter(this);
         return view;
     }
 
