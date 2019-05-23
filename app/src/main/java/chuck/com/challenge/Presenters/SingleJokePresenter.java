@@ -23,22 +23,21 @@ import chuck.com.challenge.responsePojo.JokeEntry;
 /**
  * Created by Laurence on 12/10/2016.
  */
-public class SingleJokePresenter implements ISingleJokePresenter,
-        OnJokeRetrievedListener {
+public class SingleJokePresenter implements ISingleJokePresenter, OnJokeRetrievedListener {
 
-    @Inject
-    ResourceHelper resourceHelper;
+    private ResourceHelper resourceHelper;
 
-    @Inject UIHelper uiHelper;
+    private UIHelper uiHelper;
 
     private ISingleJokeView view;
 
     private AsyncJokeRetriever model;
 
-    public SingleJokePresenter(ISingleJokeView view) {
-        ChuckChallengeApplication.getDiComponent().inject(this);
+    public SingleJokePresenter(ISingleJokeView view, AsyncJokeRetriever model, UIHelper uiHelper, ResourceHelper resourceHelper) {
         this.view = view;
-        this.model = new AsyncJokeRetriever();
+        this.model = model;
+        this.resourceHelper = resourceHelper;
+        this.uiHelper = uiHelper;
     }
 
     @Override

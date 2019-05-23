@@ -18,9 +18,9 @@ public class BatchJokePresenter implements IBatchJokePresenter,
 
     private AsyncJokeRetriever model;
 
-    public BatchJokePresenter(IBatchJokeView view) {
+    public BatchJokePresenter(IBatchJokeView view, AsyncJokeRetriever model) {
         this.view = view;
-        this.model = new AsyncJokeRetriever();
+        this.model = model;
     }
 
     @Override

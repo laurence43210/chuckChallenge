@@ -29,21 +29,23 @@ import chuck.com.challenge.responsePojo.JokeEntry;
 public class ReplaceNamePresenter implements TextWatcher,
         IReplaceNamePresenter, OnJokeRetrievedListener {
 
-    @Inject
-    ResourceHelper resourceHelper;
 
-    @Inject UIHelper uiHelper;
+    private ResourceHelper resourceHelper;
 
-    @Inject RegexHelper regexHelper;
+    private UIHelper uiHelper;
+
+    private RegexHelper regexHelper;
 
     private IReplaceNameView view;
 
     private AsyncJokeRetriever model;
 
-    public ReplaceNamePresenter(IReplaceNameView view) {
-        ChuckChallengeApplication.getDiComponent().inject(this);
+    public ReplaceNamePresenter(IReplaceNameView view, AsyncJokeRetriever model, UIHelper uiHelper, ResourceHelper resourceHelper, RegexHelper regexHelper) {
         this.view = view;
-        this.model = new AsyncJokeRetriever();
+        this.model = model;
+        this.resourceHelper = resourceHelper;
+        this.uiHelper = uiHelper;
+        this.regexHelper = regexHelper;
     }
 
     @Override

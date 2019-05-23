@@ -36,8 +36,9 @@ import chuck.com.challenge.activities.singleJokeActivity.SingleJokeActivity;
 import chuck.com.challenge.appListeners.GlobalListener;
 import chuck.com.challenge.helpers.ResourceHelper;
 import chuck.com.challenge.helpers.SharedPreferencesHelper;
+import dagger.android.support.DaggerAppCompatActivity;
 
-public class BaseActivity extends AppCompatActivity implements GlobalListener {
+public class BaseActivity extends DaggerAppCompatActivity implements GlobalListener {
 
     @BindView(R.id.activityContent)
     FrameLayout frameLayout;
@@ -70,7 +71,6 @@ public class BaseActivity extends AppCompatActivity implements GlobalListener {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_base);
         ButterKnife.bind(this);
-        ChuckChallengeApplication.getDiComponent().inject(this);
         setSupportActionBar(toolbar);
         setUpNavigationView();
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {

@@ -25,6 +25,7 @@ import chuck.com.challenge.appEnums.ContentValuesEnum;
 import chuck.com.challenge.appListeners.IBatchJokeView;
 import chuck.com.challenge.appListeners.InfiniteListListener;
 import chuck.com.challenge.helpers.DialogHelper;
+import chuck.com.challenge.helpers.UIHelper;
 import chuck.com.challenge.responsePojo.JokeEntry;
 
 /**
@@ -39,8 +40,13 @@ public class InfiniteListFragment extends BaseFragment implements
     @Inject
     DialogHelper dialogHelper;
 
+    @Inject
+    UIHelper uIHelper;
+
+    @Inject
     JokeListAdapter jokeListAdapter;
 
+    @Inject
     BatchJokePresenter batchJokePresenter;
 
     private List<JokeEntry> jokes = new ArrayList<>();
@@ -50,7 +56,6 @@ public class InfiniteListFragment extends BaseFragment implements
             Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_infinite_list,
                 container, false);
-        batchJokePresenter = new BatchJokePresenter(this);
         return view;
     }
 
@@ -59,10 +64,8 @@ public class InfiniteListFragment extends BaseFragment implements
     protected void initUI() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(
                 getActivity());
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
-
-        jokeListAdapter = new JokeListAdapter(getActivity());
         recyclerView.setAdapter(jokeListAdapter);
 
         batchJokePresenter.fetchBatchOfRandomJokes();
@@ -118,11 +121,6 @@ public class InfiniteListFragment extends BaseFragment implements
     @Override
     public void onError(String message) {
         dialogHelper.getErrorDialog(getActivity(), message).show();
-    }
-
-    @Override
-    protected void daggerInjection() {
-        ChuckChallengeApplication.getDiComponent().inject(this);
     }
 
     @Override
