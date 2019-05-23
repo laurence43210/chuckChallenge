@@ -9,10 +9,11 @@ import chuck.com.challenge.di.modules.AppModule
 import chuck.com.challenge.di.modules.HelperModule
 import chuck.com.challenge.di.modules.NetModule
 import chuck.com.challenge.di.modules.RepositoryModule
+import chuck.com.challenge.di.modules.SchedulersModule
 import dagger.Component
 import dagger.android.AndroidInjectionModule
 import dagger.android.AndroidInjector
 
 @Singleton
-@Component(modules = [AppModule::class, AndroidInjectionModule::class, NetModule::class, HelperModule::class, ApiModule::class, RepositoryModule::class, ActivityBindingModule::class])
+@Component(modules = [AppModule::class, AndroidInjectionModule::class, NetModule::class, HelperModule::class, ApiModule::class, RepositoryModule::class, ActivityBindingModule::class, SchedulersModule::class])
 interface AppComponent : AndroidInjector<ChuckChallengeApplication>
