@@ -90,10 +90,10 @@ public class BaseActivity extends DaggerAppCompatActivity implements GlobalListe
                         //Check to see which item was being clicked and perform appropriate action
                         switch (item.getItemId()) {
 
-                        case R.id.home:
-                            if (!(BaseActivity.this instanceof SingleJokeActivity))
-                                goToActivity(SingleJokeActivity.class);
-                            break;
+//                        case R.id.home:
+//                            if (!(BaseActivity.this instanceof SingleJokeActivity))
+//                                goToActivity(SingleJokeActivity.class);
+//                            break;
 
                         case R.id.nameReplace:
                             if (!(BaseActivity.this instanceof ReplaceNameActivity))

@@ -25,10 +25,6 @@ public abstract class BaseFragment extends DaggerFragment {
         super.onAttach(context);
         if (context instanceof GlobalListener) {
             mListener = (GlobalListener) context;
-        } else {
-            throw new RuntimeException((new StringBuilder())
-                    .append(context.toString()).append(TAG)
-                    .append(" must implement Listeners").toString());
         }
     }
 
@@ -37,7 +33,4 @@ public abstract class BaseFragment extends DaggerFragment {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
     }
-
-
-    abstract protected void initUI();
 }

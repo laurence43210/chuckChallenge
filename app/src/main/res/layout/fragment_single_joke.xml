@@ -1,0 +1,43 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryLight"
+    android:orientation="vertical"
+    tools:context=".ui.singleJoke.SingleJokeFragment">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:src="@drawable/chuck_forrest" />
+
+    <TextSwitcher
+        android:id="@+id/textSwitcher"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="@dimen/grid_spacing_double">
+
+        <TextView
+            style="@style/Content.Large"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center" />
+
+        <TextView
+            style="@style/Content.Large"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center" />
+    </TextSwitcher>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/showRandomJokeFab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="@dimen/grid_spacing_double"
+        android:src="@drawable/ic_autorenew_white_24dp" />
+
+</LinearLayout>

@@ -1,22 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/singleJokeFragment"
+    android:name="chuck.com.challenge.ui.singleJoke.SingleJokeFragment"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
-
-
-        <include layout="@layout/content_launch" />
-
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/showRandomJoke"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="@dimen/grid_spacing"
-        android:src="@drawable/ic_autorenew_white_24dp"
-        />
-
-</RelativeLayout>
-</merge>
+    android:layout_height="fill_parent" />
