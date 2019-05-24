@@ -38,6 +38,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_margin="@dimen/grid_spacing_double"
-        android:src="@drawable/ic_autorenew_white_24dp" />
+        android:src="@drawable/ic_autorenew_24dp" />
 
 </LinearLayout>
