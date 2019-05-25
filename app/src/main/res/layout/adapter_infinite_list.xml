@@ -5,22 +5,26 @@
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:layout_margin="@dimen/grid_spacing_half"
     card_view:cardCornerRadius="4dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingLeft="@dimen/grid_spacing"
-        android:paddingRight="@dimen/grid_spacing">
+        android:padding="@dimen/grid_spacing">
+
+        <TextView
+            android:id="@+id/jokeNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Content.Small"
+            tools:text="lesson number" />
 
         <TextView
             android:id="@+id/jokeText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/grid_spacing"
+            android:layout_marginTop="@dimen/grid_spacing_half"
             style="@style/Content.Dark"
             android:shadowColor="@color/colorPrimaryDark"
             android:shadowDx="1"
@@ -29,41 +33,13 @@
             tools:text="random joke" />
 
         <TextView
-            android:id="@+id/jokeNumber"
-            android:layout_width="match_parent"
+            android:id="@+id/jokeCategories"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/grid_spacing"
-            android:layout_marginTop="@dimen/grid_spacing"
-            style="@style/Content"
-            tools:text="lesson number" />
+            android:layout_marginTop="@dimen/grid_spacing_half"
+            tools:text="Nerdy, Explicit"
+            style="@style/Content.Small.Italics" />
 
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/explicit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/grid_spacing"
-                android:layout_marginRight="@dimen/grid_spacing"
-                android:layout_marginEnd="@dimen/grid_spacing"
-                android:text="@string/explicit_tag"
-                style="@style/Content.Small.Italics"
-                android:visibility="gone"/>
-
-            <TextView
-                android:id="@+id/nerdy"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/grid_spacing"
-                android:text="@string/nerdy_tag"
-                style="@style/Content.Small.Italics"
-                android:visibility="gone" />
-
-        </LinearLayout>
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>
