@@ -25,7 +25,7 @@ public class DialogHelper {
 
         return getDialogWithOkButton(context,
                 SpannableString.valueOf(resourceHelper
-                        .getString(R.string.generic_title_dialog_error)),
+                        .getString(R.string.title_dialog_error)),
                 errorMessage);
 
     }
