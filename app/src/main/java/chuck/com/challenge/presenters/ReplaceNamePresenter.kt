@@ -25,7 +25,7 @@ class ReplaceNamePresenter(private val jokesRepository: JokesRepository, private
 
             addDisposable(jokesRepository.getNamedReplaceJoke(firstName, lastName).subscribe({
                 val jokeTitle = String.format(
-                        resourceHelper.getString(R.string.generic_dialog_title),
+                        resourceHelper.getString(R.string.joke_number),
                         it.id.toString())
 
                 val titleSpan = SpannableString(jokeTitle)
