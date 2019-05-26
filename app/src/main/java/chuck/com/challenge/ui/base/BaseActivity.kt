@@ -23,7 +23,7 @@ open class BaseActivity : DaggerAppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        super.setContentView(R.layout.activity_base)
+        setContentView(R.layout.activity_base)
         setSupportActionBar(toolbar)
         setUpNavigationView()
         val fragment = SingleJokeFragment.newInstance()
