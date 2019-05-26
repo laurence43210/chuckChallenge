@@ -3,18 +3,21 @@
     <group android:checkableBehavior="single">
 
         <item
-            android:id="@+id/home"
+            android:id="@+id/randomJoke"
             android:checked="false"
+            android:icon="@drawable/ic_mood_white_24dp"
             android:title="@string/title_activity_launch" />
 
         <item
             android:id="@+id/nameReplace"
             android:checked="false"
+            android:icon="@drawable/ic_swap_horiz_white_24dp"
             android:title="@string/title_activity_name_replace" />
 
         <item
             android:id="@+id/infiniteList"
             android:checked="false"
+            android:icon="@drawable/ic_all_inclusive_white_24dp"
             android:title="@string/title_activity_infinite_list" />
 
     </group>

@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/singleJokeFragment"
-    android:name="chuck.com.challenge.ui.singleJoke.SingleJokeFragment"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent" />

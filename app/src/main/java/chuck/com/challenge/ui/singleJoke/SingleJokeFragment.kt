@@ -18,6 +18,10 @@ import kotlinx.android.synthetic.main.fragment_single_joke.textSwitcher
 
 class SingleJokeFragment : DaggerFragment(), SingleJokeFragmentContract.View {
 
+    companion object {
+        fun newInstance() = SingleJokeFragment()
+    }
+
     @Inject
     lateinit var dialogHelper: DialogHelper
 
