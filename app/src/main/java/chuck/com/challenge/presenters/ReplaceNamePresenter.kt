@@ -9,11 +9,12 @@ import chuck.com.challenge.R
 import chuck.com.challenge.contracts.replaceName.ReplaceNameFragmentContract
 import chuck.com.challenge.data.repositories.JokesRepository
 import chuck.com.challenge.helpers.ResourceHelper
+import javax.inject.Inject
 
 private const val SPACE_CHAR = " "
 private const val MIN_NAME_LENGTH = 3
 
-class ReplaceNamePresenter(private val jokesRepository: JokesRepository, private val resourceHelper: ResourceHelper) : BasePresenter<ReplaceNameFragmentContract.View>() {
+class ReplaceNamePresenter @Inject constructor(private val jokesRepository: JokesRepository, private val resourceHelper: ResourceHelper) : BasePresenter<ReplaceNameFragmentContract.View>() {
 
     private fun checkNameIsValid(name: String) =
             name.isNotBlank() && name.contains(SPACE_CHAR) && name.length >= MIN_NAME_LENGTH
