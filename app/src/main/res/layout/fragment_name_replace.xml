@@ -23,6 +23,7 @@
         android:id="@+id/inputLayoutName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:errorEnabled="true"
         app:errorTextAppearance="@style/TextAppearance.Error">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -36,7 +37,7 @@
 
     <Button
         android:id="@+id/submitButton"
-        style="@style/Button"
+        style="@style/Button.Faded"
         android:layout_width="match_parent"
         android:layout_height="@dimen/button_height"
         android:layout_marginLeft="@dimen/grid_spacing_triple"

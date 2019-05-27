@@ -15,5 +15,7 @@ interface ReplaceNameFragmentContract {
         fun onError(message: String)
 
         fun showInvalidNameError()
+
+        fun getName(): String
     }
 }

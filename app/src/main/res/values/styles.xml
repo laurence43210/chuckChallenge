@@ -75,6 +75,9 @@
         <item name="android:textAllCaps">false</item>
     </style>
 
+    <style name="Button.Faded">
+        <item name="android:background">@drawable/button_faded</item>
+    </style>
 
     <style name="TextAppearance.Error" parent="@android:style/TextAppearance">
         <item name="android:textColor">@color/colorAccent</item>
