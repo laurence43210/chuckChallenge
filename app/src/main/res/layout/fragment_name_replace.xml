@@ -1,51 +1,46 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="@dimen/grid_spacing_double"
-    tools:context=".ui.nameReplace.ReplaceNameFragment"
-    tools:showIn="@layout/activity_name_replace"
     android:background="@color/colorPrimaryLight"
+    android:gravity="center"
     android:orientation="vertical"
-    android:gravity="center">
+    android:padding="@dimen/grid_spacing_double"
+    tools:context=".ui.nameReplace.ReplaceNameFragment">
 
     <TextView
         android:id="@+id/introText"
+        style="@style/Content.Bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/input_layout_name"
         android:layout_marginBottom="@dimen/grid_spacing_double"
-        android:layout_marginTop="@dimen/grid_spacing_double"
-        android:text="@string/name_replace_intro"
-        style="@style/Content.Bold"
         android:focusable="true"
-        android:focusableInTouchMode="true"/>
+        android:focusableInTouchMode="true"
+        android:text="@string/name_replace_intro" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/input_layout_name"
+        android:id="@+id/inputLayoutName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:errorTextAppearance="@style/TextAppearance.Error"
-        android:layout_above="@+id/submitButton">
+        app:errorTextAppearance="@style/TextAppearance.Error">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/input_name"
+            android:id="@+id/inputName"
+            style="@style/Content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/name_replace_hint_name"
-            style="@style/Content"
             android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/submitButton"
+        style="@style/Button"
         android:layout_width="match_parent"
         android:layout_height="@dimen/button_height"
         android:layout_marginLeft="@dimen/grid_spacing_triple"
-        android:layout_marginRight="@dimen/grid_spacing_triple"
         android:layout_marginTop="@dimen/grid_spacing"
-        style="@style/Button"
-        android:layout_centerInParent="true"
+        android:layout_marginRight="@dimen/grid_spacing_triple"
         android:text="@string/name_replace_button" />
-    </LinearLayout>
+</LinearLayout>
