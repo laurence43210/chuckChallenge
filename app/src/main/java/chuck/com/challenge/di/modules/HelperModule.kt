@@ -6,7 +6,6 @@ import android.content.res.Resources
 import chuck.com.challenge.helpers.DialogHelper
 import chuck.com.challenge.helpers.ResourceHelper
 import chuck.com.challenge.helpers.SharedPreferencesHelper
-import chuck.com.challenge.helpers.UIHelper
 import dagger.Module
 import dagger.Provides
 
@@ -21,7 +20,4 @@ class HelperModule {
 
     @Provides
     fun getDialogHelper(resourceHelper: ResourceHelper) = DialogHelper(resourceHelper)
-
-    @Provides
-    fun getUIHelper() = UIHelper()
 }

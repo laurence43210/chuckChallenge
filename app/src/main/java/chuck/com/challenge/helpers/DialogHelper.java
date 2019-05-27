@@ -31,7 +31,7 @@ public class DialogHelper {
     }
 
     public Dialog getDialogWithOkButton(Context context, SpannableString title,
-            String message) {
+                                        CharSequence message) {
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                 context);
