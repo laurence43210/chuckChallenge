@@ -7,9 +7,10 @@ import dagger.Reusable
 import retrofit2.Retrofit
 
 @Module
-class ApiModule {
+object ApiModule {
 
     @Provides
     @Reusable
-    fun provideChuckNorrisAPI(retrofit: Retrofit) = retrofit.create(ChuckNorrisAPI::class.java)
+    @JvmStatic
+    fun provideChuckNorrisAPI(retrofit: Retrofit): ChuckNorrisAPI = retrofit.create(ChuckNorrisAPI::class.java)
 }

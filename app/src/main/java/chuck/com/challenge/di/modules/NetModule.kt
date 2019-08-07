@@ -13,8 +13,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Named
 
 @Module
-class NetModule {
+object NetModule {
 
+    @JvmStatic
     @Provides
     fun provideLoggingInterceptor() = HttpLoggingInterceptor().apply {
         level = if (BuildConfig.DEBUG) {
@@ -24,10 +25,12 @@ class NetModule {
         }
     }
 
+    @JvmStatic
     @Provides
     fun provideOkHttpClient(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient =
             OkHttpClient.Builder().addNetworkInterceptor(loggingInterceptor).build()
 
+    @JvmStatic
     @Provides
     fun provideRetrofit(okHttpClient: OkHttpClient, @Named(NAME_IO_SCHEDULER) scheduler: Scheduler): Retrofit = Retrofit.Builder()
             .baseUrl(JOKE_API_BASE_URL)
