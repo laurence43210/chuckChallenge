@@ -12,16 +12,19 @@ const val NAME_IO_SCHEDULER = "io_scheduler"
 const val NAME_COMPUTATION_SCHEDULER = "computation_scheduler"
 
 @Module
-class SchedulersModule {
+object SchedulersModule {
 
+    @JvmStatic
     @Provides
     @Named(NAME_ANDROID_SCHEDULER_MAIN_THREAD)
     fun provideAndroidSchedulerMainThread(): Scheduler = AndroidSchedulers.mainThread()
 
+    @JvmStatic
     @Provides
     @Named(NAME_IO_SCHEDULER)
     fun provideIOScheduler(): Scheduler = Schedulers.io()
 
+    @JvmStatic
     @Provides
     @Named(NAME_COMPUTATION_SCHEDULER)
     fun provideComputationScheduler(): Scheduler = Schedulers.computation()

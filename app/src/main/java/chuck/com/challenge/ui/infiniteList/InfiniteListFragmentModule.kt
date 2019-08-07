@@ -5,8 +5,9 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-class InfiniteListFragmentModule {
+object InfiniteListFragmentModule {
 
+    @JvmStatic
     @Provides
     fun provideAdapter(fragment: InfiniteListFragment) = JokeListAdapter(fragment.requireContext())
 }
