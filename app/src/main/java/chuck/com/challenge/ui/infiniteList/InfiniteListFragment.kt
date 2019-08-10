@@ -1,7 +1,5 @@
 package chuck.com.challenge.ui.infiniteList
 
-import java.util.ArrayList
-
 import javax.inject.Inject
 
 import android.os.Bundle
@@ -10,21 +8,21 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 
 import chuck.com.challenge.R
-import chuck.com.challenge.contracts.infiniteList.InfiniteListFragmentContract
 import chuck.com.challenge.data.models.Joke
-import chuck.com.challenge.presenters.BatchJokePresenter
 import chuck.com.challenge.adapters.JokeListAdapter
 import chuck.com.challenge.appListeners.InfiniteListListener
+import chuck.com.challenge.data.wrappers.DataState
 import chuck.com.challenge.helpers.DialogHelper
+import chuck.com.challenge.viewmodels.InfiniteListFragmentViewModel
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_infinite_list.recyclerView
 
-private const val RECYCLER_VIEW_DATA = "recycler_view_data"
-private const val ADAPTER_DATA = "adapter_data"
-
-class InfiniteListFragment : DaggerFragment(), InfiniteListFragmentContract.View {
+class InfiniteListFragment : DaggerFragment() {
 
     @Inject
     lateinit var dialogHelper: DialogHelper
@@ -33,7 +31,15 @@ class InfiniteListFragment : DaggerFragment(), InfiniteListFragmentContract.View
     lateinit var jokeListAdapter: JokeListAdapter
 
     @Inject
-    lateinit var presenter: BatchJokePresenter
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    private lateinit var viewModel: InfiniteListFragmentViewModel
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        viewModel = ViewModelProviders.of(this, viewModelFactory)[InfiniteListFragmentViewModel::class.java]
+        viewModel.getJokeListLiveData().observe(viewLifecycleOwner, Observer(::updateJokes))
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
             inflater.inflate(R.layout.fragment_infinite_list, container, false)
@@ -41,8 +47,6 @@ class InfiniteListFragment : DaggerFragment(), InfiniteListFragmentContract.View
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpRecyclerView()
-        presenter.attachView(this)
-        presenter.fetchBatchOfRandomJokes()
     }
 
     private fun setUpRecyclerView() {
@@ -50,44 +54,24 @@ class InfiniteListFragment : DaggerFragment(), InfiniteListFragmentContract.View
         recyclerView.adapter = jokeListAdapter
         recyclerView.addOnScrollListener(object : InfiniteListListener() {
             override fun onLoadMore() {
-                presenter.fetchBatchOfRandomJokes()
+                viewModel.loadJokes()
             }
         })
         recyclerView.hasFixedSize()
     }
 
     override fun onDestroyView() {
-        recyclerView.adapter = null
         super.onDestroyView()
-        presenter.destroyAllDisposables()
-        presenter.detachView()
+        recyclerView.adapter = null
     }
 
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        super.onViewStateRestored(savedInstanceState)
-        savedInstanceState?.let {
-            if (it.containsKey(ADAPTER_DATA)) {
-                it.getParcelableArrayList<Joke>(ADAPTER_DATA)?.let { jokes ->
-                    jokeListAdapter.data = jokes.toMutableList()
-                    jokeListAdapter.notifyDataSetChanged()
-                }
+    private fun updateJokes(result: DataState<List<Joke>>) {
+        when (result) {
+            is DataState.Success -> {
+                jokeListAdapter.data = result.data
+                jokeListAdapter.notifyDataSetChanged()
             }
-            if (it.containsKey(RECYCLER_VIEW_DATA)) {
-                recyclerView.layoutManager?.onRestoreInstanceState(it.getParcelable(RECYCLER_VIEW_DATA))
-            }
+            is DataState.Error -> dialogHelper.getErrorDialog(requireContext(), result.message).show()
         }
     }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        recyclerView.layoutManager?.let { outState.putParcelable(RECYCLER_VIEW_DATA, it.onSaveInstanceState()) }
-        outState.putParcelableArrayList(ADAPTER_DATA, ArrayList(jokeListAdapter.data))
-    }
-
-    override fun onJokesLoaded(jokeEntries: List<Joke>) {
-        jokeListAdapter.data.addAll(jokeEntries)
-        jokeListAdapter.notifyDataSetChanged()
-    }
-
-    override fun onError(message: String) = dialogHelper.getErrorDialog(requireContext(), message).show()
 }

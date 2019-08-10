@@ -10,6 +10,7 @@ import chuck.com.challenge.di.modules.HelperModule
 import chuck.com.challenge.di.modules.NetModule
 import chuck.com.challenge.di.modules.RepositoryModule
 import chuck.com.challenge.di.modules.SchedulersModule
+import chuck.com.challenge.di.modules.ViewModelModule
 import dagger.Component
 import dagger.android.AndroidInjectionModule
 import dagger.android.AndroidInjector
