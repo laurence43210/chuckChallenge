@@ -8,27 +8,27 @@ import javax.inject.Inject
 
 class SingleJokeFragmentViewModel @Inject constructor(private val jokesRepository: JokesRepository) : BaseViewModel() {
 
-    private val jokeLiveData = MutableLiveData<DataState<String>>()
-
-    init {
-        fetchSingleRandomJoke()
+    private val jokeLiveData by lazy {
+        val liveData = MutableLiveData<DataState<String>>()
+        fetchSingleRandomJoke(liveData)
+        return@lazy liveData
     }
 
     fun getJokeLiveData(): LiveData<DataState<String>> = jokeLiveData
 
-    fun getNewJoke() = fetchSingleRandomJoke()
+    fun getNewJoke() = fetchSingleRandomJoke(jokeLiveData)
 
-    private fun fetchSingleRandomJoke() =
+    private fun fetchSingleRandomJoke(liveData: MutableLiveData<DataState<String>>) =
             addDisposable(jokesRepository.getRandomJoke()
                     .doOnSubscribe {
-                        jokeLiveData.value = DataState.Loading()
+                        liveData.value = DataState.Loading()
                     }
                     .subscribe({
                         val joke = it.value
-                        jokeLiveData.value = DataState.Success(joke)
+                        liveData.value = DataState.Success(joke)
                     }, {
                         it.message?.let { message ->
-                            jokeLiveData.value = DataState.Error(message)
+                            liveData.value = DataState.Error(message)
                         }
                     }))
 }

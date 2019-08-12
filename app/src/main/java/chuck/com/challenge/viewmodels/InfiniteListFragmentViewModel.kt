@@ -11,24 +11,24 @@ class InfiniteListFragmentViewModel @Inject constructor(private val jokesReposit
 
     private val jokeList = mutableListOf<Joke>()
 
-    private val jokeListLiveData = MutableLiveData<DataState<List<Joke>>>()
-
-    init {
-        fetchBatchOfRandomJokes()
+    private val jokeListLiveData by lazy {
+        val liveData = MutableLiveData<DataState<List<Joke>>>()
+        fetchBatchOfRandomJokes(liveData)
+        return@lazy liveData
     }
 
     fun getJokeListLiveData(): LiveData<DataState<List<Joke>>> = jokeListLiveData
 
-    fun loadJokes() = fetchBatchOfRandomJokes()
+    fun loadJokes() = fetchBatchOfRandomJokes(jokeListLiveData)
 
-    private fun fetchBatchOfRandomJokes() =
+    private fun fetchBatchOfRandomJokes(liveData: MutableLiveData<DataState<List<Joke>>>) =
             addDisposable(jokesRepository.getJokes()
                     .subscribe({
                         jokeList.addAll(it)
-                        jokeListLiveData.value = DataState.Success(jokeList)
+                        liveData.value = DataState.Success(jokeList)
                     }, {
                         it.message?.let { message ->
-                            jokeListLiveData.value = DataState.Error(message)
+                            liveData.value = DataState.Error(message)
                         }
                     }))
 }
