@@ -17,8 +17,6 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 
 import chuck.com.challenge.R
 import chuck.com.challenge.data.models.Joke
@@ -38,13 +36,10 @@ class ReplaceNameFragment : DaggerFragment(), TextWatcher {
     lateinit var dialogHelper: DialogHelper
 
     @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    private lateinit var viewModel: ReplaceNameFragmentViewModel
+    lateinit var viewModel: ReplaceNameFragmentViewModel
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this, viewModelFactory)[ReplaceNameFragmentViewModel::class.java]
         viewModel.getJokeLiveData().observe(viewLifecycleOwner, Observer(::onJokeResult))
         viewModel.getNameValidLiveData().observe(viewLifecycleOwner, Observer(::setViewsForNameState))
     }

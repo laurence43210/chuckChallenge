@@ -9,8 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 
 import chuck.com.challenge.R
 import chuck.com.challenge.data.models.Joke
@@ -31,13 +29,10 @@ class InfiniteListFragment : DaggerFragment() {
     lateinit var jokeListAdapter: JokeListAdapter
 
     @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    private lateinit var viewModel: InfiniteListFragmentViewModel
+    lateinit var viewModel: InfiniteListFragmentViewModel
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this, viewModelFactory)[InfiniteListFragmentViewModel::class.java]
         viewModel.getJokeListLiveData().observe(viewLifecycleOwner, Observer(::updateJokes))
     }
 
