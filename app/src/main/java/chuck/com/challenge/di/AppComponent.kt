@@ -16,7 +16,7 @@ import dagger.android.AndroidInjectionModule
 import dagger.android.AndroidInjector
 
 @Singleton
-@Component(modules = [AppModule::class, AndroidInjectionModule::class, NetModule::class, HelperModule::class, ApiModule::class, RepositoryModule::class, ActivityBindingModule::class, SchedulersModule::class])
+@Component(modules = [AppModule::class, AndroidInjectionModule::class, NetModule::class, HelperModule::class, ApiModule::class, RepositoryModule::class, ActivityBindingModule::class, SchedulersModule::class, ViewModelModule::class])
 interface AppComponent : AndroidInjector<ChuckChallengeApplication> {
 
     @Component.Factory
