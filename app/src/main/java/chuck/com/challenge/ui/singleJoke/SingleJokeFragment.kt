@@ -6,17 +6,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.lifecycle.Observer
 
 import chuck.com.challenge.R
-import chuck.com.challenge.contracts.singleJoke.SingleJokeFragmentContract
+import chuck.com.challenge.data.wrappers.DataState
 import chuck.com.challenge.extentions.fromHtml
-import chuck.com.challenge.presenters.SingleJokePresenter
 import chuck.com.challenge.helpers.DialogHelper
+import chuck.com.challenge.viewmodels.SingleJokeFragmentViewModel
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_single_joke.showRandomJokeFab
 import kotlinx.android.synthetic.main.fragment_single_joke.textSwitcher
 
-class SingleJokeFragment : DaggerFragment(), SingleJokeFragmentContract.View {
+class SingleJokeFragment : DaggerFragment() {
 
     companion object {
         fun newInstance() = SingleJokeFragment()
@@ -26,7 +28,12 @@ class SingleJokeFragment : DaggerFragment(), SingleJokeFragmentContract.View {
     lateinit var dialogHelper: DialogHelper
 
     @Inject
-    lateinit var presenter: SingleJokePresenter
+    lateinit var viewModel: SingleJokeFragmentViewModel
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        viewModel.getJokeLiveData().observe(viewLifecycleOwner, Observer(::updateJoke))
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,28 +44,24 @@ class SingleJokeFragment : DaggerFragment(), SingleJokeFragmentContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter.attachView(this)
-        presenter.fetchSingleRandomJoke(false)
-        showRandomJokeFab.setOnClickListener { presenter.fetchSingleRandomJoke(true) }
-
+        showRandomJokeFab.setOnClickListener { viewModel.getNewJoke() }
         textSwitcher.setInAnimation(context, R.anim.slide_in_right)
         textSwitcher.setOutAnimation(context, R.anim.slide_out_left)
     }
 
-    override fun onPause() {
-        super.onPause()
-        presenter.destroyAllDisposables()
+    private fun updateJoke(result: DataState<String>) {
+        when (result) {
+            is DataState.Success -> {
+                textSwitcher.currentView.let { view ->
+                    val joke = result.data?.fromHtml()
+                    if ((view as TextView).text.isNullOrEmpty()) {
+                        textSwitcher.setCurrentText(joke)
+                    } else {
+                        textSwitcher.setText(joke)
+                    }
+                }
+            }
+            is DataState.Error -> dialogHelper.getErrorDialog(requireContext(), result.message).show()
+        }
     }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        presenter.detachView()
-    }
-
-    override fun showJoke(joke: String) = textSwitcher.setCurrentText(joke.fromHtml())
-
-    override fun showJokeWithAnimation(joke: String) = textSwitcher.setText(joke.fromHtml())
-
-    override fun onError(message: String) =
-            dialogHelper.getErrorDialog(activity, message).show()
 }

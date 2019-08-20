@@ -3,34 +3,46 @@ package chuck.com.challenge.ui.nameReplace
 import javax.inject.Inject
 
 import android.content.Context
+import android.graphics.Typeface
 import android.os.Bundle
 import android.text.Editable
 
 import android.text.SpannableString
+import android.text.Spanned
 import android.text.TextWatcher
+import android.text.style.StyleSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.core.content.res.ResourcesCompat
+import androidx.lifecycle.Observer
 
 import chuck.com.challenge.R
-import chuck.com.challenge.contracts.replaceName.ReplaceNameFragmentContract
+import chuck.com.challenge.data.models.Joke
+import chuck.com.challenge.data.wrappers.DataState
 import chuck.com.challenge.extentions.fromHtml
-import chuck.com.challenge.presenters.ReplaceNamePresenter
 import chuck.com.challenge.helpers.DialogHelper
+import chuck.com.challenge.viewmodels.INVALID_NAME_ERROR
+import chuck.com.challenge.viewmodels.ReplaceNameFragmentViewModel
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_name_replace.inputLayoutName
 import kotlinx.android.synthetic.main.fragment_name_replace.inputName
 import kotlinx.android.synthetic.main.fragment_name_replace.submitButton
 
-class ReplaceNameFragment : DaggerFragment(), ReplaceNameFragmentContract.View, TextWatcher {
+class ReplaceNameFragment : DaggerFragment(), TextWatcher {
 
     @Inject
     lateinit var dialogHelper: DialogHelper
 
     @Inject
-    lateinit var presenter: ReplaceNamePresenter
+    lateinit var viewModel: ReplaceNameFragmentViewModel
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        viewModel.getJokeLiveData().observe(viewLifecycleOwner, Observer(::onJokeResult))
+        viewModel.getNameValidLiveData().observe(viewLifecycleOwner, Observer(::setViewsForNameState))
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,31 +52,32 @@ class ReplaceNameFragment : DaggerFragment(), ReplaceNameFragmentContract.View, 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter.attachView(this)
         inputName.addTextChangedListener(this)
         submitButton.setOnClickListener {
             hideKeyboard()
-            presenter.onSubmitClicked()
+            viewModel.onSubmitClicked(inputName.text.toString())
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        presenter.destroyAllDisposables()
-        presenter.detachView()
-    }
+    private fun onJokeResult(result: DataState<Joke>) {
+        when (result) {
+            is DataState.Success -> result.data?.let { joke ->
+                val jokeTitle = getString(R.string.joke_number, joke.id)
 
-    override fun onJokeLoaded(title: SpannableString, joke: String) = dialogHelper.getDialogWithOkButton(activity, title, joke.fromHtml()).show()
+                val titleSpan = SpannableString(jokeTitle)
+                titleSpan.setSpan(StyleSpan(Typeface.BOLD), jokeTitle.length - joke.id.toString().length, jokeTitle.length,
+                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
 
-    override fun onError(message: String) = dialogHelper.getErrorDialog(activity, message).show()
-
-    override fun onSubmitButtonBackgroundChange(drawableId: Int) {
-        submitButton.background = ResourcesCompat.getDrawable(resources, drawableId, null)
-    }
-
-    override fun onRemoveTextInputLayoutErrorState(enabled: Boolean) {
-        if (enabled) {
-            inputLayoutName.error = null
+                dialogHelper.getDialogWithOkButton(requireContext(), titleSpan, joke.value.fromHtml()).show()
+            }
+            is DataState.Error -> {
+                val message = result.message
+                if (message == INVALID_NAME_ERROR) {
+                    inputLayoutName.error = getString(R.string.name_replace_error_message_name)
+                } else {
+                    dialogHelper.getErrorDialog(requireContext(), message).show()
+                }
+            }
         }
     }
 
@@ -73,15 +86,18 @@ class ReplaceNameFragment : DaggerFragment(), ReplaceNameFragmentContract.View, 
         imm.hideSoftInputFromWindow(view?.windowToken, 0)
     }
 
-    override fun showInvalidNameError() {
-        inputLayoutName.error = getString(R.string.name_replace_error_message_name)
+    private fun setViewsForNameState(isValid: Boolean) {
+        val drawableId = if (isValid) R.drawable.button else R.drawable.button_faded
+        submitButton.background = ResourcesCompat.getDrawable(resources, drawableId, null)
+
+        if (isValid) {
+            inputLayoutName.error = null
+        }
     }
 
     override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) = Unit
 
-    override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) = presenter.updateViewStateForName(s.toString())
+    override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) = viewModel.updateViewStateForName(s.toString())
 
     override fun afterTextChanged(s: Editable) = Unit
-
-    override fun getName() = inputName.text.toString()
 }

@@ -23,7 +23,7 @@ class JokeListAdapter(context: Context) : RecyclerView.Adapter<JokeListAdapter.M
 
     private val inflater = LayoutInflater.from(context)
 
-    var data: MutableList<Joke> = mutableListOf()
+    var data: List<Joke>? = null
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): MyViewHolder {
         val view = inflater.inflate(R.layout.adapter_infinite_list, viewGroup, false)
@@ -31,11 +31,13 @@ class JokeListAdapter(context: Context) : RecyclerView.Adapter<JokeListAdapter.M
     }
 
     override fun onBindViewHolder(viewHolder: MyViewHolder, position: Int) {
-        val joke = data[position]
-        viewHolder.bind(joke)
+        data?.let {
+            val joke = it[position]
+            viewHolder.bind(joke)
+        }
     }
 
-    override fun getItemCount() = data.size
+    override fun getItemCount() = data?.size ?: 0
 
     class MyViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
 
