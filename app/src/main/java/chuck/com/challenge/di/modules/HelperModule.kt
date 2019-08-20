@@ -2,6 +2,7 @@ package chuck.com.challenge.di.modules
 
 import android.content.SharedPreferences
 import android.content.res.Resources
+import chuck.com.challenge.ChuckChallengeApplication
 import chuck.com.challenge.helpers.DialogHelper
 import chuck.com.challenge.helpers.ResourceHelper
 import chuck.com.challenge.helpers.SharedPreferencesHelper
@@ -18,7 +19,7 @@ object HelperModule {
 
     @JvmStatic
     @Provides
-    fun getResourceHelper(application: DaggerApplication, resources: Resources) = ResourceHelper(application, resources)
+    fun getResourceHelper(application: ChuckChallengeApplication, resources: Resources) = ResourceHelper(application, resources)
 
     @JvmStatic
     @Provides
