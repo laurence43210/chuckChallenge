@@ -55,7 +55,7 @@ class SingleJokeFragment : DaggerFragment() {
         when (result) {
             is DataState.Success -> {
                 textSwitcher.currentView.let { view ->
-                    val joke = result.data?.fromHtml()
+                    val joke = result.data.fromHtml()
                     if ((view as TextView).text.isNullOrEmpty()) {
                         textSwitcher.setCurrentText(joke)
                     } else {
@@ -63,7 +63,7 @@ class SingleJokeFragment : DaggerFragment() {
                     }
                 }
             }
-            is DataState.Error -> requireContext().getErrorDialog(result.message!!).show()
+            is DataState.Error -> requireContext().getErrorDialog(result.message).show()
         }
     }
 }

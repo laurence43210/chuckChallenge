@@ -64,7 +64,8 @@ class ReplaceNameFragment : DaggerFragment(), TextWatcher {
 
     private fun onJokeResult(result: DataState<Joke>) {
         when (result) {
-            is DataState.Success -> result.data?.let { joke ->
+            is DataState.Success -> {
+                val joke = result.data
                 val jokeTitle = getString(R.string.joke_number, joke.id)
 
                 val titleSpan = SpannableString(jokeTitle)
@@ -78,7 +79,7 @@ class ReplaceNameFragment : DaggerFragment(), TextWatcher {
                 if (message == INVALID_NAME_ERROR) {
                     inputLayoutName.error = getString(R.string.name_replace_error_message_name)
                 } else {
-                    requireContext().getErrorDialog(message!!).show()
+                    requireContext().getErrorDialog(message).show()
                 }
             }
         }
