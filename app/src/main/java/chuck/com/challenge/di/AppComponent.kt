@@ -3,7 +3,7 @@ package chuck.com.challenge.di
 import chuck.com.challenge.ChuckChallengeApplication
 import javax.inject.Singleton
 
-import chuck.com.challenge.di.activity.ActivityBindingModule
+import chuck.com.challenge.di.modules.ActivityBindingModule
 import chuck.com.challenge.di.modules.ApiModule
 import chuck.com.challenge.di.modules.AppModule
 import chuck.com.challenge.di.modules.HelperModule

@@ -17,6 +17,8 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 
 import chuck.com.challenge.R
 import chuck.com.challenge.data.models.Joke
@@ -24,6 +26,7 @@ import chuck.com.challenge.data.wrappers.DataState
 import chuck.com.challenge.extentions.fromHtml
 import chuck.com.challenge.helpers.DialogHelper
 import chuck.com.challenge.viewmodels.INVALID_NAME_ERROR
+import chuck.com.challenge.viewmodels.InfiniteListFragmentViewModel
 import chuck.com.challenge.viewmodels.ReplaceNameFragmentViewModel
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_name_replace.inputLayoutName
@@ -36,10 +39,13 @@ class ReplaceNameFragment : DaggerFragment(), TextWatcher {
     lateinit var dialogHelper: DialogHelper
 
     @Inject
-    lateinit var viewModel: ReplaceNameFragmentViewModel
+    lateinit var provider: ViewModelProvider.Factory
+
+    private lateinit var viewModel: ReplaceNameFragmentViewModel
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        viewModel = ViewModelProviders.of(this, provider).get(ReplaceNameFragmentViewModel::class.java)
         viewModel.getJokeLiveData().observe(viewLifecycleOwner, Observer(::onJokeResult))
         viewModel.getNameValidLiveData().observe(viewLifecycleOwner, Observer(::setViewsForNameState))
     }

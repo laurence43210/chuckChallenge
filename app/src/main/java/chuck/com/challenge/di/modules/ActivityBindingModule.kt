@@ -1,6 +1,5 @@
-package chuck.com.challenge.di.activity
+package chuck.com.challenge.di.modules
 
-import chuck.com.challenge.di.fragments.BaseActivityFragmentBindingModule
 import chuck.com.challenge.ui.base.BaseActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
