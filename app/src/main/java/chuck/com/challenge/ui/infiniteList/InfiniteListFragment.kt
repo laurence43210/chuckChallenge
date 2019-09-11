@@ -17,16 +17,12 @@ import chuck.com.challenge.data.models.Joke
 import chuck.com.challenge.adapters.JokeListAdapter
 import chuck.com.challenge.appListeners.InfiniteListListener
 import chuck.com.challenge.data.wrappers.DataState
-import chuck.com.challenge.helpers.DialogHelper
+import chuck.com.challenge.extensions.getErrorDialog
 import chuck.com.challenge.viewmodels.InfiniteListFragmentViewModel
-import chuck.com.challenge.viewmodels.ReplaceNameFragmentViewModel
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_infinite_list.recyclerView
 
 class InfiniteListFragment : DaggerFragment() {
-
-    @Inject
-    lateinit var dialogHelper: DialogHelper
 
     @Inject
     lateinit var jokeListAdapter: JokeListAdapter
@@ -72,7 +68,7 @@ class InfiniteListFragment : DaggerFragment() {
                 jokeListAdapter.data = result.data
                 jokeListAdapter.notifyDataSetChanged()
             }
-            is DataState.Error -> dialogHelper.getErrorDialog(requireContext(), result.message).show()
+            is DataState.Error -> requireContext().getErrorDialog(result.message!!).show()
         }
     }
 }

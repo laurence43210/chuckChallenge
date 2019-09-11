@@ -14,7 +14,7 @@ import androidx.lifecycle.ViewModelProviders
 import chuck.com.challenge.R
 import chuck.com.challenge.data.wrappers.DataState
 import chuck.com.challenge.extensions.fromHtml
-import chuck.com.challenge.helpers.DialogHelper
+import chuck.com.challenge.extensions.getErrorDialog
 import chuck.com.challenge.viewmodels.SingleJokeFragmentViewModel
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_single_joke.showRandomJokeFab
@@ -25,9 +25,6 @@ class SingleJokeFragment : DaggerFragment() {
     companion object {
         fun newInstance() = SingleJokeFragment()
     }
-
-    @Inject
-    lateinit var dialogHelper: DialogHelper
 
     @Inject
     lateinit var provider: ViewModelProvider.Factory
@@ -66,7 +63,7 @@ class SingleJokeFragment : DaggerFragment() {
                     }
                 }
             }
-            is DataState.Error -> dialogHelper.getErrorDialog(requireContext(), result.message).show()
+            is DataState.Error -> requireContext().getErrorDialog(result.message!!).show()
         }
     }
 }

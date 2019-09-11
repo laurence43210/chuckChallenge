@@ -10,5 +10,4 @@ object InfiniteListFragmentModule {
     @JvmStatic
     @Provides
     fun provideAdapter(fragment: InfiniteListFragment) = JokeListAdapter(fragment.requireContext())
-
 }

@@ -24,7 +24,8 @@ import chuck.com.challenge.R
 import chuck.com.challenge.data.models.Joke
 import chuck.com.challenge.data.wrappers.DataState
 import chuck.com.challenge.extensions.fromHtml
-import chuck.com.challenge.helpers.DialogHelper
+import chuck.com.challenge.extensions.getDialogWithOkButton
+import chuck.com.challenge.extensions.getErrorDialog
 import chuck.com.challenge.viewmodels.INVALID_NAME_ERROR
 import chuck.com.challenge.viewmodels.ReplaceNameFragmentViewModel
 import dagger.android.support.DaggerFragment
@@ -33,9 +34,6 @@ import kotlinx.android.synthetic.main.fragment_name_replace.inputName
 import kotlinx.android.synthetic.main.fragment_name_replace.submitButton
 
 class ReplaceNameFragment : DaggerFragment(), TextWatcher {
-
-    @Inject
-    lateinit var dialogHelper: DialogHelper
 
     @Inject
     lateinit var provider: ViewModelProvider.Factory
@@ -73,14 +71,14 @@ class ReplaceNameFragment : DaggerFragment(), TextWatcher {
                 titleSpan.setSpan(StyleSpan(Typeface.BOLD), jokeTitle.length - joke.id.toString().length, jokeTitle.length,
                         Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
 
-                dialogHelper.getDialogWithOkButton(requireContext(), titleSpan, joke.value.fromHtml()).show()
+                requireContext().getDialogWithOkButton(titleSpan, joke.value.fromHtml()).show()
             }
             is DataState.Error -> {
                 val message = result.message
                 if (message == INVALID_NAME_ERROR) {
                     inputLayoutName.error = getString(R.string.name_replace_error_message_name)
                 } else {
-                    dialogHelper.getErrorDialog(requireContext(), message).show()
+                    requireContext().getErrorDialog(message!!).show()
                 }
             }
         }
