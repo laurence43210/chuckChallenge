@@ -18,5 +18,5 @@ object RepositoryModule {
 
     @JvmStatic
     @Provides
-    fun provideJokesRemoteDataSource(chuckNorrisAPI: ChuckNorrisAPI, @Named(NAME_IO_SCHEDULER) ioScheduler: Scheduler, @Named(NAME_ANDROID_SCHEDULER_MAIN_THREAD) uiScheduler: Scheduler) = JokesRemoteDataSource(chuckNorrisAPI, ioScheduler, uiScheduler)
+    fun provideJokesRemoteDataSource(chuckNorrisAPI: ChuckNorrisAPI, @Named(NAME_ANDROID_SCHEDULER_MAIN_THREAD) uiScheduler: Scheduler) = JokesRemoteDataSource(chuckNorrisAPI, uiScheduler)
 }
