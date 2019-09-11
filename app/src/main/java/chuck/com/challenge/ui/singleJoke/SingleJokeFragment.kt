@@ -13,9 +13,8 @@ import androidx.lifecycle.ViewModelProviders
 
 import chuck.com.challenge.R
 import chuck.com.challenge.data.wrappers.DataState
-import chuck.com.challenge.extentions.fromHtml
+import chuck.com.challenge.extensions.fromHtml
 import chuck.com.challenge.helpers.DialogHelper
-import chuck.com.challenge.viewmodels.ReplaceNameFragmentViewModel
 import chuck.com.challenge.viewmodels.SingleJokeFragmentViewModel
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_single_joke.showRandomJokeFab

@@ -13,7 +13,7 @@ import android.view.ViewGroup
 import chuck.com.challenge.R
 import chuck.com.challenge.data.models.Joke
 
-import chuck.com.challenge.extentions.fromHtml
+import chuck.com.challenge.extensions.fromHtml
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.adapter_infinite_list.jokeCategories
 import kotlinx.android.synthetic.main.adapter_infinite_list.jokeNumber
